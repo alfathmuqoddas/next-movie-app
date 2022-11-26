@@ -30,7 +30,7 @@ export default function Index({
       <Layout>
         <TemplateFront
           templateName={`Popular`}
-          children={popularDatas.map((popData) => (
+          content={popularDatas.map((popData) => (
             <Card
               key={popData.id}
               img={"https://image.tmdb.org/t/p/w500" + popData.poster_path}
@@ -41,7 +41,7 @@ export default function Index({
         />
         <TemplateFront
           templateName={`Now Playing`}
-          children={nowPlayingDatas.map((nopData) => (
+          content={nowPlayingDatas.map((nopData) => (
             <Card
               key={nopData.id}
               img={"https://image.tmdb.org/t/p/w500" + nopData.poster_path}
@@ -52,7 +52,7 @@ export default function Index({
         />
         <TemplateFront
           templateName={`Top Rated`}
-          children={topRatedDatas.map((topData) => (
+          content={topRatedDatas.map((topData) => (
             <Card
               key={topData.id}
               img={"https://image.tmdb.org/t/p/w500" + topData.poster_path}
