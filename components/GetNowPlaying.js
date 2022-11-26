@@ -24,9 +24,9 @@ function GetNowPlaying() {
   console.log(data);
 
   return (
-    <div className="mb-10">
+    <div className="mb-2">
       <h3 className="text-2xl">Now Playing</h3>
-      <div className="overflow-auto py-5">
+      <div className="overflow-auto pt-2">
         <div className="flex flex-nowrap gap-4">
           {data.map((dat) => (
             <Card
