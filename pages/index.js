@@ -1,4 +1,5 @@
 import Layout from "../components/Layout";
+import Link from "next/link";
 import Head from "next/head";
 import {
   getPopularData,
@@ -31,35 +32,38 @@ export default function Index({
         <TemplateFront
           templateName={`Popular`}
           content={popularDatas.map((popData) => (
-            <Card
-              key={popData.id}
-              img={"https://image.tmdb.org/t/p/w500" + popData.poster_path}
-              title={popData.original_title}
-              year={popData.release_date.substring(0, 4)}
-            />
+            <Link key={popData.id} href={`/details/${popData.id}`}>
+              <Card
+                img={popData.poster_path}
+                title={popData.title}
+                year={popData.release_date.substring(0, 4)}
+              />
+            </Link>
           ))}
         />
         <TemplateFront
           templateName={`Now Playing`}
           content={nowPlayingDatas.map((nopData) => (
-            <Card
-              key={nopData.id}
-              img={"https://image.tmdb.org/t/p/w500" + nopData.poster_path}
-              title={nopData.original_title}
-              year={nopData.release_date.substring(0, 4)}
-            />
+            <Link key={nopData.id} href={`/details/${nopData.id}`}>
+              <Card
+                img={nopData.poster_path}
+                title={nopData.title}
+                year={nopData.release_date.substring(0, 4)}
+              />
+            </Link>
           ))}
         />
         <TemplateFront
           templateName={`Top Rated`}
           content={topRatedDatas.map((topData) => (
-            <Card
-              key={topData.id}
-              img={"https://image.tmdb.org/t/p/w500" + topData.poster_path}
-              title={topData.original_title}
-              year={topData.release_date.substring(0, 4)}
-              rating={topData.vote_average}
-            />
+            <Link key={topData.id} href={`/details/${topData.id}`}>
+              <Card
+                img={"https://image.tmdb.org/t/p/w500" + topData.poster_path}
+                title={topData.title}
+                year={topData.release_date.substring(0, 4)}
+                rating={topData.vote_average}
+              />
+            </Link>
           ))}
         />
         {/*

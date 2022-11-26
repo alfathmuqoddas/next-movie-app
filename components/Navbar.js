@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 const Navbar = () => {
   return (
     <div className="navbar container mx-auto bg-base-100">
@@ -36,7 +38,9 @@ const Navbar = () => {
         </div>
       </div>
       <div className="navbar-center">
-        <a className="btn btn-ghost normal-case text-xl">ALEFAST</a>
+        <Link className="btn btn-ghost normal-case text-xl" href="/">
+          ALEFAST
+        </Link>
       </div>
       <div className="navbar-end">
         <button className="btn btn-ghost btn-circle">

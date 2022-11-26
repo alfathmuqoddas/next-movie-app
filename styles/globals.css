@@ -17,3 +17,7 @@
 ::-webkit-scrollbar-thumb:hover {
   background: #111111;
 }
+
+.backdrop-title {
+  font-size: 5rem;
+}
