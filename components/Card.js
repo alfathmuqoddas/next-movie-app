@@ -6,7 +6,7 @@ const Card = ({ img, title, year, rating }) => {
           <img src={img} alt="card-thumbnail" />
         </figure>
         <div className="">
-          <h5 className="text-lg font-bold">{title}</h5>
+          <h5 className="text-lg font-semibold">{title}</h5>
           <p className="p-0">{year}</p>
           <p className="p-0">{rating}</p>
         </div>
