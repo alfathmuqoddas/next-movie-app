@@ -66,7 +66,7 @@ export const MovieDetails = ({ movieDetails, casts, crews }) => {
         </div>
         <div id="text-part">
           <div className="genres">
-            <div className="my-2 md:my-5 flex flex-nowrap">
+            <div className="my-2 md:my-5 flex gap-y-2 flex-wrap">
               {movieDetails.genres.map((genre, index) => (
                 <div
                   key={index}
@@ -82,6 +82,10 @@ export const MovieDetails = ({ movieDetails, casts, crews }) => {
             <p>{movieDetails.overview}</p>
           </div>
           <div className="crew">Director: {directorName}</div>
+          <div>Runtime: {movieDetails.runtime} minutes</div>
+          <div>Budget: {movieDetails.budget.toLocaleString()} USD</div>
+          <div>Box Office: {movieDetails.revenue.toLocaleString()} USD</div>
+
           <TemplateFront
             templateName={"Cast"}
             content={casts.map((cast) => (

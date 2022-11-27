@@ -64,7 +64,7 @@ const Navbar = () => {
             className="menu dropdown-content mt-1 p-1 drop-shadow-lg bg-base-100 rounded-box w-auto"
           >
             <li>
-              <form class="form-control p-1" onSubmit={searchMovies}>
+              <form className="form-control p-1" onSubmit={searchMovies}>
                 <input
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
