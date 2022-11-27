@@ -8,15 +8,9 @@ const index = () => {
         <title>Search | ALEFAST</title>
       </Head>
       <Layout>
-        <h1 className="text-2xl mb-4">Search for Movies</h1>
-        <form>
-          <input type="text" placeholder="Search Here..." />
-          <input
-            type="submit"
-            value="Search"
-            className="btn btn-sm btn-primary"
-          />
-        </form>
+        <h1 className="text-2xl">
+          Search for movies using the search feature above
+        </h1>
       </Layout>
     </>
   );

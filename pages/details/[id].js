@@ -2,7 +2,7 @@ import Layout from "../../components/Layout";
 import Head from "next/head";
 import { CardSmall } from "../../components/Card";
 import TemplateFront from "../../components/TemplateFront";
-import Image from "next/legacy/image";
+import Image from "next/image";
 
 export async function getServerSideProps(context) {
   const { id } = context.query;
