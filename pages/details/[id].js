@@ -2,7 +2,7 @@ import Layout from "../../components/Layout";
 import Head from "next/head";
 import { CardSmall } from "../../components/Card";
 import TemplateFront from "../../components/TemplateFront";
-import Image from "next/image";
+import Image from "next/legacy/image";
 
 export async function getServerSideProps(context) {
   const { id } = context.query;
@@ -42,13 +42,14 @@ export const MovieDetails = ({ movieDetails, casts, crews }) => {
         <title>{titleName}</title>
       </Head>
       <Layout>
-        <div className="relative">
+        <div className="relative min-w-fit">
           <Image
-            src={`https://image.tmdb.org/t/p/w1280/${movieDetails.backdrop_path}`}
+            src={`https://image.tmdb.org/t/p/original/${movieDetails.backdrop_path}`}
             alt="movie backdrop"
-            width={1280}
-            height={720}
-            quality={75}
+            width={3840}
+            height={2160}
+            quality={50}
+            layout="responsive"
             className="rounded-2xl opacity-60"
           />
           <div className="absolute md:bottom-1/3 bottom-0 left-0 p-5">

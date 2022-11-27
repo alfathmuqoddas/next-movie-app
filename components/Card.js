@@ -1,4 +1,4 @@
-import Image from "next/image";
+import Image from "next/legacy/image";
 
 const Card = ({ img, title, year, rating }) => {
   return (
@@ -23,7 +23,7 @@ const Card = ({ img, title, year, rating }) => {
   );
 };
 
-export const CardSmall = ({ img, title, subtitle }) => {
+export const CardSmall = ({ img, title, subtitle, subtitle2 }) => {
   return (
     <div className="">
       <div className="w-36">
@@ -39,10 +39,40 @@ export const CardSmall = ({ img, title, subtitle }) => {
         <div className="">
           <h5 className="font-semibold">{title}</h5>
           <h6 className="">{subtitle}</h6>
+          <h6 className="">{subtitle2}</h6>
         </div>
       </div>
     </div>
   );
 };
 
+export const CardHorizontal = ({
+  img,
+  title,
+  subtitle,
+  subtitle2,
+  subtitle3,
+}) => {
+  return (
+    <div className="">
+      <div className="flex gap-4">
+        <figure className="flex-none">
+          <Image
+            src={`https://image.tmdb.org/t/p/w185/${img}`}
+            alt="cardSmall-thumbnail"
+            width={185}
+            height={278}
+            quality={75}
+          />
+        </figure>
+        <div className="shrink">
+          <h5 className="font-semibold text-xl">{title}</h5>
+          <h6 className="text-xl">{subtitle}</h6>
+          <h6 className="">{subtitle2}</h6>
+          <h6 className="">{subtitle3}</h6>
+        </div>
+      </div>
+    </div>
+  );
+};
 export default Card;

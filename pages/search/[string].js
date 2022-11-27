@@ -1,10 +1,49 @@
-import { useRouter } from "next/router";
+import Layout from "../../components/Layout";
+import Head from "next/head";
+import { CardHorizontal } from "../../components/Card";
+import Link from "next/link";
 
-const SearchResult = () => {
-  const router = useRouter();
-  const { string } = router.query;
+export const getServerSideProps = async (context) => {
+  const { string } = context.query;
+  const res = await fetch(
+    `https://api.themoviedb.org/3/search/movie?api_key=403829fffc80d8184aa974d631a475c5&language=en-US&query=${string}&page=1&include_adult=false`
+  );
 
-  return <p>You looking For: {string}?</p>;
+  const searchResultData = await res.json();
+  const searchDatas = searchResultData.results;
+
+  return {
+    props: {
+      searchDatas,
+    },
+  };
+};
+
+const SearchResult = ({ searchDatas }) => {
+  return (
+    <>
+      <Head>
+        <title>{`Search results | ALEFAST`}</title>
+      </Head>
+      <Layout>
+        {searchDatas.map((searchDat) => (
+          <Link key={searchDat.id} href={`/details/${searchDat.id}`}>
+            <CardHorizontal
+              img={searchDat.poster_path}
+              title={searchDat.title}
+              subtitle={
+                searchDat.release_date
+                  ? searchDat.release_date.substring(0, 4)
+                  : "TBA"
+              }
+              subtitle2={searchDat.vote_average}
+              subtitle3={searchDat.overview.substring(0, 140) + "..."}
+            />
+          </Link>
+        ))}
+      </Layout>
+    </>
+  );
 };
 
 export default SearchResult;
