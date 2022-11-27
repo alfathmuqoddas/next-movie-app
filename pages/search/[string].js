@@ -26,21 +26,22 @@ const SearchResult = ({ searchDatas }) => {
         <title>{`Search results | ALEFAST`}</title>
       </Head>
       <Layout>
-        {searchDatas.map((searchDat) => (
-          <Link key={searchDat.id} href={`/details/${searchDat.id}`}>
-            <CardHorizontal
-              img={searchDat.poster_path}
-              title={searchDat.title}
-              subtitle={
-                searchDat.release_date
-                  ? searchDat.release_date.substring(0, 4)
-                  : "TBA"
-              }
-              subtitle2={searchDat.vote_average}
-              subtitle3={searchDat.overview.substring(0, 140) + "..."}
-            />
-          </Link>
-        ))}
+        <div className="max-w-screen-md">
+          {searchDatas.map((searchDat) => (
+            <Link key={searchDat.id} href={`/details/${searchDat.id}`}>
+              <CardHorizontal
+                img={searchDat.poster_path}
+                title={searchDat.title}
+                subtitle={
+                  searchDat.release_date
+                    ? searchDat.release_date.substring(0, 4)
+                    : "TBA"
+                }
+                subtitle2={searchDat.vote_average}
+              />
+            </Link>
+          ))}
+        </div>
       </Layout>
     </>
   );

@@ -54,23 +54,21 @@ export const CardHorizontal = ({
   subtitle3,
 }) => {
   return (
-    <div className="">
-      <div className="flex gap-4">
-        <figure className="flex-none">
-          <Image
-            src={`https://image.tmdb.org/t/p/w185/${img}`}
-            alt="cardSmall-thumbnail"
-            width={185}
-            height={278}
-            quality={75}
-          />
-        </figure>
-        <div className="shrink">
-          <h5 className="font-semibold text-xl">{title}</h5>
-          <h6 className="text-xl">{subtitle}</h6>
-          <h6 className="">{subtitle2}</h6>
-          <h6 className="">{subtitle3}</h6>
-        </div>
+    <div className="flex gap-4 border-b pb-8 max-w-screen-md mb-8">
+      <figure className="flex-none w-20">
+        <Image
+          src={`https://image.tmdb.org/t/p/w185/${img}`}
+          alt="cardSmall-thumbnail"
+          width={185}
+          height={278}
+          quality={75}
+        />
+      </figure>
+      <div className="shrink">
+        <h5 className="font-semibold text-xl">{title}</h5>
+        <h6 className="text-xl">{subtitle}</h6>
+        <h6 className="">{subtitle2}</h6>
+        <h6 className="">{subtitle3}</h6>
       </div>
     </div>
   );

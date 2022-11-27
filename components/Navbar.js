@@ -70,7 +70,7 @@ const Navbar = () => {
                   onChange={(e) => setSearch(e.target.value)}
                   type="text"
                   placeholder="Search"
-                  class="input input-bordered"
+                  className="input input-bordered"
                 />
               </form>
             </li>
