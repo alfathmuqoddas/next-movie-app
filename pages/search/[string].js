@@ -15,17 +15,21 @@ export const getServerSideProps = async (context) => {
   return {
     props: {
       searchDatas,
+      string,
     },
   };
 };
 
-const SearchResult = ({ searchDatas }) => {
+const SearchResult = ({ searchDatas, string }) => {
   return (
     <>
       <Head>
         <title>{`Search results | ALEFAST`}</title>
       </Head>
       <Layout>
+        <h1 className="text-2xl my-12">
+          Search Results For <i>"{string}"</i>
+        </h1>
         <div className="max-w-screen-md">
           {searchDatas.map((searchDat) => (
             <Link key={searchDat.id} href={`/details/${searchDat.id}`}>
