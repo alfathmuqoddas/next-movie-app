@@ -24,10 +24,12 @@ const SearchResult = ({ searchDatas, string }) => {
   return (
     <>
       <Head>
-        <title>{`Search results | ALEFAST`}</title>
+        <title>Search results for {string} | ALEFAST</title>
       </Head>
       <Layout>
-        <h1 className="text-2xl my-12">{`Search Results For <i>"${String}"</i>`}</h1>
+        <h1 className="text-2xl my-12">
+          Search Results for <i>{'"' + string + '"'}</i>
+        </h1>
         <div className="max-w-screen-md">
           {searchDatas.map((searchDat) => (
             <Link key={searchDat.id} href={`/details/${searchDat.id}`}>

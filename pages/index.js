@@ -25,8 +25,7 @@ export default function Index({
   return (
     <>
       <Head>
-        <title>Next Movie App</title>
-        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+        <title>ALEFAST</title>
       </Head>
       <Layout>
         <TemplateFront
