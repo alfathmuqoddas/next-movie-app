@@ -81,11 +81,13 @@ export const MovieDetails = ({ movieDetails, casts, crews }) => {
             <p className="font-bold">Overview</p>
             <p>{movieDetails.overview}</p>
           </div>
-          <div className="crew">Director: {directorName}</div>
-          <div>Runtime: {movieDetails.runtime} minutes</div>
-          <div>Budget: {movieDetails.budget.toLocaleString()} USD</div>
-          <div>Box Office: {movieDetails.revenue.toLocaleString()} USD</div>
-
+          <div className="mb-5">
+            <div className="crew">Director: {directorName}</div>
+            <div>Runtime: {movieDetails.runtime} minutes</div>
+            <div>Budget: {movieDetails.budget.toLocaleString()} USD</div>
+            <div>Box Office: {movieDetails.revenue.toLocaleString()} USD</div>
+            <div>Vote Average: {movieDetails.vote_average}</div>
+          </div>
           <TemplateFront
             templateName={"Cast"}
             content={casts.map((cast) => (
