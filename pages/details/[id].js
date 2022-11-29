@@ -70,12 +70,21 @@ export const MovieDetails = ({ movieDetails, casts, crews }) => {
               {movieDetails.genres.map((genre, index) => (
                 <div
                   key={index}
-                  className="badge badge-lg badge-outline mr-2 p-2 md:p-3"
+                  className="badge badge-lg badge-outline rounded-2xl mr-2 p-2 md:p-3"
                 >
                   {genre.name}
                 </div>
               ))}
             </div>
+          </div>
+          <div
+            className="mt-2 radial-progress bg-primary text-primary-content border-4 border-primary"
+            style={{
+              "--value": movieDetails.vote_average * 10,
+              "--size": "4rem",
+            }}
+          >
+            {Math.trunc(movieDetails.vote_average * 10)}
           </div>
           <div className="overview my-5">
             <p className="font-bold">Overview</p>
@@ -86,7 +95,7 @@ export const MovieDetails = ({ movieDetails, casts, crews }) => {
             <div>Runtime: {movieDetails.runtime} minutes</div>
             <div>Budget: {movieDetails.budget.toLocaleString()} USD</div>
             <div>Box Office: {movieDetails.revenue.toLocaleString()} USD</div>
-            <div>Vote Average: {movieDetails.vote_average}</div>
+            <div>Vote Average: {movieDetails.vote_average * 10}</div>
           </div>
           <TemplateFront
             templateName={"Cast"}

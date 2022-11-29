@@ -14,7 +14,10 @@ export const getStaticProps = async () => {
   const nowPlayingDatas = await getNowPlayingData();
   const topRatedDatas = await getTopRatedData();
 
-  return { props: { popularDatas, nowPlayingDatas, topRatedDatas } };
+  return {
+    props: { popularDatas, nowPlayingDatas, topRatedDatas },
+    revalidate: 3600,
+  };
 };
 
 export default function Index({
