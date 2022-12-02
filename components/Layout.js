@@ -4,7 +4,7 @@ import Head from "next/head";
 
 const Layout = ({ children }) => {
   return (
-    <div>
+    <div className="relative min-h-screen">
       <Head>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
