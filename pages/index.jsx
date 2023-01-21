@@ -27,6 +27,7 @@ export default function Index({
 }) {
   return (
     <>
+    
       <Head>
         <title>ALEFAST</title>
       </Head>

@@ -4,7 +4,12 @@ const Footer = () => {
       <div className="text-center">
         <>Alfath Muqoddas ©2022</>
         <br />
-        <>API from TMDB</>
+        <>
+          API from{" "}
+          <a href="https://themoviedb.org" target="_blank">
+            TMDB
+          </a>
+        </>
       </div>
     </div>
   );

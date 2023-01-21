@@ -1,7 +1,8 @@
+import React, {Suspense} from 'react';
 import Layout from "../../components/Layout";
 import Head from "next/head";
-import { CardHorizontal } from "../../components/Card";
 import Link from "next/link";
+import {CardHorizontal} from "../../components/Card";
 
 export const getServerSideProps = async (context) => {
   const { string } = context.query;
@@ -32,7 +33,7 @@ const SearchResult = ({ searchDatas, string }) => {
         </h1>
         <div className="max-w-screen-md">
           {searchDatas.map((searchDat) => (
-            <Link key={searchDat.id} href={`/details/${searchDat.id}`}>
+            <Link href={`/details/${searchDat.id}`}>
               <CardHorizontal
                 img={searchDat.poster_path}
                 title={searchDat.title}

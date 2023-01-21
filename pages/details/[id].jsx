@@ -1,6 +1,6 @@
 import Layout from "../../components/Layout";
 import Head from "next/head";
-import { CardSmall } from "../../components/Card";
+import { CardSmall, CardYoutube } from "../../components/Card";
 import TemplateFront from "../../components/TemplateFront";
 import Image from "next/image";
 
@@ -9,24 +9,45 @@ export async function getServerSideProps(context) {
   const res = await fetch(
     `https://api.themoviedb.org/3/movie/${id}?api_key=403829fffc80d8184aa974d631a475c5&language=en-US`
   );
+  const movieDetails = await res.json();
+
   const credits = await fetch(
     `https://api.themoviedb.org/3/movie/${id}/credits?api_key=403829fffc80d8184aa974d631a475c5&language=en-US`
   );
-  const movieDetails = await res.json();
   const credit = await credits.json();
-  const casts = credit.cast.slice(0, 10);
+  const casts = credit.cast;
   const crews = credit.crew;
+
+  const pics = await fetch(
+    `https://api.themoviedb.org/3/movie/${id}/images?api_key=403829fffc80d8184aa974d631a475c5`
+  );
+  const pic = await pics.json();
+  const picSelected = pic.posters;
+
+  const videos = await fetch(
+    `https://api.themoviedb.org/3/movie/${id}/videos?api_key=403829fffc80d8184aa974d631a475c5`
+  );
+  const vid = await videos.json();
+  const videoSelected = vid.results;
 
   return {
     props: {
       movieDetails,
       casts,
       crews,
+      picSelected,
+      videoSelected,
     },
   };
 }
 
-export const MovieDetails = ({ movieDetails, casts, crews }) => {
+export const MovieDetails = ({
+  movieDetails,
+  casts,
+  crews,
+  picSelected,
+  videoSelected,
+}) => {
   const director = crews.filter((el) => {
     return el.job === "Director";
   });
@@ -43,14 +64,10 @@ export const MovieDetails = ({ movieDetails, casts, crews }) => {
       </Head>
       <Layout>
         <div className="relative min-w-fit">
-          <Image
+          <img
             src={`https://image.tmdb.org/t/p/original/${movieDetails.backdrop_path}`}
             alt="movie backdrop"
-            width={3840}
-            height={2160}
-            quality={50}
-            layout="responsive"
-            className="rounded-2xl opacity-60"
+            className="rounded-2xl opacity-60 object-cover"
           />
           <div className="absolute md:bottom-1/3 bottom-0 left-0 p-5">
             <h6 className="text-white md:text-xl p-0">
@@ -106,6 +123,34 @@ export const MovieDetails = ({ movieDetails, casts, crews }) => {
                 title={cast.name}
                 subtitle={cast.character}
               />
+            ))}
+          />
+          <TemplateFront
+            templateName={"Pictures"}
+            content={picSelected.map((picSelect) => (
+              <a
+                key={picSelect.index}
+                href={`https://image.tmdb.org/t/p/original${picSelect.file_path}`}
+                target="_blank"
+              >
+                <CardSmall img={picSelect.file_path} />
+              </a>
+            ))}
+          />
+          <TemplateFront
+            templateName={"Videos"}
+            content={videoSelected.map((vidSelect) => (
+              <a
+                key={vidSelect.id}
+                href={`https://youtube.com/watch?v=${vidSelect.key}`}
+                target="_blank"
+              >
+                <CardYoutube
+                  img={vidSelect.key}
+                  title={vidSelect.name}
+                  subtitle={vidSelect.site}
+                />
+              </a>
             ))}
           />
         </div>
