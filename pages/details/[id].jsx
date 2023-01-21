@@ -132,6 +132,7 @@ export const MovieDetails = ({
                 key={picSelect.index}
                 href={`https://image.tmdb.org/t/p/original${picSelect.file_path}`}
                 target="_blank"
+                rel="noreferrer"
               >
                 <CardSmall img={picSelect.file_path} />
               </a>
@@ -144,6 +145,7 @@ export const MovieDetails = ({
                 key={vidSelect.id}
                 href={`https://youtube.com/watch?v=${vidSelect.key}`}
                 target="_blank"
+                rel="noreferrer"
               >
                 <CardYoutube
                   img={vidSelect.key}

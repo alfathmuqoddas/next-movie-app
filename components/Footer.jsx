@@ -6,7 +6,7 @@ const Footer = () => {
         <br />
         <>
           API from{" "}
-          <a href="https://themoviedb.org" target="_blank">
+          <a href="https://themoviedb.org" target="_blank" rel="noreferrer">
             TMDB
           </a>
         </>
