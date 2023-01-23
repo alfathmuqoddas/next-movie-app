@@ -1,6 +1,6 @@
 import Layout from "../../components/Layout";
 import Head from "next/head";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { GridTemplate } from "../../components/TemplateFront";
 import { getNowPlayingData } from "../../lib/getData";
 
