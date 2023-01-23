@@ -1,10 +1,10 @@
 import Layout from "../../components/Layout";
 import Head from "next/head";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { GridTemplate } from "../../components/TemplateFront";
 import { getTopRatedData } from "../../lib/getData";
 
-const index = () => {
+const Index = () => {
   const [movies, setMovies] = useState([]);
   const [page, setPage] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
@@ -48,4 +48,4 @@ const index = () => {
   );
 };
 
-export default index;
+export default Index;
