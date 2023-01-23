@@ -51,9 +51,11 @@ export const MovieDetails = ({
       <Layout>
         <div className="relative min-w-fit">
           <img
-            src={`https://image.tmdb.org/t/p/original/${movieDetails.backdrop_path}`}
+            src={`https://image.tmdb.org/t/p/w1280/${movieDetails.backdrop_path}`}
             alt="movie backdrop"
             className="rounded-2xl opacity-60 object-cover"
+            width={1280}
+            height={720}
           />
           <div className="absolute md:bottom-1/3 bottom-0 left-0 p-5">
             <h6 className="text-white md:text-xl p-0">
