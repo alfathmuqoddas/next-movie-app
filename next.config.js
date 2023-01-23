@@ -3,7 +3,7 @@
 module.exports = {
   reactStrictMode: true,
   output: "standalone",
-  images: {
+  /* images: {
     unoptimized: true,
     remotePatterns: [
       {
@@ -19,5 +19,8 @@ module.exports = {
         pathname: "/**",
       },
     ],
+  }, */
+  env: {
+    apiKey: "403829fffc80d8184aa974d631a475c5",
   },
 };

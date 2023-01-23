@@ -2,33 +2,19 @@ import Layout from "../../components/Layout";
 import Head from "next/head";
 import { CardSmall, CardYoutube } from "../../components/Card";
 import TemplateFront from "../../components/TemplateFront";
-import Image from "next/image";
+import {
+  getMovieDetails,
+  getCreditData,
+  getPicsData,
+  getVideosData,
+} from "../../lib/getData";
 
 export async function getServerSideProps(context) {
   const { id } = context.query;
-  const res = await fetch(
-    `https://api.themoviedb.org/3/movie/${id}?api_key=403829fffc80d8184aa974d631a475c5&language=en-US`
-  );
-  const movieDetails = await res.json();
-
-  const credits = await fetch(
-    `https://api.themoviedb.org/3/movie/${id}/credits?api_key=403829fffc80d8184aa974d631a475c5&language=en-US`
-  );
-  const credit = await credits.json();
-  const casts = credit.cast;
-  const crews = credit.crew;
-
-  const pics = await fetch(
-    `https://api.themoviedb.org/3/movie/${id}/images?api_key=403829fffc80d8184aa974d631a475c5`
-  );
-  const pic = await pics.json();
-  const picSelected = pic.posters;
-
-  const videos = await fetch(
-    `https://api.themoviedb.org/3/movie/${id}/videos?api_key=403829fffc80d8184aa974d631a475c5`
-  );
-  const vid = await videos.json();
-  const videoSelected = vid.results;
+  const movieDetails = await getMovieDetails(id);
+  const { crews, casts } = await getCreditData(id);
+  const picSelected = await getPicsData(id);
+  const videoSelected = await getVideosData(id);
 
   return {
     props: {
@@ -141,18 +127,13 @@ export const MovieDetails = ({
           <TemplateFront
             templateName={"Videos"}
             content={videoSelected.map((vidSelect) => (
-              <a
+              <CardYoutube
                 key={vidSelect.id}
-                href={`https://youtube.com/watch?v=${vidSelect.key}`}
-                target="_blank"
-                rel="noreferrer"
-              >
-                <CardYoutube
-                  img={vidSelect.key}
-                  title={vidSelect.name}
-                  subtitle={vidSelect.site}
-                />
-              </a>
+                link={vidSelect.key}
+                img={vidSelect.key}
+                title={vidSelect.name}
+                subtitle={vidSelect.site}
+              />
             ))}
           />
         </div>

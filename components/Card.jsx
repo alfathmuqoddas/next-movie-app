@@ -1,26 +1,4 @@
-import Image from "next/image";
-
-const Card = ({ img, title, year, rating }) => {
-  return (
-    <div className="">
-      <div className="w-48 xl:w-64">
-        <figure>
-          <img
-            src={`https://image.tmdb.org/t/p/w342/${img}`}
-            alt="card-thumbnail"
-            className="rounded-2xl mb-4"
-            loading="lazy"
-          />
-        </figure>
-        <div className="">
-          <h5 className="text-lg font-semibold">{title}</h5>
-          <p className="">{year}</p>
-          <p className="">{rating}</p>
-        </div>
-      </div>
-    </div>
-  );
-};
+import Link from "next/link";
 
 export const CardSmall = ({ img, title, subtitle, subtitle2 }) => {
   return (
@@ -76,9 +54,13 @@ export const CardHorizontal = ({
   );
 };
 
-export const CardYoutube = ({ img, title, subtitle, subtitle2 }) => {
+export const CardYoutube = ({ link, img, title, subtitle }) => {
   return (
-    <div className="">
+    <a
+      href={`https://youtube.com/watch?v=${link}`}
+      target="_blank"
+      rel="noreferrer"
+    >
       <div className="w-64">
         <figure>
           <img
@@ -88,13 +70,59 @@ export const CardYoutube = ({ img, title, subtitle, subtitle2 }) => {
             loading="lazy"
           />
         </figure>
-        <div className="">
+        <div>
           <h5 className="font-semibold">{title}</h5>
-          <h6 className="">{subtitle}</h6>
-          <h6 className="">{subtitle2}</h6>
+          <h6>{subtitle}</h6>
         </div>
       </div>
-    </div>
+    </a>
   );
 };
-export default Card;
+
+export const CardWrap = ({ id, poster_path, release_date, title }) => {
+  return (
+    <Link href={`/details/${id}`}>
+      <div className="">
+        <div className="w-48 xl:w-64">
+          <figure>
+            <img
+              src={`https://image.tmdb.org/t/p/w342/${poster_path}`}
+              alt="card-thumbnail"
+              className="rounded-2xl mb-4"
+              loading="lazy"
+            />
+          </figure>
+          <div className="">
+            <h5 className="text-lg font-semibold">{title}</h5>
+            <p className="">{release_date.substring(0, 4)}</p>
+          </div>
+        </div>
+      </div>
+    </Link>
+  );
+};
+
+export const CardWrap2 = ({ id, poster_path, release_date, title }) => {
+  return (
+    <Link href={`/details/${id}`}>
+      <div className="">
+        <div className="">
+          <figure>
+            <img
+              src={`https://image.tmdb.org/t/p/w342/${poster_path}`}
+              alt="card-thumbnail"
+              className="rounded-2xl mb-4"
+              loading="lazy"
+            />
+          </figure>
+          <div className="">
+            <h5 className="text-lg font-semibold">{title}</h5>
+            <p className="">{release_date.substring(0, 4)}</p>
+          </div>
+        </div>
+      </div>
+    </Link>
+  );
+};
+
+export default CardWrap;
