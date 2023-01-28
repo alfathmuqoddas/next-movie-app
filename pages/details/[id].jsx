@@ -104,37 +104,37 @@ export const MovieDetails = ({
           </div>
           <TemplateFront
             templateName={"Cast"}
-            content={casts.map((cast) => (
+            content={casts.map((cast, index) => (
               <CardSmall
-                key={cast.id}
-                img={cast.profile_path}
+                key={index}
+                img={`https://image.tmdb.org/t/p/w185/${cast.profile_path}`}
                 title={cast.name}
                 subtitle={cast.character}
+                size="w-36"
               />
             ))}
           />
           <TemplateFront
             templateName={"Pictures"}
-            content={picSelected.map((picSelect) => (
-              <a
-                key={picSelect.index}
-                href={`https://image.tmdb.org/t/p/original${picSelect.file_path}`}
-                target="_blank"
-                rel="noreferrer"
-              >
-                <CardSmall img={picSelect.file_path} />
-              </a>
+            content={picSelected.map((picSelect, index) => (
+              <CardSmall
+                key={index}
+                img={`https://image.tmdb.org/t/p/w185/${picSelect.file_path}`}
+                link={`https://image.tmdb.org/t/p/original${picSelect.file_path}`}
+                size="w-36"
+              />
             ))}
           />
           <TemplateFront
             templateName={"Videos"}
-            content={videoSelected.map((vidSelect) => (
-              <CardYoutube
-                key={vidSelect.id}
-                link={vidSelect.key}
-                img={vidSelect.key}
+            content={videoSelected.map((vidSelect, index) => (
+              <CardSmall
+                key={index}
+                link={`https://youtube.com/watch?v=${vidSelect.key}`}
+                img={`https://img.youtube.com/vi/${vidSelect.key}/0.jpg`}
                 title={vidSelect.name}
                 subtitle={vidSelect.site}
+                size="w-64"
               />
             ))}
           />

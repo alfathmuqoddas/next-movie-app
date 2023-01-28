@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { CardWrap, CardWrap2 } from "./Card";
+import { CardWrap } from "./Card";
 
 export const TemplateFront2 = ({ content, templateName, seeAll }) => {
   return (
@@ -9,7 +9,11 @@ export const TemplateFront2 = ({ content, templateName, seeAll }) => {
         <div className="flex flex-nowrap gap-4">
           {content &&
             content.map((contentData) => (
-              <CardWrap key={contentData.id} {...contentData} />
+              <CardWrap
+                key={contentData.id}
+                {...contentData}
+                size="w-48 xl:w-64"
+              />
             ))}
           <Link href={`/${seeAll}`}>
             <div className="w-48 text-2xl">See All</div>
@@ -39,7 +43,7 @@ export const GridTemplate = ({ content, templateName }) => {
         <div className="grid grid-cols-4 md:grid-cols-6 xl:grid-cols-8 gap-4">
           {content &&
             content.map((contentData, index) => (
-              <CardWrap2 key={index} {...contentData} />
+              <CardWrap key={index} {...contentData} size="" />
             ))}
         </div>
       </div>
