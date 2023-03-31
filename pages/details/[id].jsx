@@ -1,6 +1,6 @@
 import Layout from "../../components/Layout";
 import Head from "next/head";
-import { CardSmall, CardYoutube } from "../../components/Card";
+import { CardSmall } from "../../components/Card";
 import TemplateFront from "../../components/TemplateFront";
 import {
   getMovieDetails,
@@ -49,13 +49,11 @@ export const MovieDetails = ({
         <title>{titleName}</title>
       </Head>
       <Layout>
-        <div className="relative min-w-fit">
+        <div className="relative">
           <img
             src={`https://image.tmdb.org/t/p/w1280/${movieDetails.backdrop_path}`}
             alt="movie backdrop"
-            className="rounded-2xl opacity-60 object-cover"
-            width={1280}
-            height={720}
+            className="rounded-2xl opacity-60 object-cover min-w-full"
           />
           <div className="absolute md:bottom-1/3 bottom-0 left-0 p-5">
             <h6 className="text-white md:text-xl p-0">
@@ -69,38 +67,41 @@ export const MovieDetails = ({
             </h4>
           </div>
         </div>
-        <div id="text-part">
-          <div className="genres">
-            <div className="my-2 md:my-5 flex gap-y-2 flex-wrap">
-              {movieDetails.genres.map((genre, index) => (
-                <div
-                  key={index}
-                  className="badge badge-lg badge-outline rounded-full mr-2 p-2 md:p-3"
-                >
-                  {genre.name}
-                </div>
-              ))}
+
+        <div className="max-w-4xl mx-auto">
+          <div id="text-part">
+            <div className="genres">
+              <div className="my-2 md:my-5 flex gap-y-2 flex-wrap">
+                {movieDetails.genres.map((genre, index) => (
+                  <div
+                    key={index}
+                    className="badge badge-lg badge-outline rounded-full mr-2 p-2 md:p-3"
+                  >
+                    {genre.name}
+                  </div>
+                ))}
+              </div>
             </div>
-          </div>
-          <div
-            className="mt-2 radial-progress bg-primary text-primary-content border-4 border-primary"
-            style={{
-              "--value": movieDetails.vote_average * 10,
-              "--size": "4rem",
-            }}
-          >
-            {Math.trunc(movieDetails.vote_average * 10)}
-          </div>
-          <div className="overview my-5">
-            <p className="font-bold">Overview</p>
-            <p>{movieDetails.overview}</p>
-          </div>
-          <div className="mb-5">
-            <div className="crew">Director: {directorName}</div>
-            <div>Runtime: {movieDetails.runtime} minutes</div>
-            <div>Budget: {movieDetails.budget.toLocaleString()} USD</div>
-            <div>Box Office: {movieDetails.revenue.toLocaleString()} USD</div>
-            <div>Vote Average: {movieDetails.vote_average * 10}</div>
+            <div
+              className="mt-2 radial-progress bg-primary text-primary-content border-4 border-primary"
+              style={{
+                "--value": movieDetails.vote_average * 10,
+                "--size": "4rem",
+              }}
+            >
+              {Math.trunc(movieDetails.vote_average * 10)}
+            </div>
+            <div className="overview my-5">
+              <h3 className="text-2xl">Overview</h3>
+              <p>{movieDetails.overview}</p>
+            </div>
+            <div className="mb-5">
+              <div className="crew">Director: {directorName}</div>
+              <div>Runtime: {movieDetails.runtime} minutes</div>
+              <div>Budget: {movieDetails.budget.toLocaleString()} USD</div>
+              <div>Box Office: {movieDetails.revenue.toLocaleString()} USD</div>
+              <div>Vote Average: {movieDetails.vote_average * 10}</div>
+            </div>
           </div>
           <TemplateFront
             templateName={"Cast"}
@@ -132,7 +133,11 @@ export const MovieDetails = ({
                 key={index}
                 link={`https://youtube.com/watch?v=${vidSelect.key}`}
                 img={`https://img.youtube.com/vi/${vidSelect.key}/0.jpg`}
-                title={vidSelect.name}
+                title={
+                  vidSelect.name.length > 32
+                    ? `${vidSelect.name.substring(0, 32)}...`
+                    : vidSelect.name
+                }
                 subtitle={vidSelect.site}
                 size="w-64"
               />
