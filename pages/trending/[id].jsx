@@ -12,7 +12,7 @@ import {
 
 export async function getStaticPaths() {
   const results = [];
-  for (let page = 1; page <= 2; page++) {
+  for (let page = 1; page <= 100; page++) {
     const res = await fetch(
       `https://api.themoviedb.org/3/trending/movie/week?api_key=403829fffc80d8184aa974d631a475c5&language=en-US&page=${
         page | 1
