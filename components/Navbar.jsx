@@ -38,10 +38,10 @@ const Navbar = () => {
             className="menu menu-compact dropdown-content mt-3 p-2 drop-shadow-lg bg-base-100 rounded-box w-52"
           >
             <li>
-              <a>Homepage</a>
+              <Link href="/">Homepage</Link>
             </li>
             <li>
-              <a>Portfolio</a>
+              <Link href="/trending/lists">Trending Page</Link>
             </li>
             <li>
               <a>About</a>
