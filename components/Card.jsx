@@ -14,7 +14,7 @@ export const CardSmall = ({ link, img, title, subtitle, subtitle2, size }) => {
         </figure>
         <div className="">
           <h5 className="font-semibold">{title}</h5>
-          <h6 className="">{subtitle}</h6>
+          <div className="">{subtitle}</div>
           <h6 className="">{subtitle2}</h6>
         </div>
       </div>

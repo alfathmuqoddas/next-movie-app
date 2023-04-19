@@ -8,6 +8,7 @@ import {
   getPicsData,
   getVideosData,
 } from "../../lib/getData";
+import YoutubeIcons from "../../components/YoutubeIcons";
 
 export async function getServerSideProps(context) {
   const { id } = context.query;
@@ -34,11 +35,11 @@ export const MovieDetails = ({
   picSelected,
   videoSelected,
 }) => {
-  const director = crews.filter((el) => {
-    return el.job === "Director";
-  });
+  const director =
+    crews.length > 0 ? crews.filter((el) => el.job === "Director") : [];
 
-  const directorName = director[0].name;
+  const directorName =
+    director.length > 0 ? director[0].name : "data not available";
   const titleName = `${
     movieDetails.original_title
   } (${movieDetails.release_date.substring(0, 4)}) | ALEFAST`;
@@ -51,7 +52,11 @@ export const MovieDetails = ({
       <Layout>
         <div className="relative">
           <img
-            src={`https://image.tmdb.org/t/p/w1280/${movieDetails.backdrop_path}`}
+            src={
+              movieDetails.backdrop_path
+                ? `https://image.tmdb.org/t/p/w1280/${movieDetails.backdrop_path}`
+                : "https://placehold.co/1280x720"
+            }
             alt="movie backdrop"
             className="rounded-2xl opacity-60 object-cover min-w-full"
           />
@@ -105,43 +110,61 @@ export const MovieDetails = ({
           </div>
           <TemplateFront
             templateName={"Cast"}
-            content={casts.map((cast, index) => (
-              <CardSmall
-                key={index}
-                img={`https://image.tmdb.org/t/p/w185/${cast.profile_path}`}
-                title={cast.name}
-                subtitle={cast.character}
-                size="w-36"
-              />
-            ))}
+            content={
+              casts.length > 0 ? (
+                casts.map((cast, index) => (
+                  <CardSmall
+                    key={index}
+                    img={`https://image.tmdb.org/t/p/w185/${cast.profile_path}`}
+                    title={cast.name}
+                    subtitle={cast.character}
+                    size="w-36"
+                  />
+                ))
+              ) : (
+                <>Data Unavailable</>
+              )
+            }
           />
           <TemplateFront
             templateName={"Pictures"}
-            content={picSelected.map((picSelect, index) => (
-              <CardSmall
-                key={index}
-                img={`https://image.tmdb.org/t/p/w185/${picSelect.file_path}`}
-                link={`https://image.tmdb.org/t/p/original${picSelect.file_path}`}
-                size="w-36"
-              />
-            ))}
+            content={
+              picSelected.length > 0 ? (
+                picSelected.map((picSelect, index) => (
+                  <CardSmall
+                    key={index}
+                    img={`https://image.tmdb.org/t/p/w185/${picSelect.file_path}`}
+                    link={`https://image.tmdb.org/t/p/original${picSelect.file_path}`}
+                    size="w-36"
+                  />
+                ))
+              ) : (
+                <>Data Unavailable</>
+              )
+            }
           />
           <TemplateFront
             templateName={"Videos"}
-            content={videoSelected.map((vidSelect, index) => (
-              <CardSmall
-                key={index}
-                link={`https://youtube.com/watch?v=${vidSelect.key}`}
-                img={`https://img.youtube.com/vi/${vidSelect.key}/0.jpg`}
-                title={
-                  vidSelect.name.length > 32
-                    ? `${vidSelect.name.substring(0, 32)}...`
-                    : vidSelect.name
-                }
-                subtitle={vidSelect.site}
-                size="w-64"
-              />
-            ))}
+            content={
+              videoSelected.length > 0 ? (
+                videoSelected.map((vidSelect, index) => (
+                  <CardSmall
+                    key={index}
+                    link={`https://youtube.com/watch?v=${vidSelect.key}`}
+                    img={`https://img.youtube.com/vi/${vidSelect.key}/0.jpg`}
+                    title={
+                      vidSelect.name.length > 32
+                        ? `${vidSelect.name.substring(0, 32)}...`
+                        : vidSelect.name
+                    }
+                    subtitle={<YoutubeIcons />}
+                    size="w-64"
+                  />
+                ))
+              ) : (
+                <>Data Unavailable</>
+              )
+            }
           />
         </div>
       </Layout>
