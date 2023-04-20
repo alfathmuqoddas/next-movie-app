@@ -115,7 +115,11 @@ export const MovieDetails = ({
                 casts.map((cast, index) => (
                   <CardSmall
                     key={index}
-                    img={`https://image.tmdb.org/t/p/w185/${cast.profile_path}`}
+                    img={
+                      cast.profile_path
+                        ? `https://image.tmdb.org/t/p/w185/${cast.profile_path}`
+                        : "https://placehold.co/185x278?text=Data+Unavailable"
+                    }
                     title={cast.name}
                     subtitle={cast.character}
                     size="w-36"
@@ -133,7 +137,11 @@ export const MovieDetails = ({
                 picSelected.map((picSelect, index) => (
                   <CardSmall
                     key={index}
-                    img={`https://image.tmdb.org/t/p/w185/${picSelect.file_path}`}
+                    img={
+                      picSelect.file_path
+                        ? `https://image.tmdb.org/t/p/w185/${picSelect.file_path}`
+                        : "https://placehold.co/185x278?text=Data+Unavailable"
+                    }
                     link={`https://image.tmdb.org/t/p/original${picSelect.file_path}`}
                     size="w-36"
                   />

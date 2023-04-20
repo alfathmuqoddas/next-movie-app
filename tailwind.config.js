@@ -9,6 +9,14 @@ module.exports = {
   },
   plugins: [require("daisyui")],
   daisyui: {
-    themes: ["dark"],
+    themes: [
+      {
+        black: {
+          ...require("daisyui/src/colors/themes")["[data-theme=black]"],
+          "--rounded-box": "0.5rem",
+          "--rounded-btn": "0.5rem",
+        },
+      },
+    ],
   },
 };

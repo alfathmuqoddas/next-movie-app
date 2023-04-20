@@ -34,22 +34,22 @@ export default function Index({
       </Head>
       <Layout>
         <TemplateFront2
-          templateName={`Trending`}
+          templateName={`TRENDING`}
           content={trendingDatas}
           seeAll="trending"
         />
         <TemplateFront2
-          templateName={`Popular`}
+          templateName={`POPULAR`}
           content={popularDatas}
           seeAll="popular"
         />
         <TemplateFront2
-          templateName={`Now Playing`}
+          templateName={`NOW PLAYING`}
           content={nowPlayingDatas}
           seeAll="now-playing"
         />
         <TemplateFront2
-          templateName={`Top Rated`}
+          templateName={`TOP RATED`}
           content={topRatedDatas}
           seeAll="top-rated"
         />

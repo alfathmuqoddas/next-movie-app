@@ -19,15 +19,17 @@ export async function getStaticProps() {
 export const MovieTrendingLists = ({ results }) => {
   return (
     <Layout>
-      <ol className="list-decimal">
-        {results.map((result) => {
-          return (
-            <li key={result.id}>
-              <Link href={`/trending/${result.id}`}>{result.title}</Link>
-            </li>
-          );
-        })}
-      </ol>
+      <div>
+        <ol className="list-decimal">
+          {results.map((result, index) => {
+            return (
+              <li key={index}>
+                <Link href={`/trending/${result.id}`}>{result.title}</Link>
+              </li>
+            );
+          })}
+        </ol>
+      </div>
     </Layout>
   );
 };
