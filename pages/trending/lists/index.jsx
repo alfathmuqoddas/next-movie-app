@@ -13,7 +13,7 @@ export async function getStaticProps() {
     results.push(...trendingData.results);
   }
 
-  return { props: { results } };
+  return { props: { results }, revalidate: 3600 };
 }
 
 export const MovieTrendingLists = ({ results }) => {

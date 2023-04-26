@@ -40,6 +40,7 @@ export async function getStaticProps({ params }) {
   const videoSelected = await getVideosData(params.id);
   return {
     props: { movieDetails, casts, crews, picSelected, videoSelected },
+    revalidate: 3600,
   };
 }
 
