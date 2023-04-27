@@ -41,7 +41,7 @@ const SearchResult = ({ searchDatas, string }) => {
                     ? searchDat.release_date.substring(0, 4)
                     : "TBA"
                 }
-                subtitle2={searchDat.vote_average * 10}
+                subtitle2={Math.round(searchDat.vote_average * 10)}
               />
             </Link>
           ))}

@@ -105,7 +105,9 @@ export const MovieDetails = ({
               <div>Runtime: {movieDetails.runtime} minutes</div>
               <div>Budget: {movieDetails.budget.toLocaleString()} USD</div>
               <div>Box Office: {movieDetails.revenue.toLocaleString()} USD</div>
-              <div>Vote Average: {movieDetails.vote_average * 10}</div>
+              <div>
+                Vote Average: {Math.round(movieDetails.vote_average * 10)}
+              </div>
             </div>
           </div>
           <TemplateFront
