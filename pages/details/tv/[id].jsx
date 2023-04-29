@@ -1,23 +1,23 @@
-import Layout from "../../components/Layout";
+import Layout from "../../../components/Layout";
 import Head from "next/head";
-import { CardSmall } from "../../components/Card";
-import TemplateFront from "../../components/TemplateFront";
+import { CardSmall } from "../../../components/Card";
+import TemplateFront from "../../../components/TemplateFront";
 import {
   getMediaDetails,
-  getCreditData,
-  getPicsData,
-  getVideosData,
-  getSimilarData,
-} from "../../lib/getData";
-import YoutubeIcons from "../../components/YoutubeIcons";
+  getTvPicsData,
+  getTvCreditData,
+  getTvVideosData,
+  getTvSimilarData,
+} from "../../../lib/getData";
+import YoutubeIcons from "../../../components/YoutubeIcons";
 
 export async function getServerSideProps(context) {
   const { id } = context.query;
-  const mediaDetails = await getMediaDetails("movie", id);
-  const { crews, casts } = await getCreditData(id);
-  const picSelected = await getPicsData(id);
-  const videoSelected = await getVideosData(id);
-  const similarData = await getSimilarData(id);
+  const mediaDetails = await getMediaDetails("tv", id);
+  const { crews, casts } = await getTvCreditData(id);
+  const picSelected = await getTvPicsData(id);
+  const videoSelected = await getTvVideosData(id);
+  const similarData = await getTvSimilarData(id);
 
   return {
     props: {
@@ -45,8 +45,8 @@ export const mediaDetails = ({
   const directorName =
     director.length > 0 ? director[0].name : "data not available";
   const titleName = `${
-    mediaDetails.original_title
-  } (${mediaDetails.release_date.substring(0, 4)}) | ALEFAST`;
+    mediaDetails.name
+  } (${mediaDetails.first_air_date.substring(0, 4)}) | ALEFAST`;
 
   return (
     <>
@@ -66,10 +66,10 @@ export const mediaDetails = ({
           />
           <div className="absolute md:bottom-1/3 bottom-0 left-0 p-5">
             <h6 className="text-white md:text-xl p-0">
-              {mediaDetails.release_date.substring(0, 4)}
+              {mediaDetails.first_air_date.substring(0, 4)}
             </h6>
             <h1 className="text-xl xl:text-7xl md:text-5xl font-bold text-white">
-              {mediaDetails.title.toUpperCase()}
+              {mediaDetails.name.toUpperCase()}
             </h1>
             <h4 className="md:text-xl text-white italic">
               {mediaDetails.tagline}
@@ -106,9 +106,10 @@ export const mediaDetails = ({
             </div>
             <div className="mb-5">
               <div className="crew">Director: {directorName}</div>
-              <div>Runtime: {mediaDetails.runtime} minutes</div>
-              <div>Budget: {mediaDetails.budget.toLocaleString()} USD</div>
-              <div>Box Office: {mediaDetails.revenue.toLocaleString()} USD</div>
+              <div>Runtime: {mediaDetails.episode_run_time} minutes</div>
+              <div>Number of Episodes: {mediaDetails.number_of_episodes}</div>
+              <div>Number of Seasons: {mediaDetails.number_of_seasons}</div>
+              <div>Networks: {mediaDetails.networks[0].name}</div>
               <div>
                 Vote Average: {Math.round(mediaDetails.vote_average * 10)}
               </div>
@@ -189,14 +190,14 @@ export const mediaDetails = ({
                 similarData.map((similarDat, index) => (
                   <CardSmall
                     key={index}
-                    link={`/details/${similarDat.id}`}
+                    link={`/details/tv/${similarDat.id}`}
                     img={
                       similarDat.poster_path
                         ? `https://image.tmdb.org/t/p/w185/${similarDat.poster_path}`
                         : "https://placehold.co/185x278?text=Data+Unavailable"
                     }
-                    title={similarDat.title}
-                    subtitle={similarDat.release_date.slice(0, 4)}
+                    title={similarDat.name}
+                    subtitle={similarDat.first_air_date.slice(0, 4)}
                     size="w-36"
                   />
                 ))

@@ -2,7 +2,7 @@ import Layout from "../../components/Layout";
 import Head from "next/head";
 import { useEffect, useState } from "react";
 import { GridTemplate } from "../../components/TemplateFront";
-import { getNowPlayingData } from "../../lib/getData";
+import { getPopularTvData } from "../../lib/getData";
 
 const Index = () => {
   const [movies, setMovies] = useState([]);
@@ -14,8 +14,8 @@ const Index = () => {
     const loadUsers = async () => {
       try {
         setIsLoading(true);
-        const nowPlayingDatas = await getNowPlayingData(page);
-        setMovies((movies) => [...movies, ...nowPlayingDatas]);
+        const popularDatas = await getPopularTvData(page);
+        setMovies((movies) => [...movies, ...popularDatas]);
         setErrorMsg("");
       } catch (error) {
         setErrorMsg("Error while loading data. Try again later.");
@@ -33,11 +33,11 @@ const Index = () => {
   return (
     <div>
       <Head>
-        <title>Now Playing | ALEFAST</title>
+        <title>Popular TV Series | ALEFAST</title>
       </Head>
       <Layout>
         <div className="mx-auto container px-4">
-          <GridTemplate content={movies} templateName="Now Playing" />
+          <GridTemplate content={movies} templateName="Popular" />
           {errorMsg && <p className="errorMsg">{errorMsg}</p>}
           <div className="load-more">
             <button onClick={loadMore} className="btn btn-primary">

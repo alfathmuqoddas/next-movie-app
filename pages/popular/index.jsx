@@ -36,12 +36,14 @@ const Index = () => {
         <title>Popular | ALEFAST</title>
       </Head>
       <Layout>
-        <GridTemplate content={movies} templateName="Popular" />
-        {errorMsg && <p className="errorMsg">{errorMsg}</p>}
-        <div className="load-more">
-          <button onClick={loadMore} className="btn btn-primary">
-            {isLoading ? "Loading..." : "Load More"}
-          </button>
+        <div className="mx-auto container px-4">
+          <GridTemplate content={movies} templateName="Popular" />
+          {errorMsg && <p className="errorMsg">{errorMsg}</p>}
+          <div className="load-more">
+            <button onClick={loadMore} className="btn btn-primary">
+              {isLoading ? "Loading..." : "Load More"}
+            </button>
+          </div>
         </div>
       </Layout>
     </div>
