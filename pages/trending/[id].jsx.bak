@@ -7,37 +7,48 @@ import {
   getCreditData,
   getPicsData,
   getVideosData,
-  getSimilarData,
 } from "../../lib/getData";
 import YoutubeIcons from "../../components/YoutubeIcons";
 
-export async function getServerSideProps(context) {
-  const { id } = context.query;
-  const mediaDetails = await getMediaDetails("movie", id);
-  const { crews, casts } = await getCreditData(id);
-  const picSelected = await getPicsData(id);
-  const videoSelected = await getVideosData(id);
-  const similarData = await getSimilarData(id);
+export async function getStaticPaths() {
+  const results = [];
+  for (let page = 1; page <= 100; page++) {
+    const res = await fetch(
+      `https://api.themoviedb.org/3/trending/movie/week?api_key=403829fffc80d8184aa974d631a475c5&language=en-US&page=${
+        page | 1
+      }`
+    );
+    const trendingData = await res.json();
+    results.push(...trendingData.results);
+  }
 
+  const paths = results.map((result) => ({
+    params: { id: result.id.toString() },
+  }));
+
+  return { paths, fallback: false };
+}
+
+export async function getStaticProps({ params }) {
+  //   const res = await fetch(
+  //     `https://api.themoviedb.org/3/movie/${params.id}?api_key=${process.env.apiKey}&language=en-US`
+  //   );
+  const mediaDetails = await getMediaDetails("movie", params.id);
+  const { crews, casts } = await getCreditData(params.id);
+  const picSelected = await getPicsData(params.id);
+  const videoSelected = await getVideosData(params.id);
   return {
-    props: {
-      mediaDetails,
-      casts,
-      crews,
-      picSelected,
-      videoSelected,
-      similarData,
-    },
+    props: { mediaDetails, casts, crews, picSelected, videoSelected },
+    revalidate: 3600,
   };
 }
 
-export const mediaDetails = ({
+export const MovieTrendingDetails = ({
   mediaDetails,
   casts,
   crews,
   picSelected,
   videoSelected,
-  similarData,
 }) => {
   const director =
     crews.length > 0 ? crews.filter((el) => el.job === "Director") : [];
@@ -62,7 +73,7 @@ export const mediaDetails = ({
                 : "https://placehold.co/1280x720"
             }
             alt="movie backdrop"
-            className="opacity-60 object-cover min-w-full"
+            className="rounded-2xl opacity-60 object-cover min-w-full"
           />
           <div className="absolute md:bottom-1/3 bottom-0 left-0 p-5">
             <h6 className="text-white md:text-xl p-0">
@@ -77,7 +88,7 @@ export const mediaDetails = ({
           </div>
         </div>
 
-        <div className="max-w-4xl px-4 mx-auto">
+        <div className="max-w-4xl mx-auto">
           <div id="text-part">
             <div className="genres">
               <div className="my-2 md:my-5 flex gap-y-2 flex-wrap">
@@ -98,7 +109,7 @@ export const mediaDetails = ({
                 "--size": "4rem",
               }}
             >
-              {Math.round(mediaDetails.vote_average * 10)}
+              {Math.trunc(mediaDetails.vote_average * 10)}
             </div>
             <div className="overview my-5">
               <h3 className="text-2xl">Overview</h3>
@@ -109,9 +120,7 @@ export const mediaDetails = ({
               <div>Runtime: {mediaDetails.runtime} minutes</div>
               <div>Budget: {mediaDetails.budget.toLocaleString()} USD</div>
               <div>Box Office: {mediaDetails.revenue.toLocaleString()} USD</div>
-              <div>
-                Vote Average: {Math.round(mediaDetails.vote_average * 10)}
-              </div>
+              <div>Vote Average: {mediaDetails.vote_average * 10}</div>
             </div>
           </div>
           <TemplateFront
@@ -121,15 +130,10 @@ export const mediaDetails = ({
                 casts.map((cast, index) => (
                   <CardSmall
                     key={index}
-                    img={
-                      cast.profile_path
-                        ? `https://image.tmdb.org/t/p/w185/${cast.profile_path}`
-                        : "https://placehold.co/185x278?text=Data+Unavailable"
-                    }
+                    img={`https://image.tmdb.org/t/p/w185/${cast.profile_path}`}
                     title={cast.name}
                     subtitle={cast.character}
                     size="w-36"
-                    link={`https://image.tmdb.org/t/p/w185${cast.profile_path}`}
                   />
                 ))
               ) : (
@@ -144,11 +148,7 @@ export const mediaDetails = ({
                 picSelected.map((picSelect, index) => (
                   <CardSmall
                     key={index}
-                    img={
-                      picSelect.file_path
-                        ? `https://image.tmdb.org/t/p/w185/${picSelect.file_path}`
-                        : "https://placehold.co/185x278?text=Data+Unavailable"
-                    }
+                    img={`https://image.tmdb.org/t/p/w185/${picSelect.file_path}`}
                     link={`https://image.tmdb.org/t/p/original${picSelect.file_path}`}
                     size="w-36"
                   />
@@ -181,34 +181,10 @@ export const mediaDetails = ({
               )
             }
           />
-
-          <TemplateFront
-            templateName={"Recommendations"}
-            content={
-              similarData.length > 0 ? (
-                similarData.map((similarDat, index) => (
-                  <CardSmall
-                    key={index}
-                    link={`/details/${similarDat.id}`}
-                    img={
-                      similarDat.poster_path
-                        ? `https://image.tmdb.org/t/p/w185/${similarDat.poster_path}`
-                        : "https://placehold.co/185x278?text=Data+Unavailable"
-                    }
-                    title={similarDat.title}
-                    subtitle={similarDat.release_date.slice(0, 4)}
-                    size="w-36"
-                  />
-                ))
-              ) : (
-                <>Data Unavailable</>
-              )
-            }
-          />
         </div>
       </Layout>
     </>
   );
 };
 
-export default mediaDetails;
+export default MovieTrendingDetails;

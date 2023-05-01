@@ -1,6 +1,12 @@
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+* {
+  font-family: "IBM Plex Sans", sans-serif;
+}
 
 /* width */
 ::-webkit-scrollbar {
@@ -15,6 +21,22 @@
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
+  background: #111111;
+}
+
+/* width */
+::-moz-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+
+/* Handle */
+::-moz-scrollbar-thumb {
+  background: #222222;
+}
+
+/* Handle on hover */
+::-moz-scrollbar-thumb:hover {
   background: #111111;
 }
 

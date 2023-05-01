@@ -4,12 +4,12 @@ import Head from "next/head";
 
 const Layout = ({ children }) => {
   return (
-    <div className="relative min-h-screen">
+    <div className={`relative min-h-screen`}>
       <Head>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
       <Navbar />
-      <div className="container mx-auto px-4">{children}</div>
+      <div className="mx-auto">{children}</div>
       <Footer />
     </div>
   );

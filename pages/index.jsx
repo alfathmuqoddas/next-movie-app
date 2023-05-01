@@ -6,17 +6,25 @@ import {
   getTopRatedData,
   getNowPlayingData,
   getTrendingData,
+  getPopularTvData,
 } from "../lib/getData";
 import { TemplateFront2 } from "../components/TemplateFront";
 
 export const getStaticProps = async () => {
   const popularDatas = await getPopularData();
+  const popularTvDatas = await getPopularTvData();
   const nowPlayingDatas = await getNowPlayingData();
   const topRatedDatas = await getTopRatedData();
   const trendingDatas = await getTrendingData();
 
   return {
-    props: { popularDatas, nowPlayingDatas, topRatedDatas, trendingDatas },
+    props: {
+      popularDatas,
+      popularTvDatas,
+      nowPlayingDatas,
+      topRatedDatas,
+      trendingDatas,
+    },
     revalidate: 3600,
   };
 };
@@ -25,6 +33,7 @@ export default function Index({
   popularDatas,
   nowPlayingDatas,
   topRatedDatas,
+  popularTvDatas,
   trendingDatas,
 }) {
   return (
@@ -34,25 +43,34 @@ export default function Index({
       </Head>
       <Layout>
         <TemplateFront2
-          templateName={`Trending`}
+          templateName={`TRENDING`}
           content={trendingDatas}
           seeAll="trending"
+          contentLink=""
         />
         <TemplateFront2
-          templateName={`Popular`}
+          templateName={`POPULAR MOVIES`}
           content={popularDatas}
           seeAll="popular"
+          contentLink=""
         />
         <TemplateFront2
-          templateName={`Now Playing`}
+          templateName={`POPULAR TV SERIES`}
+          content={popularTvDatas}
+          seeAll="popular-tv"
+          contentLink="/tv"
+        />
+        <TemplateFront2
+          templateName={`NOW PLAYING`}
           content={nowPlayingDatas}
           seeAll="now-playing"
+          contentLink=""
         />
-        <TemplateFront2
-          templateName={`Top Rated`}
+        {/* <TemplateFront2
+          templateName={`TOP RATED`}
           content={topRatedDatas}
           seeAll="top-rated"
-        />
+        /> */}
       </Layout>
     </div>
   );
