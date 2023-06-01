@@ -33,7 +33,7 @@ export const CardHorizontal = ({
     <div className="flex gap-4 border-b pb-8 max-w-screen-md mb-8">
       <figure className="flex-none w-24">
         <img
-          src={`https://image.tmdb.org/t/p/w185/${img}`}
+          src={img}
           alt="cardSmall-thumbnail"
           className="rounded-xl"
           loading="lazy"
