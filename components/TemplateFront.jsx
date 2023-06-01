@@ -8,9 +8,9 @@ export const TemplateFront2 = ({
   contentLink,
 }) => {
   return (
-    <div className="my-8">
+    <div className="mt-8 mb-12">
       <h3 className="px-8 text-2xl font-extrabold">{templateName}</h3>
-      <div className="overflow-auto pt-2">
+      <div className="overflow-auto pt-6">
         <div className="px-8 flex flex-nowrap gap-6">
           {content &&
             content.map((contentData) => (
