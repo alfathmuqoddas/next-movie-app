@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export const CardSmall = ({ link, img, title, subtitle, subtitle2, size }) => {
   return (
-    <Link href={link}>
+    <Link href={link} className="no-underline focus:underline">
       <div className={size}>
         <figure>
           <img
@@ -12,7 +12,7 @@ export const CardSmall = ({ link, img, title, subtitle, subtitle2, size }) => {
             loading="lazy"
           />
         </figure>
-        <div className="">
+        <div className="hover:text-decoration-line: underline;">
           <h5 className="font-semibold">{title}</h5>
           <div className="">{subtitle}</div>
           <h6 className="">{subtitle2}</h6>
@@ -67,6 +67,7 @@ export const CardWrap = ({
 }) => {
   return (
     <Link
+      className="no-underline focus:underline"
       href={
         media_type == "movie"
           ? `/details/${id}`

@@ -59,7 +59,11 @@ const SearchResult = ({ searchDatas, searchTVDatas, string }) => {
                 searchDatas.map((searchDat) => (
                   <Link key={searchDat.id} href={`/details/${searchDat.id}`}>
                     <CardHorizontal
-                      img={searchDat.poster_path}
+                      img={
+                        searchDat.poster_path
+                          ? searchDat.poster_path
+                          : "https://placehold.co/185x278?text=Data+Unavailable"
+                      }
                       title={searchDat.title}
                       subtitle={
                         searchDat.release_date
@@ -82,7 +86,11 @@ const SearchResult = ({ searchDatas, searchTVDatas, string }) => {
                     href={`/details/tv/${searchTVData.id}`}
                   >
                     <CardHorizontal
-                      img={searchTVData.poster_path}
+                      img={
+                        searchTVData.poster_path
+                          ? searchTVData.poster_path
+                          : "https://placehold.co/185x278?text=Data+Unavailable"
+                      }
                       title={searchTVData.name}
                       subtitle={
                         searchTVData.first_air_date

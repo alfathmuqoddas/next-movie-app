@@ -41,7 +41,7 @@ export const TemplateFront = ({ content, templateName }) => {
   );
 };
 
-export const GridTemplate = ({ content, templateName }) => {
+export const GridTemplate = ({ content, templateName, contentLink }) => {
   return (
     <div className="my-8">
       <h3 className="text-2xl mb-8">{templateName}</h3>
@@ -49,7 +49,12 @@ export const GridTemplate = ({ content, templateName }) => {
         <div className="grid grid-cols-3 md:grid-cols-4 xl:grid-cols-6 gap-8">
           {content &&
             content.map((contentData, index) => (
-              <CardWrap key={index} {...contentData} size="" />
+              <CardWrap
+                key={index}
+                {...contentData}
+                size=""
+                link={contentLink}
+              />
             ))}
         </div>
       </div>

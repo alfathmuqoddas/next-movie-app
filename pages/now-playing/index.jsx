@@ -37,7 +37,11 @@ const Index = () => {
       </Head>
       <Layout>
         <div className="mx-auto container px-4">
-          <GridTemplate content={movies} templateName="Now Playing" />
+          <GridTemplate
+            content={movies}
+            templateName="Now Playing"
+            contentLink=""
+          />
           {errorMsg && <p className="errorMsg">{errorMsg}</p>}
           <div className="load-more">
             <button onClick={loadMore} className="btn btn-primary">
