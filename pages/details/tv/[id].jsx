@@ -66,7 +66,10 @@ export const mediaDetails = ({
           />
           <div className="absolute md:bottom-1/3 bottom-0 left-0 p-5">
             <h6 className="text-white md:text-xl p-0">
-              {mediaDetails.first_air_date.substring(0, 4)}
+              {`${mediaDetails.first_air_date.substring(
+                0,
+                4
+              )} - ${mediaDetails.last_air_date.substring(0, 4)}`}
             </h6>
             <h1 className="text-xl xl:text-7xl md:text-5xl font-bold text-white">
               {mediaDetails.name.toUpperCase()}
@@ -106,7 +109,7 @@ export const mediaDetails = ({
             </div>
             <div className="mb-5">
               <div className="crew">Director: {directorName}</div>
-              <div>Runtime: {mediaDetails.episode_run_time} minutes</div>
+              <div>Runtime: {mediaDetails.episode_run_time[0]} minutes</div>
               <div>Number of Episodes: {mediaDetails.number_of_episodes}</div>
               <div>Number of Seasons: {mediaDetails.number_of_seasons}</div>
               <div>Networks: {mediaDetails.networks[0].name}</div>
