@@ -88,7 +88,7 @@ const SearchResult = ({ searchDatas, searchTVDatas, string }) => {
                     <CardHorizontal
                       img={
                         searchTVData.poster_path
-                          ? searchTVData.poster_path
+                          ? `https://image.tmdb.org/t/p/w185/${searchTVData.poster_path}`
                           : "https://placehold.co/185x278?text=Data+Unavailable"
                       }
                       title={searchTVData.name}
