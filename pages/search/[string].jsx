@@ -112,7 +112,9 @@ const SearchResult = ({ searchDatas, searchTVDatas, string }) => {
                             ? first_air_date.substring(0, 4)
                             : "TBA"
                         })`}
-                        subtitle2={Math.round(vote_average * 10)}
+                        subtitle2={
+                          <RadialRating rating={vote_average} size="2rem" />
+                        }
                         subtitle3={
                           overview.length > 120
                             ? overview.slice(0, 120) + "..."
