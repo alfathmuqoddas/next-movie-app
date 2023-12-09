@@ -8,25 +8,29 @@ export const TemplateFront2 = ({
   contentLink,
 }) => {
   return (
-    <div className="mt-8 mb-12">
-      <h3 className="px-8 text-2xl font-extrabold">{templateName}</h3>
-      <div className="overflow-auto pt-6">
-        <div className="px-8 flex flex-nowrap gap-6">
-          {content &&
-            content.map((contentData) => (
-              <CardWrap
-                key={contentData.id}
-                {...contentData}
-                size="w-48"
-                link={contentLink}
-              />
-            ))}
+    <>
+      <div className="py-12">
+        <div className="flex items-center">
+          <h3 className="px-8 text-2xl font-extrabold">{templateName}</h3>
           <Link href={`/${seeAll}`}>
-            <div className="w-48 text-2xl">See All</div>
+            <h4 className="hover:underline">See More →</h4>
           </Link>
         </div>
+        <div className="overflow-auto pt-6">
+          <div className="px-8 flex flex-nowrap gap-6">
+            {content &&
+              content.map((contentData) => (
+                <CardWrap
+                  key={contentData.id}
+                  size="w-48"
+                  link={contentLink}
+                  {...contentData}
+                />
+              ))}
+          </div>
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 
@@ -51,9 +55,9 @@ export const GridTemplate = ({ content, templateName, contentLink }) => {
             content.map((contentData, index) => (
               <CardWrap
                 key={index}
-                {...contentData}
                 size=""
                 link={contentLink}
+                {...contentData}
               />
             ))}
         </div>

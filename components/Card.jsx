@@ -1,8 +1,16 @@
 import Link from "next/link";
 
-export const CardSmall = ({ link, img, title, subtitle, subtitle2, size }) => {
+export const CardSmall = ({
+  link,
+  img,
+  title,
+  subtitle,
+  flexSubtitle1,
+  size,
+  flexSubtitle2,
+}) => {
   return (
-    <Link href={link} className="no-underline focus:underline">
+    <Link href={link} className="no-underline focus:underline hover:underline">
       <div className={size}>
         <figure>
           <img
@@ -12,10 +20,13 @@ export const CardSmall = ({ link, img, title, subtitle, subtitle2, size }) => {
             loading="lazy"
           />
         </figure>
-        <div className="hover:text-decoration-line: underline;">
+        <div className="">
           <h5 className="font-semibold">{title}</h5>
-          <div className="">{subtitle}</div>
-          <h6 className="">{subtitle2}</h6>
+          <h6 className="font-light">{subtitle}</h6>
+          <div className="flex">
+            <div>{flexSubtitle1}</div>
+            <div>{flexSubtitle2}</div>
+          </div>
         </div>
       </div>
     </Link>
@@ -43,12 +54,7 @@ export const CardHorizontal = ({
         <h6 className="text-md">{subtitle}</h6>
         <h5 className="font-semibold text-xl">{title}</h5>
         <h6 className="">{subtitle3}</h6>
-        <div
-          className="mt-2 radial-progress bg-primary text-primary-content border-4 border-primary"
-          style={{ "--value": subtitle2, "--size": "2rem" }}
-        >
-          {subtitle2}
-        </div>
+        <div>{subtitle2}</div>
       </div>
     </div>
   );
@@ -80,19 +86,20 @@ export const CardWrap = ({
         <div className={size}>
           <figure>
             <img
-              src={`https://image.tmdb.org/t/p/w342/${poster_path}`}
+              src={`https://image.tmdb.org/t/p/w185/${poster_path}`}
               alt="card-thumbnail"
               className="rounded-2xl mb-4"
               loading="lazy"
             />
           </figure>
           <div className="">
-            <h5 className="text-lg font-semibold">{title ? title : name}</h5>
-            <p className="">
+            <h5 className="font-semibold">
+              {title ? title : name} (
               {release_date
                 ? release_date.substring(0, 4)
                 : first_air_date.substring(0, 4)}
-            </p>
+              )
+            </h5>
           </div>
         </div>
       </div>
