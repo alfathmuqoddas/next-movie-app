@@ -1,6 +1,6 @@
 import Layout from "../../../components/Layout";
 import Head from "next/head";
-import { CardSmall } from "../../../components/Card";
+import { CardSmall, CardHorizontal } from "../../../components/Card";
 import TemplateFront from "../../../components/TemplateFront";
 import {
   getMediaDetails,
@@ -54,6 +54,7 @@ export const mediaDetails = ({
     number_of_episodes,
     number_of_seasons,
     networks,
+    seasons,
   } = mediaDetails;
 
   const director =
@@ -109,6 +110,51 @@ export const mediaDetails = ({
               <div>Vote Average: {Math.round(vote_average * 10)}</div>
             </div>
           </div>
+
+          <div className="my-5">
+            <h3 className="text-2xl py-5">Seasons</h3>
+            <div>
+              {seasons.map((season) => {
+                const {
+                  air_date,
+                  episode_count,
+                  id,
+                  name,
+                  overview,
+                  poster_path,
+                  //season_number,
+                  vote_average,
+                } = season;
+                return (
+                  <div key={id}>
+                    <CardHorizontal
+                      title={name}
+                      subtitle={
+                        overview
+                          ? overview.length > 240
+                            ? overview.substring(0, 240) + "..."
+                            : overview
+                          : "Description data not exist"
+                      }
+                      img={
+                        poster_path
+                          ? `https://image.tmdb.org/t/p/w92/${poster_path}`
+                          : "https://placehold.co/185x278?text=Data+Unavailable"
+                      }
+                      subtitle2={`${air_date.substring(
+                        0,
+                        4
+                      )}, ${episode_count} Episode(s)`}
+                      subtitle3={
+                        <RadialRating rating={vote_average} size="2rem" />
+                      }
+                    />
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
           <TemplateFront
             templateName={"Cast"}
             content={

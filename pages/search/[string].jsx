@@ -77,13 +77,13 @@ const SearchResult = ({ searchDatas, searchTVDatas, string }) => {
                         title={`${title} (${
                           release_date ? release_date.substring(0, 4) : "TBA"
                         })`}
-                        subtitle2={
-                          <RadialRating rating={vote_average} size="2rem" />
-                        }
-                        subtitle3={
+                        subtitle={
                           overview.length > 120
                             ? overview.slice(0, 120) + "..."
                             : overview
+                        }
+                        subtitle2={
+                          <RadialRating rating={vote_average} size="2rem" />
                         }
                       />
                     </Link>
@@ -112,13 +112,13 @@ const SearchResult = ({ searchDatas, searchTVDatas, string }) => {
                             ? first_air_date.substring(0, 4)
                             : "TBA"
                         })`}
-                        subtitle2={
-                          <RadialRating rating={vote_average} size="2rem" />
-                        }
-                        subtitle3={
+                        subtitle={
                           overview.length > 120
                             ? overview.slice(0, 120) + "..."
                             : overview
+                        }
+                        subtitle2={
+                          <RadialRating rating={vote_average} size="2rem" />
                         }
                       />
                     </Link>
