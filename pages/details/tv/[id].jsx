@@ -1,4 +1,5 @@
 import Layout from "../../../components/Layout";
+import { lazy, Suspense } from "react";
 import Head from "next/head";
 import { CardSmall, CardHorizontal } from "../../../components/Card";
 import TemplateFront from "../../../components/TemplateFront";
@@ -113,7 +114,7 @@ export const mediaDetails = ({
 
           <div className="my-5">
             <h3 className="text-2xl py-5">Seasons</h3>
-            <div>
+            <div className="max-h-[360px] overflow-auto">
               {seasons.map((season) => {
                 const {
                   air_date,
@@ -209,7 +210,7 @@ export const mediaDetails = ({
             templateName={"Videos"}
             content={
               videoSelected.length > 0 ? (
-                videoSelected.map((vidSelect, index) => {
+                videoSelected.map((vidSelect) => {
                   const { key, name } = vidSelect;
                   return (
                     <CardSmall
