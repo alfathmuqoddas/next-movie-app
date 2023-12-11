@@ -50,7 +50,7 @@ const Navbar = () => {
         </div>
       </div>
       <div className="navbar-center">
-        <Link className="btn btn-ghost normal-case text-xl" href="/">
+        <Link className="btn btn-ghost normal-case text-xl font-black" href="/">
           ALEFAST
         </Link>
       </div>

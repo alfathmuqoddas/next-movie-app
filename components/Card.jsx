@@ -41,7 +41,7 @@ export const CardHorizontal = ({
   subtitle3,
 }) => {
   return (
-    <div className="flex items-center gap-4 border-b pb-8 max-w-screen mb-8">
+    <div className="flex items-center gap-4 border-b pb-4 max-w-screen mb-4">
       <figure className="flex-none w-24">
         <img
           src={img}
@@ -50,7 +50,7 @@ export const CardHorizontal = ({
           loading="lazy"
         />
       </figure>
-      <div className="shrink">
+      <div className="shrink leading-tight">
         <h5 className="font-semibold text-xl">{title}</h5>
         <h6 className="text-md py-2">{subtitle}</h6>
         <div className="font-light">{subtitle2}</div>

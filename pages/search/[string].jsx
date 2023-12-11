@@ -78,8 +78,8 @@ const SearchResult = ({ searchDatas, searchTVDatas, string }) => {
                           release_date ? release_date.substring(0, 4) : "TBA"
                         })`}
                         subtitle={
-                          overview.length > 120
-                            ? overview.slice(0, 120) + "..."
+                          overview.length > 240
+                            ? overview.slice(0, 240) + "..."
                             : overview
                         }
                         subtitle2={
@@ -113,8 +113,8 @@ const SearchResult = ({ searchDatas, searchTVDatas, string }) => {
                             : "TBA"
                         })`}
                         subtitle={
-                          overview.length > 120
-                            ? overview.slice(0, 120) + "..."
+                          overview.length > 240
+                            ? overview.slice(0, 240) + "..."
                             : overview
                         }
                         subtitle2={
