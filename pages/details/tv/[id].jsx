@@ -1,5 +1,5 @@
 import Layout from "../../../components/Layout";
-import { lazy, Suspense } from "react";
+//import { lazy, Suspense } from "react";
 import Head from "next/head";
 import { CardSmall, CardHorizontal } from "../../../components/Card";
 import TemplateFront from "../../../components/TemplateFront";
@@ -142,10 +142,9 @@ export const mediaDetails = ({
                           ? `https://image.tmdb.org/t/p/w92/${poster_path}`
                           : "https://placehold.co/185x278?text=Data+Unavailable"
                       }
-                      subtitle2={`${air_date.substring(
-                        0,
-                        4
-                      )}, ${episode_count} Episode(s)`}
+                      subtitle2={`${
+                        air_date ? air_date.substring(0, 4) : "Data Unavailable"
+                      }, ${episode_count} Episode(s)`}
                       subtitle3={
                         <RadialRating rating={vote_average} size="2rem" />
                       }
