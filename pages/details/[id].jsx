@@ -1,5 +1,6 @@
 import Layout from "../../components/Layout";
 import Head from "next/head";
+import { lazy, Suspense } from "react";
 import { CardSmall } from "../../components/Card";
 import TemplateFront from "../../components/TemplateFront";
 import {
@@ -10,6 +11,8 @@ import {
   getSimilarData,
 } from "../../lib/getData";
 import YoutubeIcons from "../../components/YoutubeIcons";
+import RadialRating from "../../components/RadialRating";
+import Hero from "../../components/Hero";
 
 export async function getServerSideProps(context) {
   const { id } = context.query;
@@ -48,40 +51,37 @@ export const mediaDetails = ({
     mediaDetails.original_title
   } (${mediaDetails.release_date.substring(0, 4)}) | ALEFAST`;
 
+  const {
+    backdrop_path,
+    release_date,
+    title,
+    tagline,
+    genres,
+    vote_average,
+    overview,
+    runtime,
+    budget,
+    revenue,
+  } = mediaDetails;
+
   return (
     <>
       <Head>
         <title>{titleName}</title>
       </Head>
       <Layout>
-        <div className="relative">
-          <img
-            src={
-              mediaDetails.backdrop_path
-                ? `https://image.tmdb.org/t/p/w1280/${mediaDetails.backdrop_path}`
-                : "https://placehold.co/1280x720"
-            }
-            alt="movie backdrop"
-            className="opacity-60 object-cover min-w-full"
-          />
-          <div className="absolute md:bottom-1/3 bottom-0 left-0 p-5">
-            <h6 className="text-white md:text-xl p-0">
-              {mediaDetails.release_date.substring(0, 4)}
-            </h6>
-            <h1 className="text-xl xl:text-7xl md:text-5xl font-bold text-white">
-              {mediaDetails.title.toUpperCase()}
-            </h1>
-            <h4 className="md:text-xl text-white italic">
-              {mediaDetails.tagline}
-            </h4>
-          </div>
-        </div>
+        <Hero
+          backdrop_path={backdrop_path}
+          release_date={release_date.substring(0, 4)}
+          title={title}
+          tagline={tagline}
+        />
 
         <div className="max-w-4xl px-4 mx-auto">
           <div id="text-part">
             <div className="genres">
               <div className="my-2 md:my-5 flex gap-y-2 flex-wrap">
-                {mediaDetails.genres.map((genre, index) => (
+                {genres.map((genre, index) => (
                   <div
                     key={index}
                     className="badge badge-lg badge-outline rounded-full mr-2 p-2 md:p-3"
@@ -91,47 +91,40 @@ export const mediaDetails = ({
                 ))}
               </div>
             </div>
-            <div
-              className="mt-2 radial-progress bg-primary text-primary-content border-4 border-primary"
-              style={{
-                "--value": mediaDetails.vote_average * 10,
-                "--size": "4rem",
-              }}
-            >
-              {Math.round(mediaDetails.vote_average * 10)}
-            </div>
+            <RadialRating rating={vote_average} size="4rem" />
             <div className="overview my-5">
               <h3 className="text-2xl">Overview</h3>
-              <p>{mediaDetails.overview}</p>
+              <p>{overview}</p>
             </div>
             <div className="mb-5">
               <div className="crew">Director: {directorName}</div>
-              <div>Runtime: {mediaDetails.runtime} minutes</div>
-              <div>Budget: {mediaDetails.budget.toLocaleString()} USD</div>
-              <div>Box Office: {mediaDetails.revenue.toLocaleString()} USD</div>
-              <div>
-                Vote Average: {Math.round(mediaDetails.vote_average * 10)}
-              </div>
+              <div>Runtime: {runtime} minutes</div>
+              <div>Budget: {budget.toLocaleString()} USD</div>
+              <div>Box Office: {revenue.toLocaleString()} USD</div>
+              <div>Vote Average: {Math.round(vote_average * 10)}</div>
             </div>
           </div>
           <TemplateFront
             templateName={"Cast"}
             content={
               casts.length > 0 ? (
-                casts.map((cast, index) => (
-                  <CardSmall
-                    key={index}
-                    img={
-                      cast.profile_path
-                        ? `https://image.tmdb.org/t/p/w185/${cast.profile_path}`
-                        : "https://placehold.co/185x278?text=Data+Unavailable"
-                    }
-                    title={cast.name}
-                    subtitle={cast.character}
-                    size="w-36"
-                    link={`https://image.tmdb.org/t/p/w185${cast.profile_path}`}
-                  />
-                ))
+                casts.map((cast, index) => {
+                  const { profile_path, name, character } = cast;
+                  return (
+                    <CardSmall
+                      key={index}
+                      img={
+                        profile_path
+                          ? `https://image.tmdb.org/t/p/w185/${profile_path}`
+                          : "https://placehold.co/185x278?text=Data+Unavailable"
+                      }
+                      title={name}
+                      subtitle={character}
+                      size="w-36"
+                      link={`https://image.tmdb.org/t/p/w185${profile_path}`}
+                    />
+                  );
+                })
               ) : (
                 <>Data Unavailable</>
               )
@@ -141,18 +134,21 @@ export const mediaDetails = ({
             templateName={"Pictures"}
             content={
               picSelected.length > 0 ? (
-                picSelected.map((picSelect, index) => (
-                  <CardSmall
-                    key={index}
-                    img={
-                      picSelect.file_path
-                        ? `https://image.tmdb.org/t/p/w185/${picSelect.file_path}`
-                        : "https://placehold.co/185x278?text=Data+Unavailable"
-                    }
-                    link={`https://image.tmdb.org/t/p/original${picSelect.file_path}`}
-                    size="w-36"
-                  />
-                ))
+                picSelected.map((picSelect, index) => {
+                  const { file_path } = picSelect;
+                  return (
+                    <CardSmall
+                      key={index}
+                      img={
+                        file_path
+                          ? `https://image.tmdb.org/t/p/w185/${file_path}`
+                          : "https://placehold.co/185x278?text=Data+Unavailable"
+                      }
+                      link={`https://image.tmdb.org/t/p/original${file_path}`}
+                      size="w-36"
+                    />
+                  );
+                })
               ) : (
                 <>Data Unavailable</>
               )
@@ -162,20 +158,21 @@ export const mediaDetails = ({
             templateName={"Videos"}
             content={
               videoSelected.length > 0 ? (
-                videoSelected.map((vidSelect, index) => (
-                  <CardSmall
-                    key={index}
-                    link={`https://youtube.com/watch?v=${vidSelect.key}`}
-                    img={`https://img.youtube.com/vi/${vidSelect.key}/0.jpg`}
-                    title={
-                      vidSelect.name.length > 32
-                        ? `${vidSelect.name.substring(0, 32)}...`
-                        : vidSelect.name
-                    }
-                    subtitle={<YoutubeIcons />}
-                    size="w-64"
-                  />
-                ))
+                videoSelected.map((vidSelect) => {
+                  const { key, name } = vidSelect;
+                  return (
+                    <CardSmall
+                      key={key}
+                      link={`https://youtube.com/watch?v=${key}`}
+                      img={`https://img.youtube.com/vi/${key}/0.jpg`}
+                      flexSubtitle1={<YoutubeIcons />}
+                      flexSubtitle2={
+                        name.length > 32 ? `${name.substring(0, 32)}...` : name
+                      }
+                      size="w-64"
+                    />
+                  );
+                })
               ) : (
                 <>Data Unavailable</>
               )
@@ -186,20 +183,22 @@ export const mediaDetails = ({
             templateName={"Recommendations"}
             content={
               similarData.length > 0 ? (
-                similarData.map((similarDat, index) => (
-                  <CardSmall
-                    key={index}
-                    link={`/details/${similarDat.id}`}
-                    img={
-                      similarDat.poster_path
-                        ? `https://image.tmdb.org/t/p/w185/${similarDat.poster_path}`
-                        : "https://placehold.co/185x278?text=Data+Unavailable"
-                    }
-                    title={similarDat.title}
-                    subtitle={similarDat.release_date.slice(0, 4)}
-                    size="w-36"
-                  />
-                ))
+                similarData.map((similarDat) => {
+                  const { id, poster_path, title, release_date } = similarDat;
+                  return (
+                    <CardSmall
+                      key={id}
+                      link={`/details/${id}`}
+                      img={
+                        poster_path
+                          ? `https://image.tmdb.org/t/p/w185/${poster_path}`
+                          : "https://placehold.co/185x278?text=Data+Unavailable"
+                      }
+                      title={`${title} (${release_date.slice(0, 4)})`}
+                      size="w-36"
+                    />
+                  );
+                })
               ) : (
                 <>Data Unavailable</>
               )
