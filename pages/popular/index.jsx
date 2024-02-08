@@ -14,7 +14,7 @@ const Index = () => {
     const loadUsers = async () => {
       try {
         setIsLoading(true);
-        const popularDatas = await getPopularData(page);
+        const popularDatas = await getPopularData("movie", page);
         setMovies((movies) => [...movies, ...popularDatas]);
         setErrorMsg("");
       } catch (error) {

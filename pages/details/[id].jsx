@@ -17,10 +17,10 @@ import Hero from "../../components/Hero";
 export async function getServerSideProps(context) {
   const { id } = context.query;
   const mediaDetails = await getMediaDetails("movie", id);
-  const { crews, casts } = await getCreditData(id);
-  const picSelected = await getPicsData(id);
-  const videoSelected = await getVideosData(id);
-  const similarData = await getSimilarData(id);
+  const { crews, casts } = await getCreditData("movie", id);
+  const picSelected = await getPicsData("movie", id);
+  const videoSelected = await getVideosData("movie", id);
+  const similarData = await getSimilarData("movie", id);
 
   return {
     props: {

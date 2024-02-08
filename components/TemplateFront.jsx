@@ -16,8 +16,8 @@ export const TemplateFront2 = ({
             <h4 className="hover:underline">See More →</h4>
           </Link>
         </div>
-        <div className="overflow-auto pt-6">
-          <div className="px-8 flex flex-nowrap gap-6">
+        <div className="pt-6">
+          <div className="px-8 flex flex-nowrap overflow-auto gap-6">
             {content &&
               content.map((contentData) => (
                 <CardWrap

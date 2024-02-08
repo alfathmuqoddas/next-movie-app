@@ -5,10 +5,10 @@ import { CardSmall, CardHorizontal } from "../../../components/Card";
 import TemplateFront from "../../../components/TemplateFront";
 import {
   getMediaDetails,
-  getTvPicsData,
-  getTvCreditData,
-  getTvVideosData,
-  getTvSimilarData,
+  getPicsData,
+  getCreditData,
+  getVideosData,
+  getSimilarData,
 } from "../../../lib/getData";
 import YoutubeIcons from "../../../components/YoutubeIcons";
 import RadialRating from "../../../components/RadialRating";
@@ -17,10 +17,10 @@ import Hero from "../../../components/Hero";
 export async function getServerSideProps(context) {
   const { id } = context.query;
   const mediaDetails = await getMediaDetails("tv", id);
-  const { crews, casts } = await getTvCreditData(id);
-  const picSelected = await getTvPicsData(id);
-  const videoSelected = await getTvVideosData(id);
-  const similarData = await getTvSimilarData(id);
+  const { crews, casts } = await getCreditData("tv", id);
+  const picSelected = await getPicsData("tv", id);
+  const videoSelected = await getVideosData("tv", id);
+  const similarData = await getSimilarData("tv", id);
 
   return {
     props: {
