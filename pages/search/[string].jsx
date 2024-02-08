@@ -3,6 +3,7 @@ import Head from "next/head";
 import Link from "next/link";
 import { useState } from "react";
 import { CardHorizontal } from "../../components/Card";
+import RadialRating from "../../components/RadialRating";
 
 export const getServerSideProps = async (context) => {
   const { string } = context.query;
@@ -43,10 +44,10 @@ const SearchResult = ({ searchDatas, searchTVDatas, string }) => {
         <div className="container px-4 mx-auto">
           <div className="text-center my-12">
             <h1 className="text-2xl">
-              Search Results for <i>{'"' + string + '"'}</i>
+              Search Results for <i>{`"${string}"`}</i>
             </h1>
             <button
-              className="btn btn-primary btn-small"
+              className="btn btn-primary btn-small mt-4"
               onClick={toggleComponent}
             >
               {showComponent ? "Toggle TV results" : "Toggle movie results"}
@@ -56,56 +57,73 @@ const SearchResult = ({ searchDatas, searchTVDatas, string }) => {
           <div className="mx-auto max-w-screen-md">
             {showComponent
               ? //showing movies result
-                searchDatas.map((searchDat) => (
-                  <Link key={searchDat.id} href={`/details/${searchDat.id}`}>
-                    <CardHorizontal
-                      img={
-                        searchDat.poster_path
-                          ? `https://image.tmdb.org/t/p/w185/${searchDat.poster_path}`
-                          : "https://placehold.co/185x278?text=Data+Unavailable"
-                      }
-                      title={searchDat.title}
-                      subtitle={
-                        searchDat.release_date
-                          ? searchDat.release_date.substring(0, 4)
-                          : "TBA"
-                      }
-                      subtitle2={Math.round(searchDat.vote_average * 10)}
-                      subtitle3={
-                        searchDat.overview.length > 120
-                          ? searchDat.overview.slice(0, 120) + "..."
-                          : searchDat.overview
-                      }
-                    />
-                  </Link>
-                ))
+                searchDatas.map((searchDat) => {
+                  const {
+                    id,
+                    poster_path,
+                    title,
+                    release_date,
+                    vote_average,
+                    overview,
+                  } = searchDat;
+                  return (
+                    <Link key={id} href={`/details/${id}`}>
+                      <CardHorizontal
+                        img={
+                          poster_path
+                            ? `https://image.tmdb.org/t/p/w185/${poster_path}`
+                            : "https://placehold.co/185x278?text=Data+Unavailable"
+                        }
+                        title={`${title} (${
+                          release_date ? release_date.substring(0, 4) : "TBA"
+                        })`}
+                        subtitle={
+                          overview.length > 240
+                            ? overview.slice(0, 240) + "..."
+                            : overview
+                        }
+                        subtitle2={
+                          <RadialRating rating={vote_average} size="2rem" />
+                        }
+                      />
+                    </Link>
+                  );
+                })
               : //showing tv series results
-                searchTVDatas.map((searchTVData) => (
-                  <Link
-                    key={searchTVData.id}
-                    href={`/details/tv/${searchTVData.id}`}
-                  >
-                    <CardHorizontal
-                      img={
-                        searchTVData.poster_path
-                          ? `https://image.tmdb.org/t/p/w185/${searchTVData.poster_path}`
-                          : "https://placehold.co/185x278?text=Data+Unavailable"
-                      }
-                      title={searchTVData.name}
-                      subtitle={
-                        searchTVData.first_air_date
-                          ? searchTVData.first_air_date.substring(0, 4)
-                          : "TBA"
-                      }
-                      subtitle2={Math.round(searchTVData.vote_average * 10)}
-                      subtitle3={
-                        searchTVData.overview.length > 120
-                          ? searchTVData.overview.slice(0, 120) + "..."
-                          : searchTVData.overview
-                      }
-                    />
-                  </Link>
-                ))}
+                searchTVDatas.map((searchTVData) => {
+                  const {
+                    id,
+                    poster_path,
+                    name,
+                    first_air_date,
+                    vote_average,
+                    overview,
+                  } = searchTVData;
+                  return (
+                    <Link key={id} href={`/details/tv/${id}`}>
+                      <CardHorizontal
+                        img={
+                          poster_path
+                            ? `https://image.tmdb.org/t/p/w185/${poster_path}`
+                            : "https://placehold.co/185x278?text=Data+Unavailable"
+                        }
+                        title={`${name} (${
+                          first_air_date
+                            ? first_air_date.substring(0, 4)
+                            : "TBA"
+                        })`}
+                        subtitle={
+                          overview.length > 240
+                            ? overview.slice(0, 240) + "..."
+                            : overview
+                        }
+                        subtitle2={
+                          <RadialRating rating={vote_average} size="2rem" />
+                        }
+                      />
+                    </Link>
+                  );
+                })}
           </div>
         </div>
       </Layout>

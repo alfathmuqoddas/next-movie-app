@@ -2,7 +2,7 @@ import Layout from "../../components/Layout";
 import Head from "next/head";
 import { useEffect, useState } from "react";
 import { GridTemplate } from "../../components/TemplateFront";
-import { getPopularTvData } from "../../lib/getData";
+import { getPopularData } from "../../lib/getData";
 
 const Index = () => {
   const [movies, setMovies] = useState([]);
@@ -14,7 +14,7 @@ const Index = () => {
     const loadUsers = async () => {
       try {
         setIsLoading(true);
-        const popularDatas = await getPopularTvData(page);
+        const popularDatas = await getPopularData("tv", page);
         setMovies((movies) => [...movies, ...popularDatas]);
         setErrorMsg("");
       } catch (error) {

@@ -8,31 +8,35 @@ export const TemplateFront2 = ({
   contentLink,
 }) => {
   return (
-    <div className="mt-8 mb-12">
-      <h3 className="px-8 text-2xl font-extrabold">{templateName}</h3>
-      <div className="overflow-auto pt-6">
-        <div className="px-8 flex flex-nowrap gap-6">
-          {content &&
-            content.map((contentData) => (
-              <CardWrap
-                key={contentData.id}
-                {...contentData}
-                size="w-48"
-                link={contentLink}
-              />
-            ))}
+    <>
+      <div className="py-12">
+        <div className="flex items-center">
+          <h3 className="px-8 text-2xl font-extrabold">{templateName}</h3>
           <Link href={`/${seeAll}`}>
-            <div className="w-48 text-2xl">See All</div>
+            <h4 className="hover:underline">See More →</h4>
           </Link>
         </div>
+        <div className="pt-6">
+          <div className="px-8 flex flex-nowrap overflow-auto gap-6">
+            {content &&
+              content.map((contentData) => (
+                <CardWrap
+                  key={contentData.id}
+                  size="w-48"
+                  link={contentLink}
+                  {...contentData}
+                />
+              ))}
+          </div>
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 
 export const TemplateFront = ({ content, templateName }) => {
   return (
-    <div className="my-8">
+    <div className="mb-2 py-6">
       <h3 className="text-2xl">{templateName}</h3>
       <div className="overflow-auto pt-2">
         <div className="flex flex-nowrap gap-4">{content}</div>
@@ -51,9 +55,9 @@ export const GridTemplate = ({ content, templateName, contentLink }) => {
             content.map((contentData, index) => (
               <CardWrap
                 key={index}
-                {...contentData}
                 size=""
                 link={contentLink}
+                {...contentData}
               />
             ))}
         </div>

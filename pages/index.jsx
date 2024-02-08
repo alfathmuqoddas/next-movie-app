@@ -1,18 +1,16 @@
 import Layout from "../components/Layout";
-import Link from "next/link";
 import Head from "next/head";
 import {
   getPopularData,
   getTopRatedData,
   getNowPlayingData,
   getTrendingData,
-  getPopularTvData,
 } from "../lib/getData";
 import { TemplateFront2 } from "../components/TemplateFront";
 
 export const getStaticProps = async () => {
-  const popularDatas = await getPopularData();
-  const popularTvDatas = await getPopularTvData();
+  const popularDatas = await getPopularData("movie");
+  const popularTvDatas = await getPopularData("tv");
   const nowPlayingDatas = await getNowPlayingData();
   const topRatedDatas = await getTopRatedData();
   const trendingDatas = await getTrendingData();
