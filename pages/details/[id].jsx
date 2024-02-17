@@ -84,7 +84,7 @@ export const mediaDetails = ({
                 {genres.map((genre, index) => (
                   <div
                     key={index}
-                    className="badge badge-lg badge-outline rounded-full mr-2 p-2 md:p-3"
+                    className="badge badge-lg badge-outline hover:bg-white hover:text-black hover:cursor-pointer rounded-full mr-2 p-2 md:p-3"
                   >
                     {genre.name}
                   </div>

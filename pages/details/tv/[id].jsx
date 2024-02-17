@@ -90,7 +90,7 @@ export const mediaDetails = ({
                 {genres.map((genre, index) => (
                   <div
                     key={index}
-                    className="badge badge-lg badge-outline rounded-full mr-2 p-2 md:p-3"
+                    className="badge badge-lg badge-outline hover:bg-white hover:text-black hover:cursor-pointer rounded-full mr-2 p-2 md:p-3"
                   >
                     {genre.name}
                   </div>
@@ -139,7 +139,7 @@ export const mediaDetails = ({
                       }
                       img={
                         poster_path
-                          ? `https://image.tmdb.org/t/p/w92/${poster_path}`
+                          ? `https://image.tmdb.org/t/p/w185/${poster_path}`
                           : "https://placehold.co/185x278?text=Data+Unavailable"
                       }
                       subtitle2={`${
@@ -148,6 +148,7 @@ export const mediaDetails = ({
                       subtitle3={
                         <RadialRating rating={vote_average} size="2rem" />
                       }
+                      imgSize={24}
                     />
                   </div>
                 );

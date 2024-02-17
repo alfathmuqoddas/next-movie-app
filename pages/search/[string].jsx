@@ -85,6 +85,7 @@ const SearchResult = ({ searchDatas, searchTVDatas, string }) => {
                         subtitle2={
                           <RadialRating rating={vote_average} size="2rem" />
                         }
+                        imgSize={36}
                       />
                     </Link>
                   );
@@ -120,6 +121,7 @@ const SearchResult = ({ searchDatas, searchTVDatas, string }) => {
                         subtitle2={
                           <RadialRating rating={vote_average} size="2rem" />
                         }
+                        imgSize={36}
                       />
                     </Link>
                   );

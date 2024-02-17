@@ -8,8 +8,12 @@ const Layout = ({ children }) => {
       <Head>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
-      <Navbar />
-      <div className="mx-auto">{children}</div>
+      <div className="relative">
+        <div className="fixed min-w-full z-10">
+          <Navbar />
+        </div>
+        <div className="mx-auto pt-16">{children}</div>
+      </div>
       <Footer />
     </div>
   );
