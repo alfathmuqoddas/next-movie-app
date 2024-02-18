@@ -45,7 +45,7 @@ export const CardHorizontal = ({
   imgSize,
 }) => {
   return (
-    <div className="flex hover:bg-neutral-900 rounded-[28px] gap-4 mb-6 p-[8px] max-w-screen">
+    <div className="flex hover:bg-neutral-900 rounded-[28px] gap-4 mb-4 p-[8px] max-w-screen">
       <figure className={`flex-none w-${imgSize}`}>
         <img
           src={img}
@@ -56,7 +56,7 @@ export const CardHorizontal = ({
       </figure>
       <div className="shrink leading-tight">
         <h5 className="font-semibold text-xl">{title}</h5>
-        <h6 className="text-md py-2">{subtitle}</h6>
+        <h6 className="text-md py-2 hidden lg:block">{subtitle}</h6>
         <div className="font-light">{subtitle2}</div>
         <div>{subtitle3}</div>
       </div>
