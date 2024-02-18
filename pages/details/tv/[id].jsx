@@ -139,8 +139,8 @@ export const mediaDetails = ({
                       }
                       img={
                         poster_path
-                          ? `https://image.tmdb.org/t/p/w92/${poster_path}`
-                          : "https://placehold.co/185x278?text=Data+Unavailable"
+                          ? `https://image.tmdb.org/t/p/w92${poster_path}`
+                          : "https://placehold.co/92x138?text=Data+Unavailable"
                       }
                       subtitle2={`${
                         air_date ? air_date.substring(0, 4) : "Data Unavailable"
@@ -166,7 +166,7 @@ export const mediaDetails = ({
                       key={index}
                       img={
                         profile_path
-                          ? `https://image.tmdb.org/t/p/w185/${profile_path}`
+                          ? `https://image.tmdb.org/t/p/w185${profile_path}`
                           : "https://placehold.co/185x278?text=Data+Unavailable"
                       }
                       title={name}

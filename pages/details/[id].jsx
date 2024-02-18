@@ -115,7 +115,7 @@ export const mediaDetails = ({
                       key={index}
                       img={
                         profile_path
-                          ? `https://image.tmdb.org/t/p/w185/${profile_path}`
+                          ? `https://image.tmdb.org/t/p/w185${profile_path}`
                           : "https://placehold.co/185x278?text=Data+Unavailable"
                       }
                       title={name}
@@ -141,7 +141,7 @@ export const mediaDetails = ({
                       key={index}
                       img={
                         file_path
-                          ? `https://image.tmdb.org/t/p/w185/${file_path}`
+                          ? `https://image.tmdb.org/t/p/w185${file_path}`
                           : "https://placehold.co/185x278?text=Data+Unavailable"
                       }
                       link={`https://image.tmdb.org/t/p/original${file_path}`}
