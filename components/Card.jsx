@@ -12,7 +12,7 @@ export const CardSmall = ({
   return (
     <Link
       href={link}
-      className="focus:underline hover:bg-neutral-900 mb-4 rounded-[28px] p-[4px]"
+      className="focus:underline hover:bg-neutral-900 mb-1 rounded-[28px]"
     >
       <div className={size}>
         <figure>
@@ -45,7 +45,7 @@ export const CardHorizontal = ({
   imgSize,
 }) => {
   return (
-    <div className="flex hover:bg-neutral-900 rounded-[28px] gap-4 mb-4 p-[8px] max-w-screen items-center">
+    <div className="flex hover:bg-neutral-900 rounded-[28px] mb-4 max-w-screen items-center">
       <figure className={`flex-none w-${imgSize}`}>
         <img
           src={img}
@@ -54,9 +54,9 @@ export const CardHorizontal = ({
           loading="lazy"
         />
       </figure>
-      <div className="shrink leading-tight">
+      <div className="shrink leading-tight p-4">
         <h5 className="font-semibold text-xl">{title}</h5>
-        <h6 className="text-md py-2 hidden lg:block">{subtitle}</h6>
+        <h6 className="text-md hidden lg:block">{subtitle}</h6>
         <div className="font-light">{subtitle2}</div>
         <div>{subtitle3}</div>
       </div>
@@ -77,7 +77,7 @@ export const CardWrap = ({
 }) => {
   return (
     <Link
-      className="no-underline hover:bg-neutral-900 p-[4px] mb-4 rounded-[28px]"
+      className="no-underline hover:bg-neutral-900 rounded-[28px] mb-2"
       href={
         media_type == "movie"
           ? `/details/${id}`
@@ -87,12 +87,12 @@ export const CardWrap = ({
       }
     >
       <div className="">
-        <div className={size}>
+        <div className={`p-0 ${size}`}>
           <figure>
             <img
               src={`https://image.tmdb.org/t/p/w185/${poster_path}`}
               alt="card-thumbnail"
-              className="rounded-[28px] mb-4"
+              className="rounded-[28px] mb-2 w-full"
               loading="lazy"
             />
           </figure>
