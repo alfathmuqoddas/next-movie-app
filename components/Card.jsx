@@ -45,7 +45,7 @@ export const CardHorizontal = ({
   imgSize,
 }) => {
   return (
-    <div className="flex hover:bg-neutral-900 rounded-[28px] gap-4 mb-4 p-[8px] max-w-screen">
+    <div className="flex hover:bg-neutral-900 rounded-[28px] gap-4 mb-4 p-[8px] max-w-screen items-center">
       <figure className={`flex-none w-${imgSize}`}>
         <img
           src={img}

@@ -9,9 +9,9 @@ export const TemplateFront2 = ({
 }) => {
   return (
     <>
-      <div className="py-12">
-        <div className="flex items-center">
-          <h3 className="px-8 text-2xl font-extrabold">{templateName}</h3>
+      <div className="py-8">
+        <div className="flex justify-between items-center px-8">
+          <h3 className="text-2xl font-extrabold">{templateName}</h3>
           <Link href={`/${seeAll}`}>
             <h4 className="hover:underline">See More →</h4>
           </Link>
