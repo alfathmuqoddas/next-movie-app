@@ -10,10 +10,7 @@ export const CardSmall = ({
   flexSubtitle2,
 }) => {
   return (
-    <Link
-      href={link}
-      className="focus:underline hover:bg-neutral-900 mb-1 rounded-[28px]"
-    >
+    <Link href={link} className="hover:bg-neutral-900 mb-1 rounded-[28px]">
       <div className={size}>
         <figure>
           <img
