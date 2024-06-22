@@ -4,11 +4,11 @@ import Head from "next/head";
 
 const Layout = ({ children }) => {
   return (
-    <div className={`relative min-h-screen`}>
+    <div className="">
       <Head>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
-      <div className="relative">
+      <div className="relative min-h-screen">
         <div className="fixed min-w-full z-10">
           <Navbar />
         </div>

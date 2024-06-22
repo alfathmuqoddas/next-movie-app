@@ -50,7 +50,7 @@ export default function Index({
           templateName={`POPULAR MOVIES`}
           content={popularDatas}
           seeAll="popular"
-          contentLink=""
+          contentLink="/movie"
         />
         <TemplateFront2
           templateName={`POPULAR TV SERIES`}

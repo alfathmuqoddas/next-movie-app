@@ -1,18 +1,18 @@
-import Layout from "../../components/Layout";
+import Layout from "../../../components/Layout";
 import Head from "next/head";
 import { lazy, Suspense } from "react";
-import { CardSmall } from "../../components/Card";
-import TemplateFront from "../../components/TemplateFront";
+import { CardSmall } from "../../../components/Card";
+import TemplateFront from "../../../components/TemplateFront";
 import {
   getMediaDetails,
   getCreditData,
   getPicsData,
   getVideosData,
   getSimilarData,
-} from "../../lib/getData";
-import YoutubeIcons from "../../components/YoutubeIcons";
-import RadialRating from "../../components/RadialRating";
-import Hero from "../../components/Hero";
+} from "../../../lib/getData";
+import YoutubeIcons from "../../../components/YoutubeIcons";
+import RadialRating from "../../../components/RadialRating";
+import Hero from "../../../components/Hero";
 
 export async function getServerSideProps(context) {
   const { id } = context.query;

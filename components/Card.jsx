@@ -10,13 +10,13 @@ export const CardSmall = ({
   flexSubtitle2,
 }) => {
   return (
-    <Link href={link} className="hover:bg-neutral-900 mb-1 rounded-[28px]">
+    <Link href={link} className="focus:bg-neutral-900 mb-1 rounded-[16px]">
       <div className={size}>
         <figure>
           <img
             src={img}
             alt="cardSmall-thumbnail"
-            className="rounded-[28px] mb-2"
+            className="rounded-[16px] mb-2"
             loading="lazy"
           />
         </figure>
@@ -42,12 +42,12 @@ export const CardHorizontal = ({
   imgSize,
 }) => {
   return (
-    <div className="flex hover:bg-neutral-900 rounded-[28px] mb-4 max-w-screen items-center">
+    <div className="flex focus:bg-neutral-900 rounded-[16px] mb-4 max-w-screen items-center">
       <figure className={`flex-none w-${imgSize}`}>
         <img
           src={img}
           alt="cardSmall-thumbnail"
-          className="rounded-[28px]"
+          className="rounded-[16px]"
           loading="lazy"
         />
       </figure>
@@ -74,10 +74,10 @@ export const CardWrap = ({
 }) => {
   return (
     <Link
-      className="no-underline hover:bg-neutral-900 rounded-[28px] mb-2"
+      className="no-underline focus:bg-neutral-900 rounded-[16px] mb-2"
       href={
         media_type == "movie"
-          ? `/details/${id}`
+          ? `/details/movie/${id}`
           : media_type == "tv"
           ? `details/tv/${id}`
           : `details${link}/${id}`
@@ -89,7 +89,7 @@ export const CardWrap = ({
             <img
               src={`https://image.tmdb.org/t/p/w185/${poster_path}`}
               alt="card-thumbnail"
-              className="rounded-[28px] mb-2 w-full"
+              className="rounded-[16px] mb-2 w-full"
               loading="lazy"
             />
           </figure>
