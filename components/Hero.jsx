@@ -11,7 +11,7 @@ const Hero = ({ backdrop_path, release_date, title, tagline }) => {
         className="object-cover min-w-full"
       />
       <div className="absolute bg-gradient-to-t from-black inset-0">
-        <div className="absolute p-5 top-1/2 transform -translate-y-1/2 left-4">
+        <div className="w-4xl absolute p-5 top-1/2 transform -translate-y-1/2 md:left-4 xl:left-16">
           <h6 className="text-white md:text-xl p-0">{release_date}</h6>
           <h1 className="text-xl xl:text-7xl text-5xl font-black text-white xl:max-w-md md:max-w-lg 2xl:max-w-xl">
             {title.toUpperCase()}
