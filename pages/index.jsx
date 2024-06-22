@@ -62,7 +62,7 @@ export default function Index({
           templateName={`NOW PLAYING`}
           content={nowPlayingDatas}
           seeAll="now-playing"
-          contentLink=""
+          contentLink="/movie"
         />
         {/* <TemplateFront2
           templateName={`TOP RATED`}

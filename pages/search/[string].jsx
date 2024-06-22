@@ -6,12 +6,13 @@ import { CardHorizontal } from "../../components/Card";
 import RadialRating from "../../components/RadialRating";
 
 export const getServerSideProps = async (context) => {
+  const API_KEY = process.env.API_KEY;
   const { string } = context.query;
   const res = await fetch(
-    `https://api.themoviedb.org/3/search/movie?api_key=403829fffc80d8184aa974d631a475c5&language=en-US&query=${string}&page=1&include_adult=false`
+    `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&language=en-US&query=${string}&page=1&include_adult=false`
   );
   const res2 = await fetch(
-    `https://api.themoviedb.org/3/search/tv?api_key=403829fffc80d8184aa974d631a475c5&language=en-US&query=${string}&page=1&include_adult=false`
+    `https://api.themoviedb.org/3/search/tv?api_key=${API_KEY}&language=en-US&query=${string}&page=1&include_adult=false`
   );
 
   const searchResultData = await res.json();
