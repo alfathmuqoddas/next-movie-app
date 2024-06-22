@@ -188,7 +188,7 @@ export const mediaDetails = ({
                   return (
                     <CardSmall
                       key={id}
-                      link={`/details/${id}`}
+                      link={`/details/movie/${id}`}
                       img={
                         poster_path
                           ? `https://image.tmdb.org/t/p/w185/${poster_path}`
