@@ -77,7 +77,7 @@ export const CardWrap = ({
       className="no-underline focus:bg-neutral-900 rounded-[16px] mb-2"
       href={
         media_type == "movie"
-          ? `/details/${id}`
+          ? `/details/movie/${id}`
           : media_type == "tv"
           ? `details/tv/${id}`
           : `details${link}/${id}`

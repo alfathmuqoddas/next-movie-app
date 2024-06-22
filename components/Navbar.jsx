@@ -38,13 +38,19 @@ const Navbar = () => {
             className="menu menu-compact dropdown-content mt-3 p-2 drop-shadow-lg bg-base-100 rounded-box w-52"
           >
             <li>
-              <Link href="/">Homepage</Link>
+              <Link href="/">Home</Link>
             </li>
             <li>
-              <Link href="/trending/lists">Trending Page</Link>
+              <Link href="/trending">Trending</Link>
             </li>
             <li>
-              <a>About</a>
+              <Link href="/popular">Popular Movies</Link>
+            </li>
+            <li>
+              <Link href="/popular-tv">Popular TV</Link>
+            </li>
+            <li>
+              <Link href="/now-playing">Now Playing</Link>
             </li>
           </ul>
         </div>
