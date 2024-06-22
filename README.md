@@ -1,7 +1,7 @@
 # NEXT MOVIE APP
 
 Screenshot
-[!homepage-screenshot](https://prnt.sc/SQBazP8FgfnX)
+![homepage-screenshot](https://prnt.sc/SQBazP8FgfnX)
 
 ## Features
 
