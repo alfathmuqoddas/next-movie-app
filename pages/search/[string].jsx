@@ -67,7 +67,7 @@ const SearchResult = ({ searchDatas, searchTVDatas, string }) => {
                     overview,
                   } = searchDat;
                   return (
-                    <Link key={id} href={`/details/${id}`}>
+                    <Link key={id} href={`/details/movie/${id}`}>
                       <CardHorizontal
                         img={
                           poster_path
