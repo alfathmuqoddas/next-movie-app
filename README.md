@@ -1,7 +1,10 @@
 # NEXT MOVIE APP
 
-Screenshot
-![homepage-screenshot](https://prnt.sc/SQBazP8FgfnX)
+## Screenshot
+
+1. [homepage-screenshot](https://prnt.sc/SQBazP8FgfnX)
+2. [popular page](https://prnt.sc/ufGTwT4W1pXw)
+3. [movie detail page](https://prnt.sc/AJX_oQMuua3a)
 
 ## Features
 
