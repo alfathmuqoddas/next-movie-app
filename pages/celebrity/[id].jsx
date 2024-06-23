@@ -2,22 +2,14 @@ import Link from "next/link";
 import Layout from "../../components/Layout";
 import Head from "next/head";
 import { CardHorizontal } from "../../components/Card";
+import { getCelebData } from "../../lib/getData";
 
 export const getServerSideProps = async (context) => {
-  const API_KEY = process.env.NEXT_PUBLIC_API_KEY;
   const { id } = context.query;
 
-  async function fetchData(type) {
-    const url = `https://api.themoviedb.org/3/person/${id}${type}?api_key=${API_KEY}`;
-
-    const response = await fetch(url);
-    const data = await response.json();
-    return data;
-  }
-
-  const personDetails = await fetchData();
-  const personMovieCredits = await fetchData("/movie_credits");
-  const personTVCredits = await fetchData("/tv_credits");
+  const personDetails = await getCelebData(id, "");
+  const personMovieCredits = await getCelebData(id, "/movie_credits");
+  const personTVCredits = await getCelebData(id, "/tv_credits");
 
   return {
     props: {
