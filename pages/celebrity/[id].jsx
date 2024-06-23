@@ -23,10 +23,10 @@ export const getServerSideProps = async (context) => {
 const TableData = ({ data, isMovie }) => {
   return (
     <div className="mb-8">
+      <h1 className="text-xl mb-2 font-bold">
+        {isMovie ? "Film" : "Television"}
+      </h1>
       <div className="overflow-x-auto">
-        <h1 className="text-xl mb-2 font-bold">
-          {isMovie ? "Film" : "Television"}
-        </h1>
         <table className="table table-zebra">
           <thead>
             <tr>
