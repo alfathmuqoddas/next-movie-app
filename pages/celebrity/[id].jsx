@@ -42,7 +42,11 @@ const TableData = ({ data, isMovie }) => {
               data.map((dat) => (
                 <tr key={dat.id} className="">
                   <th>{data.indexOf(dat) + 1}</th>
-                  <td>{isMovie ? dat.release_date : dat.first_air_date}</td>
+                  <td>
+                    {isMovie
+                      ? dat.release_date.slice(0, 4)
+                      : dat.first_air_date.slice(0, 4)}
+                  </td>
                   <td className="text-wrap">
                     {isMovie ? (
                       <Link
@@ -80,6 +84,14 @@ const TableData = ({ data, isMovie }) => {
   );
 };
 
+function sortByDate(data, isMovie = true) {
+  return data.sort((obj1, obj2) => {
+    const date1 = new Date(isMovie ? obj1.release_date : obj1.first_air_date);
+    const date2 = new Date(isMovie ? obj2.release_date : obj2.first_air_date);
+    return date1.getTime() - date2.getTime();
+  });
+}
+
 const Celebrity = ({ personDetails, personMovieCredits, personTVCredits }) => {
   const {
     name,
@@ -94,13 +106,14 @@ const Celebrity = ({ personDetails, personMovieCredits, personTVCredits }) => {
   } = personDetails;
   const { cast } = personMovieCredits;
   const { cast: tvCast } = personTVCredits;
+
   return (
     <>
       <Head>
         <title>Celebrity | ALEFAST</title>
       </Head>
       <Layout>
-        <div className="max-w-4xl px-4 mx-auto my-4">
+        <div className="max-w-4xl px-4 mx-auto mb-4 mt-12">
           <CardHorizontal
             img={
               profile_path
@@ -116,9 +129,9 @@ const Celebrity = ({ personDetails, personMovieCredits, personTVCredits }) => {
             flexType="items-start"
             cardBodyPadding="pl-4"
           />
-          <TableData data={cast} isMovie />
-          <TableData data={tvCast} isMovie={false} />
-          {/* <>{JSON.stringify(personMovieCredits)}</> */}
+          <TableData data={sortByDate(cast)} isMovie />
+          <TableData data={sortByDate(tvCast, false)} isMovie={false} />
+          {/* <>{JSON.stringify(personTVCredits.cast)}</> */}
         </div>
       </Layout>
     </>
