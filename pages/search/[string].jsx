@@ -7,7 +7,7 @@ import { CardHorizontal } from "../../components/Card";
 import RadialRating from "../../components/RadialRating";
 
 export const getServerSideProps = async (context) => {
-  const API_KEY = process.env.NEXT_PUBLIC_API_KEY;
+  const API_KEY = process.env.API_KEY;
   const { string } = context.query;
   const queryString = `language=en-US&query=${string}&page=1&include_adult=false`;
 
