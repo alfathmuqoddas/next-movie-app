@@ -39,10 +39,15 @@ export const CardHorizontal = ({
   subtitle,
   subtitle2,
   subtitle3,
+  subtitle4,
   imgSize,
+  flexType = "items-start",
+  cardBodyPadding = "p-4",
 }) => {
   return (
-    <div className="flex focus:bg-neutral-900 rounded-[16px] mb-4 max-w-screen items-center">
+    <div
+      className={`flex active:bg-neutral-900 rounded-[16px] mb-8 max-w-screen ${flexType}`}
+    >
       <figure className={`flex-none w-${imgSize}`}>
         <img
           src={img}
@@ -51,11 +56,12 @@ export const CardHorizontal = ({
           loading="lazy"
         />
       </figure>
-      <div className="shrink leading-tight p-4">
-        <h5 className="font-semibold text-xl">{title}</h5>
-        <h6 className="text-md hidden lg:block">{subtitle}</h6>
-        <div className="font-light">{subtitle2}</div>
-        <div>{subtitle3}</div>
+      <div className={`shrink leading-tight ${cardBodyPadding}`}>
+        <h5 className="font-semibold text-xl pb-4">{title}</h5>
+        <p className="text-sm hidden lg:block pb-2">{subtitle}</p>
+        <div className="text-sm">{subtitle2}</div>
+        <div className="text-sm">{subtitle3}</div>
+        <div className="text-sm">{subtitle4}</div>
       </div>
     </div>
   );

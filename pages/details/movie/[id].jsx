@@ -109,7 +109,7 @@ export const mediaDetails = ({
             content={
               casts.length > 0 ? (
                 casts.map((cast, index) => {
-                  const { profile_path, name, character } = cast;
+                  const { profile_path, name, character, id } = cast;
                   return (
                     <CardSmall
                       key={index}
@@ -121,7 +121,7 @@ export const mediaDetails = ({
                       title={name}
                       subtitle={character}
                       size="w-36"
-                      link={`https://image.tmdb.org/t/p/w185${profile_path}`}
+                      link={`/celebrity/${id}`}
                     />
                   );
                 })
