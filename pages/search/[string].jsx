@@ -95,8 +95,9 @@ const SearchResult = ({ searchDatas, searchTVDatas, string }) => {
           </div>
 
           <div className="mx-auto max-w-screen-md">
-            {showComponent
-              ? //showing movies result
+            {showComponent ? (
+              //showing movies result
+              searchDatas.length > 0 ? (
                 searchDatas.map((searchDat) => {
                   const {
                     id,
@@ -130,42 +131,51 @@ const SearchResult = ({ searchDatas, searchTVDatas, string }) => {
                     </Link>
                   );
                 })
-              : //showing tv series results
-                searchTVDatas.map((searchTVData) => {
-                  const {
-                    id,
-                    poster_path,
-                    name,
-                    first_air_date,
-                    vote_average,
-                    overview,
-                  } = searchTVData;
-                  return (
-                    <Link key={id} href={`/details/tv/${id}`}>
-                      <CardHorizontal
-                        img={
-                          poster_path
-                            ? `https://image.tmdb.org/t/p/w185/${poster_path}`
-                            : "https://placehold.co/185x278?text=Data+Unavailable"
-                        }
-                        title={`${name} (${
-                          first_air_date
-                            ? first_air_date.substring(0, 4)
-                            : "TBA"
-                        })`}
-                        subtitle={
-                          overview.length > 240
-                            ? overview.slice(0, 240) + "..."
-                            : overview
-                        }
-                        subtitle2={
-                          <RadialRating rating={vote_average} size="2rem" />
-                        }
-                        imgSize={36}
-                      />
-                    </Link>
-                  );
-                })}
+              ) : (
+                <div className="min-h-[250px]">
+                  <p>Movies Not Exist</p>
+                </div>
+              )
+            ) : //showing tv series results
+            searchTVDatas.length > 0 ? (
+              searchTVDatas.map((searchTVData) => {
+                const {
+                  id,
+                  poster_path,
+                  name,
+                  first_air_date,
+                  vote_average,
+                  overview,
+                } = searchTVData;
+                return (
+                  <Link key={id} href={`/details/tv/${id}`}>
+                    <CardHorizontal
+                      img={
+                        poster_path
+                          ? `https://image.tmdb.org/t/p/w185/${poster_path}`
+                          : "https://placehold.co/185x278?text=Data+Unavailable"
+                      }
+                      title={`${name} (${
+                        first_air_date ? first_air_date.substring(0, 4) : "TBA"
+                      })`}
+                      subtitle={
+                        overview.length > 240
+                          ? overview.slice(0, 240) + "..."
+                          : overview
+                      }
+                      subtitle2={
+                        <RadialRating rating={vote_average} size="2rem" />
+                      }
+                      imgSize={36}
+                    />
+                  </Link>
+                );
+              })
+            ) : (
+              <div className="min-h-[250px]">
+                <p>TV Series Not Exist</p>
+              </div>
+            )}
           </div>
         </div>
       </Layout>
