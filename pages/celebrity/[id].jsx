@@ -64,7 +64,7 @@ const TableData = ({ data, isMovie }) => {
                       </Link>
                     )}
                   </td>
-                  <td>{dat.character}</td>
+                  <td className="text-wrap">{dat.character}</td>
                   <td>{Math.round(dat.vote_average * 10)}</td>
                 </tr>
               ))
