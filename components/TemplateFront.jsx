@@ -1,21 +1,10 @@
 import Link from "next/link";
 import { CardWrap } from "./Card";
 
-export const TemplateFront2 = ({
-  content,
-  templateName,
-  seeAll,
-  contentLink,
-}) => {
+export const TemplateFront2 = ({ content, contentLink }) => {
   return (
     <>
-      <div className="py-8">
-        <div className="flex justify-between items-center px-8">
-          <h3 className="text-2xl font-extrabold">{templateName}</h3>
-          <Link href={`/${seeAll}`}>
-            <h4 className="hover:underline">See More →</h4>
-          </Link>
-        </div>
+      <div className="">
         <div className="pt-6">
           <div className="px-8 flex flex-nowrap overflow-auto gap-4">
             {content &&

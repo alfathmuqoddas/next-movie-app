@@ -1,5 +1,6 @@
 import Layout from "../components/Layout";
 import Head from "next/head";
+import Link from "next/link";
 import {
   getPopularData,
   getTopRatedData,
@@ -40,30 +41,40 @@ export default function Index({
         <title>ALEFAST</title>
       </Head>
       <Layout>
-        <TemplateFront2
-          templateName={`TRENDING`}
-          content={trendingDatas}
-          seeAll="trending"
-          contentLink=""
-        />
-        <TemplateFront2
-          templateName={`POPULAR MOVIES`}
-          content={popularDatas}
-          seeAll="popular"
-          contentLink="/movie"
-        />
-        <TemplateFront2
-          templateName={`POPULAR TV SERIES`}
-          content={popularTvDatas}
-          seeAll="popular-tv"
-          contentLink="/tv"
-        />
-        <TemplateFront2
-          templateName={`NOW PLAYING`}
-          content={nowPlayingDatas}
-          seeAll="now-playing"
-          contentLink="/movie"
-        />
+        <div className="py-8">
+          <div className="flex justify-between items-center px-8">
+            <h3 className="text-2xl font-extrabold">Trending</h3>
+            <Link href="/trending">
+              <h4 className="hover:underline">See More →</h4>
+            </Link>
+          </div>
+          <TemplateFront2
+            content={trendingDatas}
+            seeAll="trending"
+            contentLink=""
+          />
+        </div>
+        <div className="py-8">
+          <TemplateFront2
+            content={popularDatas}
+            seeAll="popular"
+            contentLink="/movie"
+          />
+        </div>
+        <div className="py-8">
+          <TemplateFront2
+            content={popularTvDatas}
+            seeAll="popular-tv"
+            contentLink="/tv"
+          />
+        </div>
+        <div className="py-8">
+          <TemplateFront2
+            content={nowPlayingDatas}
+            seeAll="now-playing"
+            contentLink="/movie"
+          />
+        </div>
         {/* <TemplateFront2
           templateName={`TOP RATED`}
           content={topRatedDatas}
