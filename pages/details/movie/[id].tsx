@@ -1,6 +1,6 @@
 import Layout from "../../../components/Layout";
 import Head from "next/head";
-import { lazy, Suspense } from "react";
+import { GetServerSideProps } from "next";
 import { CardSmall } from "../../../components/Card";
 import TemplateFront from "../../../components/TemplateFront";
 import {
@@ -14,8 +14,8 @@ import YoutubeIcons from "../../../components/YoutubeIcons";
 import RadialRating from "../../../components/RadialRating";
 import Hero from "../../../components/Hero";
 
-export async function getServerSideProps(context) {
-  const { id } = context.query;
+export const getServerSideProps = (async (context) => {
+  const id = context.query.id;
   const mediaDetails = await getMediaDetails("movie", id);
   const { crews, casts } = await getCreditData("movie", id);
   const picSelected = await getPicsData("movie", id);
@@ -32,7 +32,7 @@ export async function getServerSideProps(context) {
       similarData,
     },
   };
-}
+}) satisfies GetServerSideProps;
 
 export const mediaDetails = ({
   mediaDetails,
@@ -122,6 +122,8 @@ export const mediaDetails = ({
                       subtitle={character}
                       size="w-36"
                       link={`/celebrity/${id}`}
+                      flexSubtitle1=""
+                      flexSubtitle2=""
                     />
                   );
                 })
@@ -146,6 +148,10 @@ export const mediaDetails = ({
                       }
                       link={`https://image.tmdb.org/t/p/original${file_path}`}
                       size="w-36"
+                      flexSubtitle1=""
+                      flexSubtitle2=""
+                      title=""
+                      subtitle=""
                     />
                   );
                 })
@@ -170,6 +176,8 @@ export const mediaDetails = ({
                         name.length > 32 ? `${name.substring(0, 32)}...` : name
                       }
                       size="w-64"
+                      title=""
+                      subtitle=""
                     />
                   );
                 })
@@ -196,6 +204,9 @@ export const mediaDetails = ({
                       }
                       title={`${title} (${release_date.slice(0, 4)})`}
                       size="w-36"
+                      subtitle=""
+                      flexSubtitle1=""
+                      flexSubtitle2=""
                     />
                   );
                 })

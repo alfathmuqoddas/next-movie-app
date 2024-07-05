@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { CardWrap } from "./Card";
 
 export const TemplateFront2 = ({ content, contentLink }) => {

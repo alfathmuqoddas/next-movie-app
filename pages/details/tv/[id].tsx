@@ -3,6 +3,7 @@ import Layout from "../../../components/Layout";
 import Head from "next/head";
 import { CardSmall, CardHorizontal } from "../../../components/Card";
 import TemplateFront from "../../../components/TemplateFront";
+import { GetServerSideProps } from "next";
 import {
   getMediaDetails,
   getPicsData,
@@ -14,7 +15,7 @@ import YoutubeIcons from "../../../components/YoutubeIcons";
 import RadialRating from "../../../components/RadialRating";
 import Hero from "../../../components/Hero";
 
-export async function getServerSideProps(context) {
+export const getServerSideProps = (async (context) => {
   const { id } = context.query;
   const mediaDetails = await getMediaDetails("tv", id);
   const { crews, casts } = await getCreditData("tv", id);
@@ -32,7 +33,7 @@ export async function getServerSideProps(context) {
       similarData,
     },
   };
-}
+}) satisfies GetServerSideProps;
 
 export const mediaDetails = ({
   mediaDetails,
@@ -148,6 +149,8 @@ export const mediaDetails = ({
                       subtitle3={
                         <RadialRating rating={vote_average} size="2rem" />
                       }
+                      subtitle4=""
+                      imgSize=""
                     />
                   </div>
                 );
@@ -173,6 +176,8 @@ export const mediaDetails = ({
                       subtitle={character}
                       size="w-36"
                       link={`/celebrity/${id}`}
+                      flexSubtitle1=""
+                      flexSubtitle2=""
                     />
                   );
                 })
@@ -197,6 +202,10 @@ export const mediaDetails = ({
                       }
                       link={`https://image.tmdb.org/t/p/original${file_path}`}
                       size="w-36"
+                      title=""
+                      subtitle=""
+                      flexSubtitle1=""
+                      flexSubtitle2=""
                     />
                   );
                 })
@@ -221,6 +230,8 @@ export const mediaDetails = ({
                         name.length > 32 ? `${name.substring(0, 32)}...` : name
                       }
                       size="w-64"
+                      title=""
+                      subtitle=""
                     />
                   );
                 })
@@ -247,6 +258,9 @@ export const mediaDetails = ({
                       }
                       title={`${name} (${first_air_date.slice(0, 4)})`}
                       size="w-36"
+                      subtitle=""
+                      flexSubtitle1=""
+                      flexSubtitle2=""
                     />
                   );
                 })

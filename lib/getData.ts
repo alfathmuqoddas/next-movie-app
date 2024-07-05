@@ -1,4 +1,4 @@
-export const getPopularData = async (type, page) => {
+export const getPopularData = async (type: string, page: number) => {
   // Call an external API endpoint to get posts
   try {
     const res = await fetch(
@@ -18,7 +18,7 @@ export const getPopularData = async (type, page) => {
   }
 };
 
-export const getTrendingData = async (timeframe = "day", page = 1) => {
+export const getTrendingData = async (timeframe: string, page: number) => {
   // Call an external API endpoint to get posts
   try {
     const res = await fetch(
@@ -36,7 +36,7 @@ export const getTrendingData = async (timeframe = "day", page = 1) => {
   }
 };
 
-export const getNowPlayingData = async (page) => {
+export const getNowPlayingData = async (page: number) => {
   // Call an external API endpoint to get posts
   try {
     const res = await fetch(
@@ -56,7 +56,7 @@ export const getNowPlayingData = async (page) => {
   }
 };
 
-export const getTopRatedData = async (page) => {
+export const getTopRatedData = async (page: number) => {
   // Call an external API endpoint to get posts
   try {
     const res = await fetch(
@@ -76,7 +76,7 @@ export const getTopRatedData = async (page) => {
   }
 };
 
-export const getMediaDetails = async (type, id) => {
+export const getMediaDetails = async (type: string, id: string) => {
   try {
     const res = await fetch(
       `https://api.themoviedb.org/3/${type}/${id}?api_key=${process.env.API_KEY}&language=en-US`
@@ -92,7 +92,7 @@ export const getMediaDetails = async (type, id) => {
   }
 };
 
-export const getCreditData = async (type, id) => {
+export const getCreditData = async (type: string, id: string) => {
   try {
     const credits = await fetch(
       `https://api.themoviedb.org/3/${type}/${id}/credits?api_key=${process.env.API_KEY}&language=en-US`
@@ -110,7 +110,7 @@ export const getCreditData = async (type, id) => {
   }
 };
 
-export const getPicsData = async (type, id) => {
+export const getPicsData = async (type: string, id: string) => {
   try {
     const pics = await fetch(
       `https://api.themoviedb.org/3/${type}/${id}/images?api_key=${process.env.API_KEY}`
@@ -127,7 +127,7 @@ export const getPicsData = async (type, id) => {
   }
 };
 
-export const getVideosData = async (type, id) => {
+export const getVideosData = async (type: string, id: number) => {
   try {
     const videos = await fetch(
       `https://api.themoviedb.org/3/${type}/${id}/videos?api_key=${process.env.API_KEY}`
@@ -144,7 +144,7 @@ export const getVideosData = async (type, id) => {
   }
 };
 
-export const getSimilarData = async (type, id) => {
+export const getSimilarData = async (type: string, id: number) => {
   try {
     const similar = await fetch(
       `https://api.themoviedb.org/3/${type}/${id}/recommendations?api_key=${process.env.API_KEY}&language=en-US&page=1`
@@ -161,7 +161,7 @@ export const getSimilarData = async (type, id) => {
   }
 };
 
-export const getCelebData = async (id, type) => {
+export const getCelebData = async (id: number, type: string) => {
   const url = `https://api.themoviedb.org/3/person/${id}${type}?api_key=${process.env.API_KEY}`;
 
   try {

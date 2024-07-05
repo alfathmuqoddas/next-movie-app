@@ -9,14 +9,15 @@ import {
   getTrendingData,
 } from "../lib/getData";
 import { TemplateFront2 } from "../components/TemplateFront";
+import { GetStaticProps } from "next";
 import RadioGroup from "../components/RadioGroup";
 
-export const getStaticProps = async () => {
-  const popularDatas = await getPopularData("movie");
-  const popularTvDatas = await getPopularData("tv");
-  const nowPlayingDatas = await getNowPlayingData();
-  const topRatedDatas = await getTopRatedData();
-  const trendingDatas = await getTrendingData();
+export const getStaticProps = (async () => {
+  const popularDatas = await getPopularData("movie", 1);
+  const popularTvDatas = await getPopularData("tv", 1);
+  const nowPlayingDatas = await getNowPlayingData(1);
+  const topRatedDatas = await getTopRatedData(1);
+  const trendingDatas = await getTrendingData("day", 1);
   const trendingDatasWeek = await getTrendingData("week", 1);
 
   return {
@@ -30,7 +31,7 @@ export const getStaticProps = async () => {
     },
     revalidate: 3600,
   };
-};
+}) satisfies GetStaticProps;
 
 export default function Index({
   popularDatas,
@@ -70,17 +71,9 @@ export default function Index({
             </Link>
           </div>
           {isTrendingToday ? (
-            <TemplateFront2
-              content={trendingDatas}
-              seeAll="trending"
-              contentLink=""
-            />
+            <TemplateFront2 content={trendingDatas} contentLink="" />
           ) : (
-            <TemplateFront2
-              content={trendingDatasWeek}
-              seeAll="trending"
-              contentLink=""
-            />
+            <TemplateFront2 content={trendingDatasWeek} contentLink="" />
           )}
         </div>
         <div className="py-8">
@@ -90,11 +83,7 @@ export default function Index({
               <h4 className="hover:underline">See More →</h4>
             </Link>
           </div>
-          <TemplateFront2
-            content={popularDatas}
-            seeAll="popular"
-            contentLink="/movie"
-          />
+          <TemplateFront2 content={popularDatas} contentLink="/movie" />
         </div>
         <div className="py-8">
           <div className="flex justify-start gap-8 items-center px-8">
@@ -103,11 +92,7 @@ export default function Index({
               <h4 className="hover:underline">See More →</h4>
             </Link>
           </div>
-          <TemplateFront2
-            content={popularTvDatas}
-            seeAll="popular-tv"
-            contentLink="/tv"
-          />
+          <TemplateFront2 content={popularTvDatas} contentLink="/tv" />
         </div>
         <div className="py-8">
           <div className="flex justify-start gap-8 items-center px-8">
@@ -116,11 +101,7 @@ export default function Index({
               <h4 className="hover:underline">See More →</h4>
             </Link>
           </div>
-          <TemplateFront2
-            content={nowPlayingDatas}
-            seeAll="now-playing"
-            contentLink="/movie"
-          />
+          <TemplateFront2 content={nowPlayingDatas} contentLink="/movie" />
         </div>
         {/* <TemplateFront2
           templateName={`TOP RATED`}
