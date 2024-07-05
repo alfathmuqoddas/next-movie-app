@@ -42,14 +42,6 @@ export default function Index({
 }) {
   const [isTrendingToday, setTrendingToday] = useState(true);
 
-  const trendingOptions = [
-    { value: true, label: "Today" },
-    { value: false, label: "This Week" },
-  ];
-
-  const handleChangeTrendingTime = (value) => {
-    setTrendingToday(value);
-  };
   console.log(isTrendingToday);
   return (
     <div>
@@ -58,14 +50,22 @@ export default function Index({
       </Head>
       <Layout>
         <div className="py-8">
-          <div className="flex justify-between items-center px-8">
-            <h3 className="text-2xl font-extrabold">Trending</h3>
-            <RadioGroup
-              options={trendingOptions}
-              name="trending-option"
-              onChange={handleChangeTrendingTime}
-            />
-            <Link href="/trending">
+          <div className="flex justify-between gap-8 items-center px-8">
+            <div>
+              <h3 className="text-2xl font-extrabold">
+                {isTrendingToday ? "Trending Today" : "Trending This Week"}
+              </h3>
+              <button onClick={() => setTrendingToday(!isTrendingToday)}>
+                {isTrendingToday ? <>Today</> : <>This Week</>}
+              </button>
+            </div>
+            <Link
+              href={
+                isTrendingToday
+                  ? "/trending?timeframe=day"
+                  : "/trending?timeframe=week"
+              }
+            >
               <h4 className="hover:underline">See More →</h4>
             </Link>
           </div>
@@ -84,6 +84,12 @@ export default function Index({
           )}
         </div>
         <div className="py-8">
+          <div className="flex justify-start gap-8 items-center px-8">
+            <h3 className="text-2xl font-extrabold">Popular Movies</h3>
+            <Link href="/popular">
+              <h4 className="hover:underline">See More →</h4>
+            </Link>
+          </div>
           <TemplateFront2
             content={popularDatas}
             seeAll="popular"
@@ -91,6 +97,12 @@ export default function Index({
           />
         </div>
         <div className="py-8">
+          <div className="flex justify-start gap-8 items-center px-8">
+            <h3 className="text-2xl font-extrabold">Popular TV</h3>
+            <Link href="/popular-tv">
+              <h4 className="hover:underline">See More →</h4>
+            </Link>
+          </div>
           <TemplateFront2
             content={popularTvDatas}
             seeAll="popular-tv"
@@ -98,6 +110,12 @@ export default function Index({
           />
         </div>
         <div className="py-8">
+          <div className="flex justify-start gap-8 items-center px-8">
+            <h3 className="text-2xl font-extrabold">Now Playing</h3>
+            <Link href="/now-playing">
+              <h4 className="hover:underline">See More →</h4>
+            </Link>
+          </div>
           <TemplateFront2
             content={nowPlayingDatas}
             seeAll="now-playing"
