@@ -15,7 +15,7 @@ const Index = () => {
       try {
         setIsLoading(true);
         const topRatedDatas = await getTopRatedData(page);
-        setMovies((movies) => [...movies, ...topRatedDatas]);
+        setMovies((movies: any) => [...movies, ...topRatedDatas]);
         setErrorMsg("");
       } catch (error) {
         setErrorMsg("Error while loading data. Try again later.");
