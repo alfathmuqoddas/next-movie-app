@@ -1,12 +1,13 @@
 import Layout from "../../../components/Layout";
+//import { lazy, Suspense } from "react";
 import Head from "next/head";
-// import { lazy, Suspense } from "react";
-import { CardSmall } from "../../../components/Card";
+import { CardSmall, CardHorizontal } from "../../../components/Card";
 import TemplateFront from "../../../components/TemplateFront";
+import { GetServerSideProps } from "next";
 import {
   getMediaDetails,
-  getCreditData,
   getPicsData,
+  getCreditData,
   getVideosData,
   getSimilarData,
 } from "../../../lib/getData";
@@ -14,13 +15,13 @@ import YoutubeIcons from "../../../components/YoutubeIcons";
 import RadialRating from "../../../components/RadialRating";
 import Hero from "../../../components/Hero";
 
-export async function getServerSideProps(context) {
+export const getServerSideProps = (async (context) => {
   const { id } = context.query;
-  const mediaDetails = await getMediaDetails("movie", id);
-  const { crews, casts } = await getCreditData("movie", id);
-  const picSelected = await getPicsData("movie", id);
-  const videoSelected = await getVideosData("movie", id);
-  const similarData = await getSimilarData("movie", id);
+  const mediaDetails = await getMediaDetails("tv", id);
+  const { crews, casts } = await getCreditData("tv", id);
+  const picSelected = await getPicsData("tv", id);
+  const videoSelected = await getVideosData("tv", id);
+  const similarData = await getSimilarData("tv", id);
 
   return {
     props: {
@@ -32,7 +33,7 @@ export async function getServerSideProps(context) {
       similarData,
     },
   };
-}
+}) satisfies GetServerSideProps;
 
 export const mediaDetails = ({
   mediaDetails,
@@ -42,27 +43,31 @@ export const mediaDetails = ({
   videoSelected,
   similarData,
 }) => {
+  const {
+    name,
+    first_air_date,
+    last_air_date,
+    backdrop_path,
+    tagline,
+    genres,
+    overview,
+    vote_average,
+    episode_run_time,
+    number_of_episodes,
+    number_of_seasons,
+    networks,
+    seasons,
+  } = mediaDetails;
+
   const director =
     crews.length > 0 ? crews.filter((el) => el.job === "Director") : [];
 
   const directorName =
     director.length > 0 ? director[0].name : "data not available";
-  const titleName = `${
-    mediaDetails.original_title
-  } (${mediaDetails.release_date.substring(0, 4)}) | ALEFAST`;
-
-  const {
-    backdrop_path,
-    release_date,
-    title,
-    tagline,
-    genres,
-    vote_average,
-    overview,
-    runtime,
-    budget,
-    revenue,
-  } = mediaDetails;
+  const titleName = `${mediaDetails.name} (${first_air_date.substring(
+    0,
+    4
+  )}) | ALEFAST`;
 
   return (
     <>
@@ -72,11 +77,13 @@ export const mediaDetails = ({
       <Layout>
         <Hero
           backdrop_path={backdrop_path}
-          release_date={release_date.substring(0, 4)}
-          title={title}
+          release_date={`${first_air_date.substring(
+            0,
+            4
+          )} - ${last_air_date.substring(0, 4)}`}
+          title={name}
           tagline={tagline}
         />
-
         <div className="max-w-4xl px-4 mx-auto">
           <div id="text-part">
             <div className="genres">
@@ -98,12 +105,59 @@ export const mediaDetails = ({
             </div>
             <div className="mb-5">
               <div className="crew">Director: {directorName}</div>
-              <div>Runtime: {runtime} minutes</div>
-              <div>Budget: {budget.toLocaleString()} USD</div>
-              <div>Box Office: {revenue.toLocaleString()} USD</div>
+              <div>Runtime: {episode_run_time[0]} minutes</div>
+              <div>Number of Episodes: {number_of_episodes}</div>
+              <div>Number of Seasons: {number_of_seasons}</div>
+              <div>Networks: {networks[0].name}</div>
               <div>Vote Average: {Math.round(vote_average * 10)}</div>
             </div>
           </div>
+
+          <div className="my-5">
+            <h3 className="text-2xl py-5">Seasons</h3>
+            <div className="max-h-[360px] overflow-auto">
+              {seasons.map((season) => {
+                const {
+                  air_date,
+                  episode_count,
+                  id,
+                  name,
+                  overview,
+                  poster_path,
+                  //season_number,
+                  vote_average,
+                } = season;
+                return (
+                  <div key={id}>
+                    <CardHorizontal
+                      title={name}
+                      subtitle={
+                        overview
+                          ? overview.length > 240
+                            ? overview.substring(0, 240) + "..."
+                            : overview
+                          : "Description data not exist"
+                      }
+                      img={
+                        poster_path
+                          ? `https://image.tmdb.org/t/p/w92${poster_path}`
+                          : "https://placehold.co/92x138?text=Data+Unavailable"
+                      }
+                      subtitle2={`${
+                        air_date ? air_date.substring(0, 4) : "Data Unavailable"
+                      }, ${episode_count} Episode(s)`}
+                      subtitle3={
+                        <RadialRating rating={vote_average} size="2rem" />
+                      }
+                      subtitle4=""
+                      imgSize=""
+                    />
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
           <TemplateFront
             templateName={"Cast"}
             content={
@@ -122,6 +176,8 @@ export const mediaDetails = ({
                       subtitle={character}
                       size="w-36"
                       link={`/celebrity/${id}`}
+                      flexSubtitle1=""
+                      flexSubtitle2=""
                     />
                   );
                 })
@@ -141,11 +197,15 @@ export const mediaDetails = ({
                       key={index}
                       img={
                         file_path
-                          ? `https://image.tmdb.org/t/p/w185${file_path}`
+                          ? `https://image.tmdb.org/t/p/w185/${file_path}`
                           : "https://placehold.co/185x278?text=Data+Unavailable"
                       }
                       link={`https://image.tmdb.org/t/p/original${file_path}`}
                       size="w-36"
+                      title=""
+                      subtitle=""
+                      flexSubtitle1=""
+                      flexSubtitle2=""
                     />
                   );
                 })
@@ -170,6 +230,8 @@ export const mediaDetails = ({
                         name.length > 32 ? `${name.substring(0, 32)}...` : name
                       }
                       size="w-64"
+                      title=""
+                      subtitle=""
                     />
                   );
                 })
@@ -183,19 +245,22 @@ export const mediaDetails = ({
             templateName={"Recommendations"}
             content={
               similarData.length > 0 ? (
-                similarData.map((similarDat) => {
-                  const { id, poster_path, title, release_date } = similarDat;
+                similarData.map((similarDat, index) => {
+                  const { id, poster_path, name, first_air_date } = similarDat;
                   return (
                     <CardSmall
-                      key={id}
-                      link={`/details/movie/${id}`}
+                      key={index}
+                      link={`/details/tv/${id}`}
                       img={
                         poster_path
                           ? `https://image.tmdb.org/t/p/w185/${poster_path}`
                           : "https://placehold.co/185x278?text=Data+Unavailable"
                       }
-                      title={`${title} (${release_date.slice(0, 4)})`}
+                      title={`${name} (${first_air_date.slice(0, 4)})`}
                       size="w-36"
+                      subtitle=""
+                      flexSubtitle1=""
+                      flexSubtitle2=""
                     />
                   );
                 })
