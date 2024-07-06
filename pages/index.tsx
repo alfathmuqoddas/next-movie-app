@@ -10,7 +10,7 @@ import {
 } from "../lib/getData";
 import { TemplateFront2 } from "../components/TemplateFront";
 import { GetStaticProps } from "next";
-import RadioGroup from "../components/RadioGroup";
+// import RadioGroup from "../components/RadioGroup";
 
 export const getStaticProps = (async () => {
   const popularDatas = await getPopularData("movie", 1);

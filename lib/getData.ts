@@ -1,4 +1,16 @@
-export const getPopularData = async (type: string, page: number) => {
+// import {
+//   IApiData,
+//   IMovieDetails,
+//   ITvDetails,
+//   IApiNpData,
+//   ICasts,
+//   ICrews,
+//   IResultsMovieData,
+//   IResultsTvData,
+//   IResultsTrendingAll,
+// } from "./types";
+
+export const getPopularData = async (type: "movie" | "tv", page: number) => {
   // Call an external API endpoint to get posts
   try {
     const res = await fetch(
@@ -9,16 +21,19 @@ export const getPopularData = async (type: string, page: number) => {
     if (!res.ok) {
       throw new Error("Failed to fetch Popular data");
     }
-    const popularData = await res.json();
-    const popularDatas = popularData.results;
-    return popularDatas;
-  } catch (error) {
+    const data = await res.json();
+    const { results } = data;
+    return results;
+  } catch (error: any) {
     console.error("Error fetching popular tv data:", error.message);
     throw error;
   }
 };
 
-export const getTrendingData = async (timeframe: string, page: number) => {
+export const getTrendingData = async (
+  timeframe: "day" | "week",
+  page: number
+) => {
   // Call an external API endpoint to get posts
   try {
     const res = await fetch(
@@ -27,10 +42,10 @@ export const getTrendingData = async (timeframe: string, page: number) => {
     if (!res.ok) {
       throw new Error("Failed to fetch trending data");
     }
-    const trendingData = await res.json();
-    const trendingDatas = trendingData.results;
-    return trendingDatas;
-  } catch (error) {
+    const data = await res.json();
+    const { results } = data;
+    return results;
+  } catch (error: any) {
     console.error("Error fetching trending data:", error.message);
     throw error;
   }
@@ -47,10 +62,10 @@ export const getNowPlayingData = async (page: number) => {
     if (!res.ok) {
       throw new Error("Failed to fetch Now playing data");
     }
-    const nowPlayingData = await res.json();
-    const nowPlayingDatas = nowPlayingData.results;
-    return nowPlayingDatas;
-  } catch (error) {
+    const data = await res.json();
+    const { results } = data;
+    return results;
+  } catch (error: any) {
     console.error("Error fetching now playing data:", error.message);
     throw error;
   }
@@ -67,16 +82,19 @@ export const getTopRatedData = async (page: number) => {
     if (!res.ok) {
       throw new Error("Failed to fetch top rated data");
     }
-    const topRatedData = await res.json();
-    const topRatedDatas = topRatedData.results;
-    return topRatedDatas;
-  } catch (error) {
+    const data = await res.json();
+    const { results } = data;
+    return results;
+  } catch (error: any) {
     console.error("Error fetching top rated data:", error.message);
     throw error;
   }
 };
 
-export const getMediaDetails = async (type: string, id: string) => {
+export const getMediaDetails = async (
+  type: "movie" | "tv",
+  id: string | string[] | undefined
+) => {
   try {
     const res = await fetch(
       `https://api.themoviedb.org/3/${type}/${id}?api_key=${process.env.API_KEY}&language=en-US`
@@ -84,33 +102,35 @@ export const getMediaDetails = async (type: string, id: string) => {
     if (!res.ok) {
       throw new Error("Failed to fetch details data");
     }
-    const movieDetails = await res.json();
-    return movieDetails;
-  } catch (error) {
+    const data = await res.json();
+    return data;
+  } catch (error: any) {
     console.error("Error fetching details data:", error.message);
     throw error;
   }
 };
 
-export const getCreditData = async (type: string, id: string) => {
+export const getCreditData = async (
+  type: string,
+  id: string | string[] | undefined
+) => {
   try {
     const credits = await fetch(
       `https://api.themoviedb.org/3/${type}/${id}/credits?api_key=${process.env.API_KEY}&language=en-US`
     );
-    const credit = await credits.json();
-    const casts = credit.cast;
-    const crews = credit.crew;
-    if (casts.length && crews.length) {
-      return { casts, crews };
-    } else {
-      return { casts: [], crews: [] };
-    }
-  } catch (error) {
-    return console.log(error);
+    const data = await credits.json();
+    const { cast, crew } = data;
+    return { cast, crew };
+  } catch (error: any) {
+    console.log(error);
+    throw error;
   }
 };
 
-export const getPicsData = async (type: string, id: string) => {
+export const getPicsData = async (
+  type: string,
+  id: string | string[] | undefined
+) => {
   try {
     const pics = await fetch(
       `https://api.themoviedb.org/3/${type}/${id}/images?api_key=${process.env.API_KEY}`
@@ -118,16 +138,19 @@ export const getPicsData = async (type: string, id: string) => {
     if (!pics.ok) {
       throw new Error("Failed to fetch pics data");
     }
-    const pic = await pics.json();
-    const picSelected = pic.posters;
-    return picSelected;
-  } catch (error) {
+    const data = await pics.json();
+    const { posters } = data;
+    return posters;
+  } catch (error: any) {
     console.error("Error fetching pics data:", error.message);
     throw error;
   }
 };
 
-export const getVideosData = async (type: string, id: number) => {
+export const getVideosData = async (
+  type: string,
+  id: string | string[] | undefined
+) => {
   try {
     const videos = await fetch(
       `https://api.themoviedb.org/3/${type}/${id}/videos?api_key=${process.env.API_KEY}`
@@ -138,13 +161,16 @@ export const getVideosData = async (type: string, id: number) => {
     const vid = await videos.json();
     const videoSelected = vid.results;
     return videoSelected;
-  } catch (error) {
+  } catch (error: any) {
     console.error("Error fetching videos data:", error.message);
     throw error;
   }
 };
 
-export const getSimilarData = async (type: string, id: number) => {
+export const getSimilarData = async (
+  type: string,
+  id: string | string[] | undefined
+) => {
   try {
     const similar = await fetch(
       `https://api.themoviedb.org/3/${type}/${id}/recommendations?api_key=${process.env.API_KEY}&language=en-US&page=1`
@@ -155,14 +181,19 @@ export const getSimilarData = async (type: string, id: number) => {
     const similarDataRes = await similar.json();
     const similarData = similarDataRes.results;
     return similarData;
-  } catch (error) {
+  } catch (error: any) {
     console.error("Error fetching similar data:", error.message);
     throw error;
   }
 };
 
-export const getCelebData = async (id: number, type: string) => {
-  const url = `https://api.themoviedb.org/3/person/${id}${type}?api_key=${process.env.API_KEY}`;
+export const getCelebData = async (
+  id: string | string[] | undefined,
+  type: "" | "/tv_credits" | "/movie_credits"
+) => {
+  const url = `https://api.themoviedb.org/3/person/${
+    id ? id : ""
+  }${type}?api_key=${process.env.API_KEY}`;
 
   try {
     const response = await fetch(url);
@@ -171,7 +202,7 @@ export const getCelebData = async (id: number, type: string) => {
     }
     const data = await response.json();
     return data;
-  } catch (err) {
+  } catch (err: any) {
     console.error("Error fetching celeb data:", err.message);
     throw err;
   }

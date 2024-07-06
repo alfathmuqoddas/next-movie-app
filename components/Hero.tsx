@@ -1,4 +1,16 @@
-const Hero = ({ backdrop_path, release_date, title, tagline }) => {
+interface HeroProps {
+  backdrop_path: string;
+  release_date: string;
+  title: string;
+  tagline: string;
+}
+
+const Hero: React.FC<HeroProps> = ({
+  backdrop_path,
+  release_date,
+  title,
+  tagline,
+}) => {
   return (
     <div className="relative">
       <img

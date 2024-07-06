@@ -15,9 +15,9 @@ import RadialRating from "../../../components/RadialRating";
 import Hero from "../../../components/Hero";
 
 export const getServerSideProps = (async (context) => {
-  const id = context.query.id;
+  const { id } = context.query;
   const mediaDetails = await getMediaDetails("movie", id);
-  const { crews, casts } = await getCreditData("movie", id);
+  const { crew, cast } = await getCreditData("movie", id);
   const picSelected = await getPicsData("movie", id);
   const videoSelected = await getVideosData("movie", id);
   const similarData = await getSimilarData("movie", id);
@@ -25,8 +25,8 @@ export const getServerSideProps = (async (context) => {
   return {
     props: {
       mediaDetails,
-      casts,
-      crews,
+      cast,
+      crew,
       picSelected,
       videoSelected,
       similarData,
@@ -36,14 +36,14 @@ export const getServerSideProps = (async (context) => {
 
 export const mediaDetails = ({
   mediaDetails,
-  casts,
-  crews,
+  cast,
+  crew,
   picSelected,
   videoSelected,
   similarData,
 }) => {
   const director =
-    crews.length > 0 ? crews.filter((el) => el.job === "Director") : [];
+    crew.length > 0 ? crew.filter((el: any) => el.job === "Director") : [];
 
   const directorName =
     director.length > 0 ? director[0].name : "data not available";
@@ -81,7 +81,7 @@ export const mediaDetails = ({
           <div id="text-part">
             <div className="genres">
               <div className="my-2 md:my-5 flex gap-y-2 flex-wrap">
-                {genres.map((genre, index) => (
+                {genres.map((genre: { name: string }, index: number) => (
                   <div
                     key={index}
                     className="btn btn-outline rounded-full mr-2"
@@ -107,26 +107,36 @@ export const mediaDetails = ({
           <TemplateFront
             templateName={"Cast"}
             content={
-              casts.length > 0 ? (
-                casts.map((cast, index) => {
-                  const { profile_path, name, character, id } = cast;
-                  return (
-                    <CardSmall
-                      key={index}
-                      img={
-                        profile_path
-                          ? `https://image.tmdb.org/t/p/w185${profile_path}`
-                          : "https://placehold.co/185x278?text=Data+Unavailable"
-                      }
-                      title={name}
-                      subtitle={character}
-                      size="w-36"
-                      link={`/celebrity/${id}`}
-                      flexSubtitle1=""
-                      flexSubtitle2=""
-                    />
-                  );
-                })
+              cast.length > 0 ? (
+                cast.map(
+                  (
+                    castData: {
+                      profile_path: string;
+                      name: string;
+                      character: string;
+                      id: number;
+                    },
+                    index: number
+                  ) => {
+                    const { profile_path, name, character, id } = castData;
+                    return (
+                      <CardSmall
+                        key={index}
+                        img={
+                          profile_path
+                            ? `https://image.tmdb.org/t/p/w185${profile_path}`
+                            : "https://placehold.co/185x278?text=Data+Unavailable"
+                        }
+                        title={name}
+                        subtitle={character}
+                        size="w-36"
+                        link={`/celebrity/${id}`}
+                        flexSubtitle1=""
+                        flexSubtitle2=""
+                      />
+                    );
+                  }
+                )
               ) : (
                 <>Data Unavailable</>
               )
@@ -136,25 +146,27 @@ export const mediaDetails = ({
             templateName={"Pictures"}
             content={
               picSelected.length > 0 ? (
-                picSelected.map((picSelect, index) => {
-                  const { file_path } = picSelect;
-                  return (
-                    <CardSmall
-                      key={index}
-                      img={
-                        file_path
-                          ? `https://image.tmdb.org/t/p/w185${file_path}`
-                          : "https://placehold.co/185x278?text=Data+Unavailable"
-                      }
-                      link={`https://image.tmdb.org/t/p/original${file_path}`}
-                      size="w-36"
-                      flexSubtitle1=""
-                      flexSubtitle2=""
-                      title=""
-                      subtitle=""
-                    />
-                  );
-                })
+                picSelected.map(
+                  (picSelect: { file_path: string }, index: number) => {
+                    const { file_path } = picSelect;
+                    return (
+                      <CardSmall
+                        key={index}
+                        img={
+                          file_path
+                            ? `https://image.tmdb.org/t/p/w185${file_path}`
+                            : "https://placehold.co/185x278?text=Data+Unavailable"
+                        }
+                        link={`https://image.tmdb.org/t/p/original${file_path}`}
+                        size="w-36"
+                        flexSubtitle1=""
+                        flexSubtitle2=""
+                        title=""
+                        subtitle=""
+                      />
+                    );
+                  }
+                )
               ) : (
                 <>Data Unavailable</>
               )
@@ -164,23 +176,27 @@ export const mediaDetails = ({
             templateName={"Videos"}
             content={
               videoSelected.length > 0 ? (
-                videoSelected.map((vidSelect) => {
-                  const { key, name } = vidSelect;
-                  return (
-                    <CardSmall
-                      key={key}
-                      link={`https://youtube.com/watch?v=${key}`}
-                      img={`https://img.youtube.com/vi/${key}/0.jpg`}
-                      flexSubtitle1={<YoutubeIcons />}
-                      flexSubtitle2={
-                        name.length > 32 ? `${name.substring(0, 32)}...` : name
-                      }
-                      size="w-64"
-                      title=""
-                      subtitle=""
-                    />
-                  );
-                })
+                videoSelected.map(
+                  (vidSelect: { key: number; name: string }) => {
+                    const { key, name } = vidSelect;
+                    return (
+                      <CardSmall
+                        key={key}
+                        link={`https://youtube.com/watch?v=${key}`}
+                        img={`https://img.youtube.com/vi/${key}/0.jpg`}
+                        flexSubtitle1={<YoutubeIcons />}
+                        flexSubtitle2={
+                          name.length > 32
+                            ? `${name.substring(0, 32)}...`
+                            : name
+                        }
+                        size="w-64"
+                        title=""
+                        subtitle=""
+                      />
+                    );
+                  }
+                )
               ) : (
                 <>Data Unavailable</>
               )
@@ -191,25 +207,32 @@ export const mediaDetails = ({
             templateName={"Recommendations"}
             content={
               similarData.length > 0 ? (
-                similarData.map((similarDat) => {
-                  const { id, poster_path, title, release_date } = similarDat;
-                  return (
-                    <CardSmall
-                      key={id}
-                      link={`/details/movie/${id}`}
-                      img={
-                        poster_path
-                          ? `https://image.tmdb.org/t/p/w185/${poster_path}`
-                          : "https://placehold.co/185x278?text=Data+Unavailable"
-                      }
-                      title={`${title} (${release_date.slice(0, 4)})`}
-                      size="w-36"
-                      subtitle=""
-                      flexSubtitle1=""
-                      flexSubtitle2=""
-                    />
-                  );
-                })
+                similarData.map(
+                  (similarDat: {
+                    id: number;
+                    poster_path: string;
+                    title: string;
+                    release_date: string;
+                  }) => {
+                    const { id, poster_path, title, release_date } = similarDat;
+                    return (
+                      <CardSmall
+                        key={id}
+                        link={`/details/movie/${id}`}
+                        img={
+                          poster_path
+                            ? `https://image.tmdb.org/t/p/w185/${poster_path}`
+                            : "https://placehold.co/185x278?text=Data+Unavailable"
+                        }
+                        title={`${title} (${release_date.slice(0, 4)})`}
+                        size="w-36"
+                        subtitle=""
+                        flexSubtitle1=""
+                        flexSubtitle2=""
+                      />
+                    );
+                  }
+                )
               ) : (
                 <>Data Unavailable</>
               )

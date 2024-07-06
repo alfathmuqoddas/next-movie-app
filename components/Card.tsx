@@ -1,6 +1,16 @@
 import Link from "next/link";
 
-export const CardSmall = ({
+interface ICardSmall {
+  link: string;
+  img: string;
+  title: string;
+  subtitle: string;
+  flexSubtitle1: React.ReactNode | string;
+  size: string;
+  flexSubtitle2: React.ReactNode | string;
+}
+
+export const CardSmall: React.FC<ICardSmall> = ({
   link,
   img,
   title,
@@ -33,7 +43,19 @@ export const CardSmall = ({
   );
 };
 
-export const CardHorizontal = ({
+interface ICardHorizontal {
+  img: string;
+  title: string;
+  subtitle: string;
+  subtitle2: string;
+  subtitle3: string;
+  subtitle4: string;
+  imgSize: string;
+  flexType: string;
+  cardBodyPadding: string;
+}
+
+export const CardHorizontal: React.FC<ICardHorizontal> = ({
   img,
   title,
   subtitle,
@@ -67,7 +89,19 @@ export const CardHorizontal = ({
   );
 };
 
-export const CardWrap = ({
+export interface ICardWrap {
+  id: number;
+  poster_path: string;
+  release_date: string;
+  title: string;
+  size?: string;
+  first_air_date: string;
+  name: string;
+  media_type: "movie" | "tv";
+  link?: string;
+}
+
+export const CardWrap: React.FC<ICardWrap> = ({
   id,
   poster_path,
   release_date,

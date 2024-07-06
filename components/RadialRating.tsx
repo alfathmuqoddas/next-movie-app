@@ -1,12 +1,19 @@
-const RadialRating = ({ rating, size }) => {
+interface IRadialrating {
+  rating: number;
+  size: string;
+}
+
+const RadialRating: React.FC<IRadialrating> = ({ rating, size }) => {
   if (rating <= 5) {
     return (
       <div
         className="mt-2 radial-progress bg-primary text-red-500 border-4 border-primary"
-        style={{
-          "--value": rating * 10,
-          "--size": size,
-        }}
+        style={
+          {
+            "--value": rating * 10,
+            "--size": size,
+          } as any
+        }
       >
         {Math.round(rating * 10)}
       </div>
@@ -15,10 +22,12 @@ const RadialRating = ({ rating, size }) => {
     return (
       <div
         className="mt-2 radial-progress bg-primary text-yellow-500 border-4 border-primary"
-        style={{
-          "--value": rating * 10,
-          "--size": size,
-        }}
+        style={
+          {
+            "--value": rating * 10,
+            "--size": size,
+          } as any
+        }
       >
         {Math.round(rating * 10)}
       </div>
@@ -27,10 +36,12 @@ const RadialRating = ({ rating, size }) => {
     return (
       <div
         className="mt-2 radial-progress bg-primary text-green-500 border-4 border-primary"
-        style={{
-          "--value": rating * 10,
-          "--size": size,
-        }}
+        style={
+          {
+            "--value": rating * 10,
+            "--size": size,
+          } as any
+        }
       >
         {Math.round(rating * 10)}
       </div>
