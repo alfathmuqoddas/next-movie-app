@@ -1,6 +1,6 @@
 import Layout from "../../../components/Layout";
 import Head from "next/head";
-import { lazy, Suspense } from "react";
+// import { lazy, Suspense } from "react";
 import { CardSmall } from "../../../components/Card";
 import TemplateFront from "../../../components/TemplateFront";
 import {
