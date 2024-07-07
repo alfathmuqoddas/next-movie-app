@@ -11,10 +11,10 @@ const Index = () => {
   const [errorMsg, setErrorMsg] = useState("");
 
   useEffect(() => {
-    const loadUsers = async () => {
+    const loadData = async () => {
       try {
         setIsLoading(true);
-        const trendingDatas = await getTrendingData(page);
+        const { results: trendingDatas } = await getTrendingData(page);
         setMovies((movies) => [...movies, ...trendingDatas]);
         setErrorMsg("");
       } catch (error) {
@@ -24,7 +24,7 @@ const Index = () => {
       }
     };
 
-    loadUsers();
+    loadData();
   }, [page]);
 
   const loadMore = () => {

@@ -68,17 +68,16 @@ export const CardHorizontal = ({
   );
 };
 
-export const CardWrap = ({
-  id,
-  poster_path,
-  release_date,
-  title,
-  size,
-  first_air_date,
-  name,
-  media_type,
-  link,
-}) => {
+export const CardWrap = ({ content, size, link }) => {
+  const {
+    id,
+    poster_path,
+    release_date,
+    title,
+    first_air_date,
+    name,
+    media_type,
+  } = content;
   return (
     <Link
       className="no-underline focus:bg-neutral-900 rounded-[16px] mb-2"

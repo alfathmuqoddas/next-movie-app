@@ -16,11 +16,18 @@ import Hero from "../../../components/Hero";
 
 export async function getServerSideProps(context) {
   const { id } = context.query;
-  const mediaDetails = await getMediaDetails("movie", id);
-  const { crews, casts } = await getCreditData("movie", id);
-  const picSelected = await getPicsData("movie", id);
-  const videoSelected = await getVideosData("movie", id);
-  const similarData = await getSimilarData("movie", id);
+  const [mediaDetails, credits, pic, vid, similarDataRes] = await Promise.all([
+    getMediaDetails("movie", id),
+    getCreditData("movie", id),
+    getPicsData("movie", id),
+    getVideosData("movie", id),
+    getSimilarData("movie", id),
+  ]);
+
+  const { posters: picSelected } = pic;
+  const { results: videoSelected } = vid;
+  const { results: similarData } = similarDataRes;
+  const { cast: casts, crew: crews } = credits;
 
   return {
     props: {

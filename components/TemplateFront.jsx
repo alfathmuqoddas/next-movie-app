@@ -24,7 +24,7 @@ export const TemplateFront2 = ({
                   key={contentData.id}
                   size="w-48"
                   link={contentLink}
-                  {...contentData}
+                  content={contentData}
                 />
               ))}
           </div>
@@ -57,7 +57,7 @@ export const GridTemplate = ({ content, templateName, contentLink }) => {
                 key={index}
                 size=""
                 link={contentLink}
-                {...contentData}
+                content={contentData}
               />
             ))}
         </div>

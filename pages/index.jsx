@@ -9,11 +9,25 @@ import {
 import { TemplateFront2 } from "../components/TemplateFront";
 
 export const getStaticProps = async () => {
-  const popularDatas = await getPopularData("movie");
-  const popularTvDatas = await getPopularData("tv");
-  const nowPlayingDatas = await getNowPlayingData();
-  const topRatedDatas = await getTopRatedData();
-  const trendingDatas = await getTrendingData();
+  const [
+    popularData,
+    popularTvData,
+    nowPlayingData,
+    topRatedData,
+    trendingData,
+  ] = await Promise.all([
+    getPopularData("movie"),
+    getPopularData("tv"),
+    getNowPlayingData(),
+    getTopRatedData(),
+    getTrendingData(),
+  ]);
+
+  const { results: popularDatas } = popularData;
+  const { results: popularTvDatas } = popularTvData;
+  const { results: nowPlayingDatas } = nowPlayingData;
+  const { results: trendingDatas } = trendingData;
+  const { results: topRatedDatas } = topRatedData;
 
   return {
     props: {

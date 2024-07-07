@@ -11,10 +11,10 @@ const Index = () => {
   const [errorMsg, setErrorMsg] = useState("");
 
   useEffect(() => {
-    const loadUsers = async () => {
+    const loadData = async () => {
       try {
         setIsLoading(true);
-        const popularDatas = await getPopularData("movie", page);
+        const { results: popularDatas } = await getPopularData("movie", page);
         setMovies((movies) => [...movies, ...popularDatas]);
         setErrorMsg("");
       } catch (error) {
@@ -24,7 +24,7 @@ const Index = () => {
       }
     };
 
-    loadUsers();
+    loadData();
   }, [page]);
 
   const loadMore = () => {
@@ -40,7 +40,7 @@ const Index = () => {
           <GridTemplate
             content={movies}
             templateName="Popular"
-            contentLink=""
+            contentLink="/movie"
           />
           {errorMsg && <p className="errorMsg">{errorMsg}</p>}
           <div className="load-more">

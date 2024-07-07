@@ -16,11 +16,18 @@ import Hero from "../../../components/Hero";
 
 export async function getServerSideProps(context) {
   const { id } = context.query;
-  const mediaDetails = await getMediaDetails("tv", id);
-  const { crews, casts } = await getCreditData("tv", id);
-  const picSelected = await getPicsData("tv", id);
-  const videoSelected = await getVideosData("tv", id);
-  const similarData = await getSimilarData("tv", id);
+  const [mediaDetails, credits, pic, vid, similarDataRes] = await Promise.all([
+    getMediaDetails("tv", id),
+    getCreditData("tv", id),
+    getPicsData("tv", id),
+    getVideosData("tv", id),
+    await getSimilarData("tv", id),
+  ]);
+
+  const { posters: picSelected } = pic;
+  const { results: videoSelected } = vid;
+  const { results: similarData } = similarDataRes;
+  const { cast: casts, crew: crews } = credits;
 
   return {
     props: {
@@ -140,7 +147,7 @@ export const mediaDetails = ({
                       img={
                         poster_path
                           ? `https://image.tmdb.org/t/p/w342${poster_path}`
-                          : "https://placehold.co/92x138?text=Data+Unavailable"
+                          : "https://placehold.co/185x278?text=Data+Unavailable"
                       }
                       subtitle2={`${
                         air_date ? air_date.substring(0, 4) : "Data Unavailable"
@@ -148,6 +155,7 @@ export const mediaDetails = ({
                       subtitle3={
                         <RadialRating rating={vote_average} size="2rem" />
                       }
+                      imgSize={"36"}
                     />
                   </div>
                 );
