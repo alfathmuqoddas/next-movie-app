@@ -8,6 +8,7 @@ import {
   getTrendingData,
 } from "../lib/getData";
 import { TemplateFront2 } from "../components/TemplateFront";
+import RadioButtonGroup from "../components/RadioButtonGroup";
 
 export const getStaticProps = async () => {
   const [
@@ -46,10 +47,6 @@ export const getStaticProps = async () => {
   };
 };
 
-export const RadioChildrenStyle =
-  "rounded-full bg-black text-white peer-checked:bg-white transition-all peer-checked:text-black py-1 px-4";
-export const RadioParentStyle = "peer sr-only";
-
 export default function Index({
   popularDatas,
   nowPlayingDatas,
@@ -69,6 +66,16 @@ export default function Index({
     setPopularType(e.target.value);
   };
 
+  const trendingOptions = [
+    { value: "day", label: "Today" },
+    { value: "week", label: "This Week" },
+  ];
+
+  const popularRadio = [
+    { value: "movie", label: "Movie" },
+    { value: "tv", label: "TV" },
+  ];
+
   return (
     <div>
       <Head>
@@ -79,26 +86,11 @@ export default function Index({
           <div className="flex gap-4 px-4 md:px-8">
             <h1 className="text-2xl font-bold">TRENDING</h1>
             <div className="flex border rounded-full">
-              <label className="cursor-pointer">
-                <input
-                  type="radio"
-                  value="day"
-                  checked={trendingTime === "day"}
-                  className={RadioParentStyle}
-                  onChange={handleTrendingChange}
-                />
-                <div className={RadioChildrenStyle}>Today</div>
-              </label>
-              <label className="cursor-pointer">
-                <input
-                  type="radio"
-                  value="week"
-                  checked={trendingTime === "week"}
-                  className={RadioParentStyle}
-                  onChange={handleTrendingChange}
-                />
-                <div className={RadioChildrenStyle}>This Week</div>
-              </label>
+              <RadioButtonGroup
+                contents={trendingOptions}
+                checkedFunction={trendingTime}
+                onChange={handleTrendingChange}
+              />
             </div>
           </div>
           {trendingTime === "day" ? (
@@ -114,34 +106,20 @@ export default function Index({
           <div className="flex gap-4 px-4 md:px-8">
             <h1 className="text-2xl font-bold">POPULAR</h1>
             <div className="flex border rounded-full">
-              <label className="cursor-pointer">
-                <input
-                  type="radio"
-                  value="movie"
-                  checked={popularType === "movie"}
-                  className={RadioParentStyle}
-                  onChange={handlePopularChange}
-                />
-                <div className={RadioChildrenStyle}>Movie</div>
-              </label>
-              <label className="cursor-pointer">
-                <input
-                  type="radio"
-                  value="tv"
-                  checked={popularType === "tv"}
-                  className={RadioParentStyle}
-                  onChange={handlePopularChange}
-                />
-                <div className={RadioChildrenStyle}>TV</div>
-              </label>
+              <RadioButtonGroup
+                contents={popularRadio}
+                onChange={handlePopularChange}
+                checkedFunction={popularType}
+              />
             </div>
           </div>
+
+          {popularType === "movie" ? (
+            <TemplateFront2 content={popularDatas} contentLink="/movie" />
+          ) : (
+            <TemplateFront2 content={popularTvDatas} contentLink="/tv" />
+          )}
         </div>
-        {popularType === "movie" ? (
-          <TemplateFront2 content={popularDatas} contentLink="/movie" />
-        ) : (
-          <TemplateFront2 content={popularTvDatas} contentLink="/tv" />
-        )}
 
         <div className="py-8">
           <div className="px-4 md:px-8">
