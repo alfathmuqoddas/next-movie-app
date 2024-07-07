@@ -100,7 +100,7 @@ export const mediaDetails = ({
             </div>
             <RadialRating rating={vote_average} size="4rem" />
             <div className="overview my-5">
-              <h3 className="text-2xl">Overview</h3>
+              <h3 className="text-2xl font-bold">Overview</h3>
               <p>{overview}</p>
             </div>
             <div className="mb-5">

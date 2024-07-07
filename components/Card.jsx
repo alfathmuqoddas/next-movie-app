@@ -47,7 +47,7 @@ export const CardHorizontal = ({
 }) => {
   return (
     <div
-      className={`flex active:bg-neutral-900 rounded-[16px] mb-8 max-w-screen ${flexType}`}
+      className={`flex active:bg-neutral-900 rounded-[16px] max-w-screen ${flexType}`}
     >
       <figure className={`flex-none w-${imgSize}`}>
         <img

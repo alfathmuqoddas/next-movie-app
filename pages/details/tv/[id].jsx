@@ -106,7 +106,7 @@ export const mediaDetails = ({
             </div>
             <RadialRating rating={vote_average} size="4rem" />
             <div className="overview my-5">
-              <h3 className="text-2xl">Overview</h3>
+              <h3 className="text-2xl font-bold">Overview</h3>
               <p>{overview}</p>
             </div>
             <div className="mb-5">
@@ -119,9 +119,9 @@ export const mediaDetails = ({
             </div>
           </div>
 
-          <div className="my-5">
-            <h3 className="text-2xl py-5">Seasons</h3>
-            <div className="max-h-[360px] overflow-auto">
+          <div className="my-5 px-4 border rounded-[20px] border-gray-700">
+            <h3 className="text-2xl font-bold py-5">Seasons</h3>
+            <div className="max-h-[360px] overflow-auto flex flex-col gap-4 pb-4">
               {seasons.map((season) => {
                 const {
                   air_date,

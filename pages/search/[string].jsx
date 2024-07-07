@@ -94,7 +94,7 @@ const SearchResult = ({ searchDatas, searchTVDatas, string }) => {
             </button>
           </div>
 
-          <div className="mx-auto max-w-screen-md">
+          <div className="mx-auto max-w-screen-md flex flex-col gap-4">
             {showComponent ? (
               //showing movies result
               searchDatas.length > 0 ? (

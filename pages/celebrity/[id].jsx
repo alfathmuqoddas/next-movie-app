@@ -129,8 +129,10 @@ const Celebrity = ({ personDetails, personMovieCredits, personTVCredits }) => {
             flexType="items-start"
             cardBodyPadding="pl-4"
           />
-          <TableData data={sortByDate(cast)} isMovie />
-          <TableData data={sortByDate(tvCast, false)} isMovie={false} />
+          <div className="mt-8">
+            <TableData data={sortByDate(cast)} isMovie />
+            <TableData data={sortByDate(tvCast, false)} isMovie={false} />
+          </div>
           {/* <>{JSON.stringify(personTVCredits.cast)}</> */}
         </div>
       </Layout>
