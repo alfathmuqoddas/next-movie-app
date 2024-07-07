@@ -1,11 +1,11 @@
-export interface IApiData<T> {
+export interface IApiData {
   page: number;
-  results: T[];
+  results: IResultsMovieData[];
   total_pages: number;
   total_results: number;
 }
 
-export interface IApiNpData<T> extends IApiData<T> {
+export interface IApiNpData extends IApiData {
   dates: { maximum: string; minimum: string };
 }
 
@@ -26,8 +26,8 @@ export interface IResultsMovieData {
   overview: string;
   popularity: number;
   poster_path: string;
-  release_date: string;
-  title: string;
+  release_date?: string;
+  title?: string;
   video: boolean;
   vote_average: number;
   vote_count: number;

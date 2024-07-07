@@ -3,9 +3,18 @@ import Head from "next/head";
 import { useEffect, useState } from "react";
 import { GridTemplate } from "../../components/TemplateFront";
 import { getPopularData } from "../../lib/getData";
+import {
+  IApiData,
+  IApiDataTv,
+  IResultsMovieData,
+  IResultsTvData,
+} from "../../lib/type";
+import { ICardWrap } from "../../components/Card";
 
 const Index = () => {
-  const [movies, setMovies] = useState([]);
+  const [movies, setMovies] = useState<
+    IApiData["results"] | IApiDataTv["results"]
+  >([]);
   const [page, setPage] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
@@ -15,7 +24,8 @@ const Index = () => {
       try {
         setIsLoading(true);
         const popularDatas = await getPopularData("movie", page);
-        setMovies((movies) => [...movies, ...popularDatas]);
+        const { results } = popularDatas;
+        setMovies((movies: any) => [...movies, ...results]);
         setErrorMsg("");
       } catch (error) {
         setErrorMsg("Error while loading data. Try again later.");

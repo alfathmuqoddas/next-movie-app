@@ -9,16 +9,26 @@ import {
   getTrendingData,
 } from "../lib/getData";
 import { TemplateFront2 } from "../components/TemplateFront";
-import { GetStaticProps } from "next";
+import { GetStaticProps, InferGetStaticPropsType } from "next";
+import { IResultsMovieData, IResultsTvData } from "../lib/type";
 // import RadioGroup from "../components/RadioGroup";
 
 export const getStaticProps = (async () => {
-  const popularDatas = await getPopularData("movie", 1);
-  const popularTvDatas = await getPopularData("tv", 1);
-  const nowPlayingDatas = await getNowPlayingData(1);
-  const topRatedDatas = await getTopRatedData(1);
-  const trendingDatas = await getTrendingData("day", 1);
-  const trendingDatasWeek = await getTrendingData("week", 1);
+  const [
+    popularDatas,
+    popularTvDatas,
+    nowPlayingDatas,
+    topRatedDatas,
+    trendingDatas,
+    trendingDatasWeek,
+  ] = await Promise.all([
+    getPopularData("movie", 1),
+    getPopularData("tv", 1),
+    getNowPlayingData(1),
+    getTopRatedData(1),
+    getTrendingData("day", 1),
+    getTrendingData("week", 1),
+  ]);
 
   return {
     props: {
@@ -31,7 +41,14 @@ export const getStaticProps = (async () => {
     },
     revalidate: 3600,
   };
-}) satisfies GetStaticProps;
+}) satisfies GetStaticProps<{
+  popularDatas: IResultsMovieData;
+  popularTvDatas: IResultsTvData;
+  nowPlayingDatas: IResultsMovieData;
+  topRatedDatas: IResultsMovieData;
+  trendingDatas: IResultsMovieData | IResultsTvData;
+  trendingDatasWeek: IResultsMovieData | IResultsTvData;
+}>;
 
 export default function Index({
   popularDatas,
@@ -40,7 +57,7 @@ export default function Index({
   popularTvDatas,
   trendingDatas,
   trendingDatasWeek,
-}) {
+}: InferGetStaticPropsType<typeof getStaticProps>) {
   const [isTrendingToday, setTrendingToday] = useState(true);
 
   console.log(isTrendingToday);
@@ -71,9 +88,13 @@ export default function Index({
             </Link>
           </div>
           {isTrendingToday ? (
-            <TemplateFront2 content={trendingDatas} contentLink="" />
+            <TemplateFront2 content={trendingDatas} contentLink="" size="" />
           ) : (
-            <TemplateFront2 content={trendingDatasWeek} contentLink="" />
+            <TemplateFront2
+              content={trendingDatasWeek}
+              contentLink=""
+              size=""
+            />
           )}
         </div>
         <div className="py-8">

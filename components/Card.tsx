@@ -1,6 +1,7 @@
 import Link from "next/link";
+import { IResultsMovieData, IResultsTvData } from "../lib/type";
 
-interface ICardSmall {
+export interface ICardSmall {
   link: string;
   img: string;
   title: string;
@@ -47,7 +48,7 @@ interface ICardHorizontal {
   img: string;
   title: string;
   subtitle: string;
-  subtitle2: string;
+  subtitle2: React.ReactNode | string;
   subtitle3: string;
   subtitle4: string;
   imgSize: string;

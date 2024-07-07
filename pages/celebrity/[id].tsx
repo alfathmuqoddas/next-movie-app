@@ -3,24 +3,22 @@ import Layout from "../../components/Layout";
 import Head from "next/head";
 import { CardHorizontal } from "../../components/Card";
 import { getCelebData } from "../../lib/getData";
-import { GetServerSidePropsContext } from "next";
+import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import {
   IPeopleDetails,
   IPeopleMovieCredits,
   IPeopleTvCredits,
 } from "../../lib/peopleType";
 
-export const getServerSideProps = async (
-  context: GetServerSidePropsContext
-) => {
+export const getServerSideProps = (async (context) => {
   const { id } = context?.query;
 
   const personDetails: IPeopleDetails = await getCelebData(id, "");
-  const personMovieCredits: IPeopleMovieCredits = await getCelebData(
+  const { cast }: IPeopleMovieCredits = await getCelebData(
     id,
     "/movie_credits"
   );
-  const personTVCredits: IPeopleMovieCredits = await getCelebData(
+  const { cast: tvCast }: IPeopleTvCredits = await getCelebData(
     id,
     "/tv_credits"
   );
@@ -28,11 +26,15 @@ export const getServerSideProps = async (
   return {
     props: {
       personDetails,
-      personMovieCredits,
-      personTVCredits,
+      cast,
+      tvCast,
     },
   };
-};
+}) satisfies GetServerSideProps<{
+  personDetails: IPeopleDetails;
+  cast: IPeopleMovieCredits["cast"];
+  tvCast: IPeopleTvCredits["cast"];
+}>;
 
 interface ITableData {
   data: {
@@ -119,11 +121,11 @@ function sortByDate(data: any, isMovie: boolean = true) {
   });
 }
 
-const Celebrity: React.FC<{
-  personDetails: IPeopleDetails;
-  personMovieCredits: IPeopleMovieCredits;
-  personTVCredits: IPeopleTvCredits;
-}> = ({ personDetails, personMovieCredits, personTVCredits }) => {
+function Celebrity({
+  personDetails,
+  cast,
+  tvCast,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const {
     name,
     biography,
@@ -133,8 +135,6 @@ const Celebrity: React.FC<{
     deathday,
     profile_path,
   } = personDetails;
-  const { cast } = personMovieCredits;
-  const { cast: tvCast } = personTVCredits;
 
   return (
     <>
@@ -165,6 +165,6 @@ const Celebrity: React.FC<{
       </Layout>
     </>
   );
-};
+}
 
 export default Celebrity;

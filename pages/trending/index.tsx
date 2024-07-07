@@ -6,20 +6,19 @@ import { GridTemplate } from "../../components/TemplateFront";
 import { getTrendingData } from "../../lib/getData";
 
 const Index = () => {
-  const [movies, setMovies] = useState([]);
+  const [movies, setMovies] = useState<any>([]);
   const [page, setPage] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
 
-  const searchParams = useSearchParams();
-  const search = searchParams.get("timeframe");
+  const search: any = useSearchParams().get("timeframe");
 
   useEffect(() => {
     const loadUsers = async () => {
       try {
         setIsLoading(true);
         const trendingDatas = await getTrendingData(search, page);
-        setMovies((movies) => [...movies, ...trendingDatas]);
+        setMovies((movies: any) => [...movies, ...trendingDatas]);
         setErrorMsg("");
       } catch (error) {
         setErrorMsg("Error while loading data. Try again later.");

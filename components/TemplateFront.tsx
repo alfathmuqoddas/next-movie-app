@@ -4,11 +4,13 @@ import { ICardWrap } from "./Card";
 interface ITemplateFront2 {
   content: ICardWrap[];
   contentLink: string;
+  size: string;
 }
 
 export const TemplateFront2: React.FC<ITemplateFront2> = ({
   content,
   contentLink,
+  size = "w-48",
 }) => {
   return (
     <>
@@ -19,7 +21,7 @@ export const TemplateFront2: React.FC<ITemplateFront2> = ({
               content.map((contentData) => (
                 <CardWrap
                   key={contentData.id}
-                  size="w-48"
+                  size={size}
                   link={contentLink}
                   {...contentData}
                 />
@@ -51,7 +53,7 @@ export const TemplateFront: React.FC<ITemplateFront> = ({
 };
 
 interface IGridTemplate {
-  content: ICardWrap[];
+  content: ICardWrap[] | null;
   templateName: string;
   contentLink?: string;
 }

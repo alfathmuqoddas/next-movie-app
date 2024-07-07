@@ -1,6 +1,6 @@
 import Layout from "../../../components/Layout";
 import Head from "next/head";
-import { GetServerSideProps } from "next";
+import { InferGetServerSidePropsType, GetServerSideProps } from "next";
 import { CardSmall } from "../../../components/Card";
 import TemplateFront from "../../../components/TemplateFront";
 import {
@@ -13,11 +13,14 @@ import {
 import YoutubeIcons from "../../../components/YoutubeIcons";
 import RadialRating from "../../../components/RadialRating";
 import Hero from "../../../components/Hero";
+import { ICasts, ICrews, IMovieDetails, ITvDetails } from "../../../lib/type";
+import { IVideoData } from "../../../lib/videoType";
+// import { IMediaDetails } from "../../../lib/type";
 
 export const getServerSideProps = (async (context) => {
   const { id } = context.query;
   const mediaDetails = await getMediaDetails("movie", id);
-  const { crew, cast } = await getCreditData("movie", id);
+  const creditsData = await getCreditData("movie", id);
   const picSelected = await getPicsData("movie", id);
   const videoSelected = await getVideosData("movie", id);
   const similarData = await getSimilarData("movie", id);
@@ -25,31 +28,35 @@ export const getServerSideProps = (async (context) => {
   return {
     props: {
       mediaDetails,
-      cast,
-      crew,
+      creditsData,
       picSelected,
       videoSelected,
       similarData,
     },
   };
-}) satisfies GetServerSideProps;
+}) satisfies GetServerSideProps<{
+  mediaDetails: IMovieDetails | ITvDetails;
+  creditsData: any;
+  picSelected: any;
+  videoSelected: IVideoData;
+  similarData: any;
+}>;
 
-export const mediaDetails = ({
+function MediaDetails({
   mediaDetails,
-  cast,
-  crew,
+  creditsData,
   picSelected,
   videoSelected,
   similarData,
-}) => {
+}: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const director =
     crew.length > 0 ? crew.filter((el: any) => el.job === "Director") : [];
 
   const directorName =
     director.length > 0 ? director[0].name : "data not available";
-  const titleName = `${
-    mediaDetails.original_title
-  } (${mediaDetails.release_date.substring(0, 4)}) | ALEFAST`;
+  const titleName: string = `${
+    mediaDetails?.original_title
+  } (${mediaDetails?.release_date.substring(0, 4)}) | ALEFAST`;
 
   const {
     backdrop_path,
@@ -62,7 +69,12 @@ export const mediaDetails = ({
     runtime,
     budget,
     revenue,
-  } = mediaDetails;
+  } = mediaDetails as IMovieDetails;
+
+  const { cast, crew } = creditsData;
+  const { posters } = picSelected;
+  const { results: videoResults } = videoSelected;
+  const { results: similarDataResults } = similarData;
 
   return (
     <>
@@ -145,8 +157,8 @@ export const mediaDetails = ({
           <TemplateFront
             templateName={"Pictures"}
             content={
-              picSelected.length > 0 ? (
-                picSelected.map(
+              posters.length > 0 ? (
+                posters.map(
                   (picSelect: { file_path: string }, index: number) => {
                     const { file_path } = picSelect;
                     return (
@@ -175,28 +187,24 @@ export const mediaDetails = ({
           <TemplateFront
             templateName={"Videos"}
             content={
-              videoSelected.length > 0 ? (
-                videoSelected.map(
-                  (vidSelect: { key: number; name: string }) => {
-                    const { key, name } = vidSelect;
-                    return (
-                      <CardSmall
-                        key={key}
-                        link={`https://youtube.com/watch?v=${key}`}
-                        img={`https://img.youtube.com/vi/${key}/0.jpg`}
-                        flexSubtitle1={<YoutubeIcons />}
-                        flexSubtitle2={
-                          name.length > 32
-                            ? `${name.substring(0, 32)}...`
-                            : name
-                        }
-                        size="w-64"
-                        title=""
-                        subtitle=""
-                      />
-                    );
-                  }
-                )
+              videoResults.length > 0 ? (
+                videoResults.map((vidSelect) => {
+                  const { key, name } = vidSelect;
+                  return (
+                    <CardSmall
+                      key={key}
+                      link={`https://youtube.com/watch?v=${key}`}
+                      img={`https://img.youtube.com/vi/${key}/0.jpg`}
+                      flexSubtitle1={<YoutubeIcons />}
+                      flexSubtitle2={
+                        name.length > 32 ? `${name.substring(0, 32)}...` : name
+                      }
+                      size="w-64"
+                      title=""
+                      subtitle=""
+                    />
+                  );
+                })
               ) : (
                 <>Data Unavailable</>
               )
@@ -206,33 +214,26 @@ export const mediaDetails = ({
           <TemplateFront
             templateName={"Recommendations"}
             content={
-              similarData.length > 0 ? (
-                similarData.map(
-                  (similarDat: {
-                    id: number;
-                    poster_path: string;
-                    title: string;
-                    release_date: string;
-                  }) => {
-                    const { id, poster_path, title, release_date } = similarDat;
-                    return (
-                      <CardSmall
-                        key={id}
-                        link={`/details/movie/${id}`}
-                        img={
-                          poster_path
-                            ? `https://image.tmdb.org/t/p/w185/${poster_path}`
-                            : "https://placehold.co/185x278?text=Data+Unavailable"
-                        }
-                        title={`${title} (${release_date.slice(0, 4)})`}
-                        size="w-36"
-                        subtitle=""
-                        flexSubtitle1=""
-                        flexSubtitle2=""
-                      />
-                    );
-                  }
-                )
+              similarDataResults.length > 0 ? (
+                similarDataResults.map((similarDat) => {
+                  const { id, poster_path, title, release_date } = similarDat;
+                  return (
+                    <CardSmall
+                      key={id}
+                      link={`/details/movie/${id}`}
+                      img={
+                        poster_path
+                          ? `https://image.tmdb.org/t/p/w185/${poster_path}`
+                          : "https://placehold.co/185x278?text=Data+Unavailable"
+                      }
+                      title={`${title} (${release_date.slice(0, 4)})`}
+                      size="w-36"
+                      subtitle=""
+                      flexSubtitle1=""
+                      flexSubtitle2=""
+                    />
+                  );
+                })
               ) : (
                 <>Data Unavailable</>
               )
@@ -242,6 +243,6 @@ export const mediaDetails = ({
       </Layout>
     </>
   );
-};
+}
 
-export default mediaDetails;
+export default MediaDetails;

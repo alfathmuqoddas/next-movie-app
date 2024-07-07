@@ -5,13 +5,14 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import { CardHorizontal } from "../../components/Card";
 import RadialRating from "../../components/RadialRating";
+import { GetServerSideProps, GetServerSidePropsContext } from "next";
 
-export const getServerSideProps = async (context) => {
+export const getServerSideProps = async (context: GetServerSidePropsContext) => {
   const API_KEY = process.env.API_KEY;
   const { string } = context.query;
   const queryString = `language=en-US&query=${string}&page=1&include_adult=false`;
 
-  async function fetchData(searchType) {
+  async function fetchData(searchType: string) {
     const url = `https://api.themoviedb.org/3/search/${searchType}?api_key=${API_KEY}&${queryString}`;
     const response = await fetch(url);
     const data = await response.json();
@@ -30,13 +31,23 @@ export const getServerSideProps = async (context) => {
   };
 };
 
-const SearchResult = ({ searchDatas, searchTVDatas, string }) => {
+interface ISearchResult {
+  searchDatas: any;
+  searchTVDatas: any;
+  string: any;
+}
+
+const SearchResult: React.FC<ISearchResult> = ({
+  searchDatas,
+  searchTVDatas,
+  string,
+}) => {
   const [showComponent, setShowComponent] = useState(true);
   const [searchString, setSearchString] = useState("");
 
   const router = useRouter();
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
     if (searchString) {
       router.push(`/search/${searchString}`);
@@ -98,7 +109,7 @@ const SearchResult = ({ searchDatas, searchTVDatas, string }) => {
             {showComponent ? (
               //showing movies result
               searchDatas.length > 0 ? (
-                searchDatas.map((searchDat) => {
+                searchDatas.map((searchDat: any) => {
                   const {
                     id,
                     poster_path,
@@ -126,9 +137,11 @@ const SearchResult = ({ searchDatas, searchTVDatas, string }) => {
                         subtitle2={
                           <RadialRating rating={vote_average} size="2rem" />
                         }
-                        imgSize={36}
+                        imgSize="36"
                         subtitle3=""
                         subtitle4=""
+                        flexType=""
+                        cardBodyPadding=""
                       />
                     </Link>
                   );
@@ -140,7 +153,7 @@ const SearchResult = ({ searchDatas, searchTVDatas, string }) => {
               )
             ) : //showing tv series results
             searchTVDatas.length > 0 ? (
-              searchTVDatas.map((searchTVData) => {
+              searchTVDatas.map((searchTVData: any) => {
                 const {
                   id,
                   poster_path,
@@ -168,9 +181,11 @@ const SearchResult = ({ searchDatas, searchTVDatas, string }) => {
                       subtitle2={
                         <RadialRating rating={vote_average} size="2rem" />
                       }
-                      imgSize={36}
+                      imgSize="36"
                       subtitle3=""
                       subtitle4=""
+                      cardBodyPadding=""
+                      flexType=""
                     />
                   </Link>
                 );
