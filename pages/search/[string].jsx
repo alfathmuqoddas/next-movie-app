@@ -112,7 +112,7 @@ const SearchResult = ({ searchDatas, searchTVDatas, string }) => {
                       <CardHorizontal
                         img={
                           poster_path
-                            ? `https://image.tmdb.org/t/p/w185/${poster_path}`
+                            ? `https://image.tmdb.org/t/p/w342/${poster_path}`
                             : "https://placehold.co/185x278?text=Data+Unavailable"
                         }
                         title={`${title} (${
@@ -152,7 +152,7 @@ const SearchResult = ({ searchDatas, searchTVDatas, string }) => {
                     <CardHorizontal
                       img={
                         poster_path
-                          ? `https://image.tmdb.org/t/p/w185/${poster_path}`
+                          ? `https://image.tmdb.org/t/p/w342/${poster_path}`
                           : "https://placehold.co/185x278?text=Data+Unavailable"
                       }
                       title={`${name} (${

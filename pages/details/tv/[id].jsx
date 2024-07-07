@@ -139,7 +139,7 @@ export const mediaDetails = ({
                       }
                       img={
                         poster_path
-                          ? `https://image.tmdb.org/t/p/w92${poster_path}`
+                          ? `https://image.tmdb.org/t/p/w342${poster_path}`
                           : "https://placehold.co/92x138?text=Data+Unavailable"
                       }
                       subtitle2={`${

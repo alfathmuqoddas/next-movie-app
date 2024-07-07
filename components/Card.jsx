@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 
 export const CardSmall = ({
   link,
@@ -93,7 +94,7 @@ export const CardWrap = ({
         <div className={`p-0 ${size}`}>
           <figure>
             <img
-              src={`https://image.tmdb.org/t/p/w185/${poster_path}`}
+              src={`https://image.tmdb.org/t/p/w342/${poster_path}`}
               alt="card-thumbnail"
               className="rounded-[16px] mb-2 w-full"
               loading="lazy"
