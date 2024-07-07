@@ -8,7 +8,7 @@ const Navbar = () => {
 
   const router = useRouter();
 
-  const searchMovies = async (e: React.FormEvent<HTMLFormElement>) => {
+  const searchMovies = async (e) => {
     e.preventDefault();
     router.push(`/search/${search}`);
   };

@@ -3,27 +3,13 @@ import Layout from "../../components/Layout";
 import Head from "next/head";
 import { CardHorizontal } from "../../components/Card";
 import { getCelebData } from "../../lib/getData";
-import { GetServerSidePropsContext } from "next";
-import {
-  IPeopleDetails,
-  IPeopleMovieCredits,
-  IPeopleTvCredits,
-} from "../../lib/peopleType";
 
-export const getServerSideProps = async (
-  context: GetServerSidePropsContext
-) => {
-  const { id } = context?.query;
+export const getServerSideProps = async (context) => {
+  const { id } = context.query;
 
-  const personDetails: IPeopleDetails = await getCelebData(id, "");
-  const personMovieCredits: IPeopleMovieCredits = await getCelebData(
-    id,
-    "/movie_credits"
-  );
-  const personTVCredits: IPeopleMovieCredits = await getCelebData(
-    id,
-    "/tv_credits"
-  );
+  const personDetails = await getCelebData(id, "");
+  const personMovieCredits = await getCelebData(id, "/movie_credits");
+  const personTVCredits = await getCelebData(id, "/tv_credits");
 
   return {
     props: {
@@ -34,48 +20,35 @@ export const getServerSideProps = async (
   };
 };
 
-interface ITableData {
-  data: {
-    release_date?: string;
-    first_air_date?: string;
-    id: number;
-    title: string;
-    name: string;
-    character: string;
-    vote_average: number;
-  }[];
-  isMovie: boolean;
-}
-
-const TableData: React.FC<ITableData> = (props) => {
+const TableData = ({ data, isMovie }) => {
   return (
     <div className="mb-8">
       <h1 className="text-xl mb-2 font-bold">
-        {props.isMovie ? "Film" : "Television"}
+        {isMovie ? "Film" : "Television"}
       </h1>
       <div className="overflow-x-auto">
         <table className="table table-zebra">
           <thead>
             <tr>
               <th>No.</th>
-              <th>{props.isMovie ? "Year" : "First Air Date"}</th>
+              <th>{isMovie ? "Year" : "First Air Date"}</th>
               <th>Title</th>
               <th>Role</th>
               <th>Vote Average</th>
             </tr>
           </thead>
           <tbody>
-            {props.data.length > 0 ? (
-              props.data.map((dat) => (
+            {data.length > 0 ? (
+              data.map((dat) => (
                 <tr key={dat.id} className="">
-                  <th>{props.data.indexOf(dat) + 1}</th>
+                  <th>{data.indexOf(dat) + 1}</th>
                   <td>
-                    {props.isMovie
-                      ? dat.release_date?.slice(0, 4)
-                      : dat.first_air_date?.slice(0, 4)}
+                    {isMovie
+                      ? dat.release_date.slice(0, 4)
+                      : dat.first_air_date.slice(0, 4)}
                   </td>
                   <td className="text-wrap">
-                    {props.isMovie ? (
+                    {isMovie ? (
                       <Link
                         href={`/details/movie/${dat.id}`}
                         className="active:underline hover:underline"
@@ -111,24 +84,22 @@ const TableData: React.FC<ITableData> = (props) => {
   );
 };
 
-function sortByDate(data: any, isMovie: boolean = true) {
-  return data.sort((obj1: any, obj2: any) => {
+function sortByDate(data, isMovie = true) {
+  return data.sort((obj1, obj2) => {
     const date1 = new Date(isMovie ? obj1.release_date : obj1.first_air_date);
     const date2 = new Date(isMovie ? obj2.release_date : obj2.first_air_date);
     return date1.getTime() - date2.getTime();
   });
 }
 
-const Celebrity: React.FC<{
-  personDetails: IPeopleDetails;
-  personMovieCredits: IPeopleMovieCredits;
-  personTVCredits: IPeopleTvCredits;
-}> = ({ personDetails, personMovieCredits, personTVCredits }) => {
+const Celebrity = ({ personDetails, personMovieCredits, personTVCredits }) => {
   const {
     name,
     biography,
     birthday,
+    gender,
     place_of_birth,
+    imdb_id,
     known_for_department,
     deathday,
     profile_path,
@@ -154,11 +125,11 @@ const Celebrity: React.FC<{
             subtitle2={`Known For: ${known_for_department}`}
             subtitle3={`Born: ${place_of_birth}, ${birthday}`}
             subtitle4={`Died: ${deathday}`}
-            imgSize="36"
+            imgSize={36}
             flexType="items-start"
             cardBodyPadding="pl-4"
           />
-          <TableData data={sortByDate(cast, true)} isMovie={true} />
+          <TableData data={sortByDate(cast)} isMovie />
           <TableData data={sortByDate(tvCast, false)} isMovie={false} />
           {/* <>{JSON.stringify(personTVCredits.cast)}</> */}
         </div>

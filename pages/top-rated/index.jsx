@@ -15,7 +15,7 @@ const Index = () => {
       try {
         setIsLoading(true);
         const topRatedDatas = await getTopRatedData(page);
-        setMovies((movies: any) => [...movies, ...topRatedDatas]);
+        setMovies((movies) => [...movies, ...topRatedDatas]);
         setErrorMsg("");
       } catch (error) {
         setErrorMsg("Error while loading data. Try again later.");
@@ -37,11 +37,7 @@ const Index = () => {
       </Head>
       <Layout>
         <div className="mx-auto container px-4">
-          <GridTemplate
-            content={movies}
-            templateName="Top Rated"
-            contentLink=""
-          />
+          <GridTemplate content={movies} templateName="Top Rated" />
           {errorMsg && <p className="errorMsg">{errorMsg}</p>}
           <div className="load-more">
             <button onClick={loadMore} className="btn btn-primary">

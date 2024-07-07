@@ -1,18 +1,21 @@
+import Link from "next/link";
 import { CardWrap } from "./Card";
-import { ICardWrap } from "./Card";
 
-interface ITemplateFront2 {
-  content: ICardWrap[];
-  contentLink: string;
-}
-
-export const TemplateFront2: React.FC<ITemplateFront2> = ({
+export const TemplateFront2 = ({
   content,
+  templateName,
+  seeAll,
   contentLink,
 }) => {
   return (
     <>
-      <div className="">
+      <div className="py-8">
+        <div className="flex justify-between items-center px-8">
+          <h3 className="text-2xl font-extrabold">{templateName}</h3>
+          <Link href={`/${seeAll}`}>
+            <h4 className="hover:underline">See More →</h4>
+          </Link>
+        </div>
         <div className="pt-6">
           <div className="px-8 flex flex-nowrap overflow-auto gap-4">
             {content &&
@@ -31,15 +34,7 @@ export const TemplateFront2: React.FC<ITemplateFront2> = ({
   );
 };
 
-export interface ITemplateFront {
-  content: React.ReactNode;
-  templateName: string;
-}
-
-export const TemplateFront: React.FC<ITemplateFront> = ({
-  content,
-  templateName,
-}) => {
+export const TemplateFront = ({ content, templateName }) => {
   return (
     <div className="mb-2 py-6">
       <h3 className="text-2xl">{templateName}</h3>
@@ -50,17 +45,7 @@ export const TemplateFront: React.FC<ITemplateFront> = ({
   );
 };
 
-interface IGridTemplate {
-  content: ICardWrap[];
-  templateName: string;
-  contentLink?: string;
-}
-
-export const GridTemplate: React.FC<IGridTemplate> = ({
-  content,
-  templateName,
-  contentLink,
-}) => {
+export const GridTemplate = ({ content, templateName, contentLink }) => {
   return (
     <div className="my-8">
       <h3 className="text-2xl font-bold mb-8">{templateName}</h3>
