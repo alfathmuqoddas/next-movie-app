@@ -47,7 +47,7 @@ export const getStaticProps = async () => {
 };
 
 export const RadioChildrenStyle =
-  "rounded-full bg-black text-white peer-checked:bg-white transition-all peer-checked:text-black py-1 px-6";
+  "rounded-full bg-black text-white peer-checked:bg-white transition-all peer-checked:text-black py-1 px-4";
 export const RadioParentStyle = "peer sr-only";
 
 export default function Index({
@@ -76,8 +76,8 @@ export default function Index({
       </Head>
       <Layout>
         <div className="py-8">
-          <div className="flex gap-4 px-8">
-            <h1 className="text-2xl font-bold">Trending</h1>
+          <div className="flex gap-4 px-4 md:px-8">
+            <h1 className="text-2xl font-bold">TRENDING</h1>
             <div className="flex border rounded-full">
               <label className="cursor-pointer">
                 <input
@@ -111,8 +111,8 @@ export default function Index({
         </div>
 
         <div className="py-8">
-          <div className="flex gap-4 px-8">
-            <h1 className="text-2xl font-bold">Popular</h1>
+          <div className="flex gap-4 px-4 md:px-8">
+            <h1 className="text-2xl font-bold">POPULAR</h1>
             <div className="flex border rounded-full">
               <label className="cursor-pointer">
                 <input
@@ -144,8 +144,8 @@ export default function Index({
         )}
 
         <div className="py-8">
-          <div className="px-8">
-            <h1 className="text-2xl font-bold">Now Playing</h1>
+          <div className="px-4 md:px-8">
+            <h1 className="text-2xl font-bold">NOW PLAYING</h1>
           </div>
           <TemplateFront2 content={nowPlayingDatas} contentLink="/movie" />
         </div>

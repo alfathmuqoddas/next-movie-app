@@ -17,7 +17,7 @@ export const TemplateFront2 = ({
           </Link>
         </div> */}
         <div className="pt-6">
-          <div className="px-8 flex flex-nowrap overflow-auto gap-4">
+          <div className="px-4 md:px-8 flex flex-nowrap overflow-auto gap-4">
             {content &&
               content.map((contentData) => (
                 <CardWrap
