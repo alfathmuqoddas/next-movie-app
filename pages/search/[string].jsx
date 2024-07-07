@@ -79,19 +79,22 @@ const SearchResult = ({ searchDatas, searchTVDatas, string }) => {
               </label>
             </form>
           </div>
-          <div className="text-center my-12">
-            <h1 className="text-base">
-              Search Results for <i>{`"${string}"`}</i>
-            </h1>
-            <button
-              className="btn btn-primary btn-small mt-4"
-              onClick={toggleComponent}
-            >
-              {showComponent ? "Toggle TV results" : "Toggle movie results"}
-            </button>
-          </div>
 
           <div className="mx-auto max-w-screen-md flex flex-col gap-4">
+            <div className="my-8 flex justify-center">
+              <div className="form-control">
+                <label className="label cursor-pointer flex-col w-12">
+                  <span className="label-text text-xl">
+                    {showComponent ? "Movies" : "TV"}
+                  </span>
+                  <input
+                    type="checkbox"
+                    className="toggle"
+                    onChange={toggleComponent}
+                  />
+                </label>
+              </div>
+            </div>
             {showComponent ? (
               //showing movies result
               searchDatas.length > 0 ? (
