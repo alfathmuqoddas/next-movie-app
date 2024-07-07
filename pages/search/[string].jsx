@@ -6,6 +6,7 @@ import { useState } from "react";
 import { CardHorizontal } from "../../components/Card";
 import RadialRating from "../../components/RadialRating";
 import { queryData } from "../../lib/getData";
+import { RadioChildrenStyle, RadioParentStyle } from "..";
 
 export const getServerSideProps = async (context) => {
   const { string } = context.query;
@@ -28,7 +29,7 @@ export const getServerSideProps = async (context) => {
 };
 
 const SearchResult = ({ searchDatas, searchTVDatas, string }) => {
-  const [showComponent, setShowComponent] = useState(true);
+  const [showComponent, setShowComponent] = useState("movie");
   const [searchString, setSearchString] = useState("");
 
   const router = useRouter();
@@ -42,8 +43,8 @@ const SearchResult = ({ searchDatas, searchTVDatas, string }) => {
     }
   };
 
-  const toggleComponent = () => {
-    setShowComponent(!showComponent);
+  const handleToggle = (e) => {
+    setShowComponent(e.target.value);
   };
 
   return (
@@ -52,8 +53,8 @@ const SearchResult = ({ searchDatas, searchTVDatas, string }) => {
         <title>Search results for {string} | ALEFAST</title>
       </Head>
       <Layout>
-        <div className="container px-4 mx-auto">
-          <div className="max-w-screen-md mx-auto mt-12">
+        <div className="container max-w-4xl px-4 mx-auto">
+          <div className="mt-8">
             <form onSubmit={handleSubmit}>
               <label className="input input-bordered rounded-full flex items-center gap-2">
                 <input
@@ -80,43 +81,97 @@ const SearchResult = ({ searchDatas, searchTVDatas, string }) => {
             </form>
           </div>
 
-          <div className="mx-auto max-w-screen-md flex flex-col gap-4">
-            <div className="my-8 flex justify-center">
-              <div className="form-control">
-                <label className="label cursor-pointer flex-col w-12">
-                  <span className="label-text text-xl">
-                    {showComponent ? "Movies" : "TV"}
-                  </span>
+          <div className="">
+            <div className="flex justify-center">
+              <div className="flex border rounded-full my-8">
+                <label className="cursor-pointer">
                   <input
-                    type="checkbox"
-                    className="toggle"
-                    onChange={toggleComponent}
+                    type="radio"
+                    value="movie"
+                    checked={showComponent === "movie"}
+                    className={RadioParentStyle}
+                    onChange={handleToggle}
                   />
+                  <div className={RadioChildrenStyle}>Movie</div>
+                </label>
+                <label className="cursor-pointer">
+                  <input
+                    type="radio"
+                    value="tv"
+                    checked={showComponent === "tv"}
+                    className={RadioParentStyle}
+                    onChange={handleToggle}
+                  />
+                  <div className={RadioChildrenStyle}>TV</div>
                 </label>
               </div>
             </div>
-            {showComponent ? (
-              //showing movies result
-              searchDatas.length > 0 ? (
-                searchDatas.map((searchDat) => {
+
+            <div className="flex flex-col gap-4">
+              {showComponent === "movie" ? (
+                //showing movies result
+                searchDatas.length > 0 ? (
+                  searchDatas.map((searchDat) => {
+                    const {
+                      id,
+                      poster_path,
+                      title,
+                      release_date,
+                      vote_average,
+                      overview,
+                    } = searchDat;
+                    return (
+                      <Link key={id} href={`/details/movie/${id}`}>
+                        <CardHorizontal
+                          img={
+                            poster_path
+                              ? `https://image.tmdb.org/t/p/w342/${poster_path}`
+                              : "https://placehold.co/185x278?text=Data+Unavailable"
+                          }
+                          title={`${title} (${
+                            release_date ? release_date.substring(0, 4) : "TBA"
+                          })`}
+                          subtitle={
+                            overview.length > 240
+                              ? overview.slice(0, 240) + "..."
+                              : overview
+                          }
+                          subtitle2={
+                            <RadialRating rating={vote_average} size="2rem" />
+                          }
+                          imgSize={36}
+                        />
+                      </Link>
+                    );
+                  })
+                ) : (
+                  <div className="min-h-[250px]">
+                    <p>Movies Not Exist</p>
+                  </div>
+                )
+              ) : //showing tv series results
+              searchTVDatas.length > 0 ? (
+                searchTVDatas.map((searchTVData) => {
                   const {
                     id,
                     poster_path,
-                    title,
-                    release_date,
+                    name,
+                    first_air_date,
                     vote_average,
                     overview,
-                  } = searchDat;
+                  } = searchTVData;
                   return (
-                    <Link key={id} href={`/details/movie/${id}`}>
+                    <Link key={id} href={`/details/tv/${id}`}>
                       <CardHorizontal
                         img={
                           poster_path
                             ? `https://image.tmdb.org/t/p/w342/${poster_path}`
                             : "https://placehold.co/185x278?text=Data+Unavailable"
                         }
-                        title={`${title} (${
-                          release_date ? release_date.substring(0, 4) : "TBA"
+                        title={`${name} (${
+                          first_air_date
+                            ? first_air_date.substring(0, 4)
+                            : "TBA"
                         })`}
                         subtitle={
                           overview.length > 240
@@ -133,49 +188,10 @@ const SearchResult = ({ searchDatas, searchTVDatas, string }) => {
                 })
               ) : (
                 <div className="min-h-[250px]">
-                  <p>Movies Not Exist</p>
+                  <p>TV Series Not Exist</p>
                 </div>
-              )
-            ) : //showing tv series results
-            searchTVDatas.length > 0 ? (
-              searchTVDatas.map((searchTVData) => {
-                const {
-                  id,
-                  poster_path,
-                  name,
-                  first_air_date,
-                  vote_average,
-                  overview,
-                } = searchTVData;
-                return (
-                  <Link key={id} href={`/details/tv/${id}`}>
-                    <CardHorizontal
-                      img={
-                        poster_path
-                          ? `https://image.tmdb.org/t/p/w342/${poster_path}`
-                          : "https://placehold.co/185x278?text=Data+Unavailable"
-                      }
-                      title={`${name} (${
-                        first_air_date ? first_air_date.substring(0, 4) : "TBA"
-                      })`}
-                      subtitle={
-                        overview.length > 240
-                          ? overview.slice(0, 240) + "..."
-                          : overview
-                      }
-                      subtitle2={
-                        <RadialRating rating={vote_average} size="2rem" />
-                      }
-                      imgSize={36}
-                    />
-                  </Link>
-                );
-              })
-            ) : (
-              <div className="min-h-[250px]">
-                <p>TV Series Not Exist</p>
-              </div>
-            )}
+              )}
+            </div>
           </div>
         </div>
       </Layout>

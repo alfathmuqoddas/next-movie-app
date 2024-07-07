@@ -46,6 +46,10 @@ export const getStaticProps = async () => {
   };
 };
 
+export const RadioChildrenStyle =
+  "rounded-full bg-black text-white peer-checked:bg-white transition-all peer-checked:text-black py-1 px-6";
+export const RadioParentStyle = "peer sr-only";
+
 export default function Index({
   popularDatas,
   nowPlayingDatas,
@@ -64,10 +68,6 @@ export default function Index({
   const handlePopularChange = (e) => {
     setPopularType(e.target.value);
   };
-
-  const RadioChildrenStyle =
-    "rounded-full bg-black text-white peer-checked:bg-white transition-all peer-checked:text-black py-1 px-6";
-  const RadioParentStyle = "peer sr-only";
 
   return (
     <div>
