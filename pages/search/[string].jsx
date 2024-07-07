@@ -5,21 +5,18 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import { CardHorizontal } from "../../components/Card";
 import RadialRating from "../../components/RadialRating";
+import { queryData } from "../../lib/getData";
 
 export const getServerSideProps = async (context) => {
-  const API_KEY = process.env.API_KEY;
   const { string } = context.query;
-  const queryString = `language=en-US&query=${string}&page=1&include_adult=false`;
 
-  async function fetchData(searchType) {
-    const url = `https://api.themoviedb.org/3/search/${searchType}?api_key=${API_KEY}&${queryString}`;
-    const response = await fetch(url);
-    const data = await response.json();
-    return data.results;
-  }
+  const [searchData, searchTVData] = await Promise.all([
+    queryData("movie", string),
+    queryData("tv", string),
+  ]);
 
-  const searchDatas = await fetchData("movie");
-  const searchTVDatas = await fetchData("tv");
+  const { results: searchDatas } = searchData;
+  const { results: searchTVDatas } = searchTVData;
 
   return {
     props: {

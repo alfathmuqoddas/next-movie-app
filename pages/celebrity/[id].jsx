@@ -6,10 +6,12 @@ import { getCelebData } from "../../lib/getData";
 
 export const getServerSideProps = async (context) => {
   const { id } = context.query;
-
-  const personDetails = await getCelebData(id, "");
-  const personMovieCredits = await getCelebData(id, "/movie_credits");
-  const personTVCredits = await getCelebData(id, "/tv_credits");
+  const [personDetails, personMovieCredits, personTVCredits] =
+    await Promise.all([
+      getCelebData(id, ""),
+      getCelebData(id, "/movie_credits"),
+      getCelebData(id, "/tv_credits"),
+    ]);
 
   return {
     props: {

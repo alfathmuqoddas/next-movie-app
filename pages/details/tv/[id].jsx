@@ -21,7 +21,7 @@ export async function getServerSideProps(context) {
     getCreditData("tv", id),
     getPicsData("tv", id),
     getVideosData("tv", id),
-    await getSimilarData("tv", id),
+    getSimilarData("tv", id),
   ]);
 
   const { posters: picSelected } = pic;
