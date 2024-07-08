@@ -6,7 +6,7 @@ import { useState } from "react";
 import { CardHorizontal } from "../../components/Card";
 import RadialRating from "../../components/RadialRating";
 import { queryData } from "../../lib/getData";
-import { RadioChildrenStyle, RadioParentStyle } from "..";
+import RadioButtonGroup from "../../components/RadioButtonGroup";
 
 export const getServerSideProps = async (context) => {
   const { string } = context.query;
@@ -47,6 +47,11 @@ const SearchResult = ({ searchDatas, searchTVDatas, string }) => {
     setShowComponent(e.target.value);
   };
 
+  const content = [
+    { value: "tv", label: "TV" },
+    { value: "movie", label: "Movie" },
+  ];
+
   return (
     <>
       <Head>
@@ -84,26 +89,11 @@ const SearchResult = ({ searchDatas, searchTVDatas, string }) => {
           <div className="">
             <div className="flex justify-center">
               <div className="flex border rounded-full my-8">
-                <label className="cursor-pointer">
-                  <input
-                    type="radio"
-                    value="movie"
-                    checked={showComponent === "movie"}
-                    className={RadioParentStyle}
-                    onChange={handleToggle}
-                  />
-                  <div className={RadioChildrenStyle}>Movie</div>
-                </label>
-                <label className="cursor-pointer">
-                  <input
-                    type="radio"
-                    value="tv"
-                    checked={showComponent === "tv"}
-                    className={RadioParentStyle}
-                    onChange={handleToggle}
-                  />
-                  <div className={RadioChildrenStyle}>TV</div>
-                </label>
+                <RadioButtonGroup
+                  contents={content}
+                  checkedFunction={showComponent}
+                  onChange={handleToggle}
+                />
               </div>
             </div>
 
@@ -115,7 +105,7 @@ const SearchResult = ({ searchDatas, searchTVDatas, string }) => {
                     const {
                       id,
                       poster_path,
-                      title,
+                      title: titleData,
                       release_date,
                       vote_average,
                       overview,
@@ -128,7 +118,7 @@ const SearchResult = ({ searchDatas, searchTVDatas, string }) => {
                               ? `https://image.tmdb.org/t/p/w342/${poster_path}`
                               : "https://placehold.co/185x278?text=Data+Unavailable"
                           }
-                          title={`${title} (${
+                          title={`${titleData} (${
                             release_date ? release_date.substring(0, 4) : "TBA"
                           })`}
                           subtitle={

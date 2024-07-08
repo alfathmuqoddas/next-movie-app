@@ -5,7 +5,7 @@ const RadioButtonGroup = ({ contents, onChange, checkedFunction }) => {
   return (
     <>
       {contents.map((content) => (
-        <label className="cursor-pointer">
+        <label className="cursor-pointer" key={content.value}>
           <input
             type="radio"
             value={content.value}
