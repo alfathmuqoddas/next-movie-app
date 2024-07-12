@@ -2,7 +2,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { useRouter } from "next/router";
 import SearchLogo from "./SearchLogo";
-import { SearchInputDesktop } from "./SearchInput";
+import { SearchInput } from "./SearchInput";
 
 const Navbar = () => {
   const [search, setSearch] = useState("");
@@ -66,7 +66,7 @@ const Navbar = () => {
       </div>
       <div className="navbar-end">
         <div className="hidden xl:block">
-          <SearchInputDesktop
+          <SearchInput
             onChange={(e) => setSearch(e.target.value)}
             searchValue={search}
             onSubmit={searchMovies}
@@ -76,22 +76,17 @@ const Navbar = () => {
           <label tabIndex={0} className="btn btn-ghost">
             <SearchLogo />
           </label>
-          <ul
+          <div
             tabIndex={0}
-            className="menu dropdown-content mt-1 p-1 drop-shadow-lg bg-base-100 rounded-box w-auto"
+            className="menu dropdown-content w-auto rounded-full p-2"
           >
-            <li>
-              <form className="form-control p-1" onSubmit={searchMovies}>
-                <input
-                  value={search}
-                  onChange={(e) => setSearch(e.target.value)}
-                  type="text"
-                  placeholder="Search"
-                  className="input input-bordered"
-                />
-              </form>
-            </li>
-          </ul>
+            <SearchInput
+              onChange={(e) => setSearch(e.target.value)}
+              searchValue={search}
+              onSubmit={searchMovies}
+              size="md"
+            />
+          </div>
         </div>
       </div>
     </div>

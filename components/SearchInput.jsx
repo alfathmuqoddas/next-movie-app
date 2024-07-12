@@ -1,9 +1,16 @@
 import SearchLogo from "./SearchLogo";
 
-export const SearchInputDesktop = ({ onChange, onSubmit, searchValue }) => {
+export const SearchInput = ({
+  onChange,
+  onSubmit,
+  searchValue,
+  size = "sm",
+}) => {
   return (
-    <form className="form-control my-2" onSubmit={onSubmit}>
-      <label className="input input-bordered input-sm rounded-full flex gap-2 items-center">
+    <form className="form-control" onSubmit={onSubmit}>
+      <label
+        className={`input input-bordered input-${size} rounded-full flex gap-2 items-center`}
+      >
         <input
           value={searchValue}
           onChange={onChange}
@@ -15,8 +22,4 @@ export const SearchInputDesktop = ({ onChange, onSubmit, searchValue }) => {
       </label>
     </form>
   );
-};
-
-export const SearchInputMobile = ({ onChange, onSubmit, searchValue }) => {
-  return <div>SearchInput</div>;
 };
