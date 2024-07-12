@@ -2,6 +2,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { useRouter } from "next/router";
 import SearchLogo from "./SearchLogo";
+import { SearchInputDesktop } from "./SearchInput";
 
 const Navbar = () => {
   const [search, setSearch] = useState("");
@@ -17,7 +18,7 @@ const Navbar = () => {
     <div className="navbar w-full mx-auto px-8 bg-gradient-to-b from-base-100 from-70% to-transparent">
       <div className="navbar-start">
         <div className="dropdown">
-          <label tabIndex={0} className="btn btn-ghost btn-circle">
+          <label tabIndex={0} className="btn btn-ghost btn-md rounded-full">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-5 w-5"
@@ -35,7 +36,7 @@ const Navbar = () => {
           </label>
           <ul
             tabIndex={0}
-            className="menu menu-compact dropdown-content mt-3 p-2 drop-shadow-lg bg-base-100 rounded-box w-52"
+            className="menu menu-compact dropdown-content mt-3 p-2 drop-shadow-lg bg-base-100 rounded-2xl w-52"
           >
             <li>
               <Link href="/">Home</Link>
@@ -56,12 +57,22 @@ const Navbar = () => {
         </div>
       </div>
       <div className="navbar-center">
-        <Link className="btn btn-ghost normal-case text-xl font-black" href="/">
+        <Link
+          className="btn btn-ghost rounded-full normal-case text-xl font-black"
+          href="/"
+        >
           ALEFAST
         </Link>
       </div>
       <div className="navbar-end">
-        <div className="dropdown dropdown-end">
+        <div className="hidden xl:block">
+          <SearchInputDesktop
+            onChange={(e) => setSearch(e.target.value)}
+            searchValue={search}
+            onSubmit={searchMovies}
+          />
+        </div>
+        <div className="block xl:hidden dropdown dropdown-end">
           <label tabIndex={0} className="btn btn-ghost">
             <SearchLogo />
           </label>

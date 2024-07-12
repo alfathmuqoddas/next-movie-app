@@ -1,12 +1,12 @@
-const SearchLogo = () => {
+const SearchLogo = ({ size = "22" }) => {
   return (
     <>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         x="0px"
         y="0px"
-        width="24"
-        height="24"
+        width={size}
+        height={size}
         viewBox="0 0 50 50"
         style={{ fill: "#FFFFFF" }}
       >

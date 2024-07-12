@@ -12,9 +12,9 @@ module.exports = {
     themes: [
       {
         black: {
-          ...require("daisyui/src/colors/themes")["[data-theme=black]"],
+          ...require("daisyui/src/theming/themes")["black"],
           "--rounded-box": "0.5rem",
-          "--rounded-btn": "0.5rem",
+          "--rounded-btn": "999px",
         },
       },
     ],
