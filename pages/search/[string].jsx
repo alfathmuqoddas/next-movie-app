@@ -48,8 +48,9 @@ const SearchResult = ({ searchDatas, searchTVDatas, string }) => {
   };
 
   const content = [
-    { value: "tv", label: "TV" },
     { value: "movie", label: "Movie" },
+    { value: "tv", label: "TV" },
+    ,
   ];
 
   return (

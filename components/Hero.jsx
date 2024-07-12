@@ -6,7 +6,7 @@ const Hero = ({ backdrop_path, release_date, title, tagline }) => {
       <img
         src={
           backdrop_path
-            ? `https://image.tmdb.org/t/p/original/${backdrop_path}`
+            ? `https://image.tmdb.org/t/p/w1280/${backdrop_path}`
             : "https://placehold.co/1280x720"
         }
         alt="movie backdrop"

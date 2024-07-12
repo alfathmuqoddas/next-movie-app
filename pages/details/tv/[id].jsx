@@ -229,6 +229,7 @@ export const mediaDetails = ({
                         name.length > 32 ? `${name.substring(0, 32)}...` : name
                       }
                       size="w-64"
+                      video={true}
                     />
                   );
                 })

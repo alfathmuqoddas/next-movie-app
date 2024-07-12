@@ -1,5 +1,5 @@
 import Link from "next/link";
-import Image from "next/image";
+// import Image from "next/image";
 
 export const CardSmall = ({
   link,
@@ -9,6 +9,7 @@ export const CardSmall = ({
   flexSubtitle1,
   size,
   flexSubtitle2,
+  video = false,
 }) => {
   return (
     <Link href={link} className="focus:bg-neutral-900 mb-1 rounded-[16px]">
@@ -17,14 +18,14 @@ export const CardSmall = ({
           <img
             src={img}
             alt="cardSmall-thumbnail"
-            className="rounded-[16px] mb-2"
+            className="rounded-[16px]"
             loading="lazy"
           />
         </figure>
-        <div className="p-2">
+        <div className={`${video ? "text-left py-2" : "text-center xl:py-4"}`}>
           <h5 className="font-semibold">{title}</h5>
           <h6 className="font-light">{subtitle}</h6>
-          <div className="flex">
+          <div className="flex gap-2">
             <div>{flexSubtitle1}</div>
             <div>{flexSubtitle2}</div>
           </div>
@@ -95,12 +96,12 @@ export const CardWrap = ({ content, size, link }) => {
             <img
               src={`https://image.tmdb.org/t/p/w342/${poster_path}`}
               alt="card-thumbnail"
-              className="rounded-[16px] mb-2 w-full"
+              className="rounded-[16px] w-full"
               loading="lazy"
             />
           </figure>
-          <div className="p-2">
-            <h5 className="font-semibold">
+          <div className="py-2 px-1 xl:py-4">
+            <h5 className="font-semibold text-center">
               {title ? title : name} (
               {release_date
                 ? release_date.substring(0, 4)
