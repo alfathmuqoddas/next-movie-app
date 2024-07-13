@@ -70,21 +70,18 @@ const Navbar = () => {
             onChange={(e) => setSearch(e.target.value)}
             searchValue={search}
             onSubmit={searchMovies}
+            small
           />
         </div>
-        <div className="block xl:hidden dropdown dropdown-end">
+        <div className="block xl:hidden dropdown dropdown-end ">
           <label tabIndex={0} className="btn btn-ghost">
             <SearchLogo />
           </label>
-          <div
-            tabIndex={0}
-            className="menu dropdown-content w-auto rounded-full p-2"
-          >
+          <div className="menu dropdown-content bg-black rounded-full p-2">
             <SearchInput
               onChange={(e) => setSearch(e.target.value)}
               searchValue={search}
               onSubmit={searchMovies}
-              size="md"
             />
           </div>
         </div>

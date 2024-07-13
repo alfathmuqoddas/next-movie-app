@@ -33,7 +33,7 @@ const TableData = ({ data, isMovie }) => {
           <thead>
             <tr>
               <th>No.</th>
-              <th>{isMovie ? "Year" : "First Air Date"}</th>
+              <th>Year</th>
               <th>Title</th>
               <th>Role</th>
               <th>Vote Average</th>
@@ -51,19 +51,43 @@ const TableData = ({ data, isMovie }) => {
                   </td>
                   <td className="text-wrap">
                     {isMovie ? (
-                      <Link
-                        href={`/details/movie/${dat.id}`}
-                        className="active:underline hover:underline"
-                      >
-                        {dat.title}
-                      </Link>
+                      <div className="flex items-center gap-4">
+                        <img
+                          src={
+                            dat.poster_path
+                              ? `https://image.tmdb.org/t/p/w92/${dat.poster_path}`
+                              : "https://placehold.co/92x130?text=Data+Unavailable"
+                          }
+                          alt="card-thumbnail"
+                          className="rounded-[16px]"
+                          loading="lazy"
+                        />
+                        <Link
+                          href={`/details/movie/${dat.id}`}
+                          className="active:underline hover:underline text-blue-500"
+                        >
+                          {dat.title}
+                        </Link>
+                      </div>
                     ) : (
-                      <Link
-                        href={`/details/tv/${dat.id}`}
-                        className="active:underline hover:underline"
-                      >
-                        {dat.name}
-                      </Link>
+                      <div className="flex items-center gap-4">
+                        <img
+                          src={
+                            dat.poster_path
+                              ? `https://image.tmdb.org/t/p/w92/${dat.poster_path}`
+                              : "https://placehold.co/92x130?text=Data+Unavailable"
+                          }
+                          alt="card-thumbnail"
+                          className="rounded-[16px]"
+                          loading="lazy"
+                        />
+                        <Link
+                          href={`/details/tv/${dat.id}`}
+                          className="active:underline hover:underline text-blue-500"
+                        >
+                          {dat.name}
+                        </Link>
+                      </div>
                     )}
                   </td>
                   <td className="text-wrap">{dat.character}</td>

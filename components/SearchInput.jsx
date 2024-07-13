@@ -1,15 +1,12 @@
 import SearchLogo from "./SearchLogo";
 
-export const SearchInput = ({
-  onChange,
-  onSubmit,
-  searchValue,
-  size = "sm",
-}) => {
+export const SearchInput = ({ onChange, onSubmit, searchValue, small }) => {
   return (
     <form className="form-control" onSubmit={onSubmit}>
       <label
-        className={`input input-bordered input-${size} rounded-full flex gap-2 items-center`}
+        className={`input input-bordered ${
+          small ? "input-sm" : "input-md"
+        } rounded-full flex gap-2 items-center`}
       >
         <input
           value={searchValue}
