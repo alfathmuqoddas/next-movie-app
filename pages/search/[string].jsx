@@ -61,7 +61,7 @@ const SearchResult = ({ searchDatas, searchTVDatas, string }) => {
       </Head>
       <Layout>
         <div className="container max-w-4xl px-4 mx-auto">
-          <div className="mt-8">
+          <div className="mt-8 xl:hidden">
             <form onSubmit={handleSubmit}>
               <label className="input input-bordered rounded-full flex items-center gap-2">
                 <input

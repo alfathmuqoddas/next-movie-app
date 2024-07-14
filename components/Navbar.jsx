@@ -15,7 +15,7 @@ const Navbar = () => {
   };
 
   return (
-    <div className="navbar w-full mx-auto px-8 bg-gradient-to-b from-base-100 from-70% to-transparent">
+    <div className="navbar w-full mx-auto bg-gradient-to-b from-base-100 from-70% to-transparent">
       <div className="navbar-start">
         <div className="dropdown">
           <label tabIndex={0} className="btn btn-ghost btn-md rounded-full">

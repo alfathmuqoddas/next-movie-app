@@ -51,7 +51,7 @@ const TableData = ({ data, isMovie }) => {
                   </td>
                   <td className="text-wrap">
                     {isMovie ? (
-                      <div className="flex items-center gap-4">
+                      <div className="flex flex-col md:flex-row items-center gap-4">
                         <img
                           src={
                             dat.poster_path
@@ -59,7 +59,7 @@ const TableData = ({ data, isMovie }) => {
                               : "https://placehold.co/92x130?text=Data+Unavailable"
                           }
                           alt="card-thumbnail"
-                          className="rounded-[16px]"
+                          className="rounded-lg"
                           loading="lazy"
                         />
                         <Link
@@ -70,7 +70,7 @@ const TableData = ({ data, isMovie }) => {
                         </Link>
                       </div>
                     ) : (
-                      <div className="flex items-center gap-4">
+                      <div className="flex flex-col md:flex-row items-center gap-4">
                         <img
                           src={
                             dat.poster_path
@@ -78,7 +78,7 @@ const TableData = ({ data, isMovie }) => {
                               : "https://placehold.co/92x130?text=Data+Unavailable"
                           }
                           alt="card-thumbnail"
-                          className="rounded-[16px]"
+                          className="rounded-lg"
                           loading="lazy"
                         />
                         <Link
