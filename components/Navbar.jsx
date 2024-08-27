@@ -3,8 +3,55 @@ import { useState } from "react";
 import { useRouter } from "next/router";
 import SearchLogo from "./SearchLogo";
 import { SearchInput } from "./SearchInput";
+import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import useAuthStore from "../store/useAuthStore";
+import { auth } from "../lib/firebase";
+
+const AuthButton = () => {
+  const { setUserData, userData } = useAuthStore();
+  const provider = new GoogleAuthProvider();
+  const handleSignIn = () => {
+    signInWithPopup(auth, provider).then((result) => {
+      setUserData(result.user);
+      alert("Succesfully logged in!");
+    });
+  };
+
+  const handleSignOut = () => {
+    if (confirm("Are you sure you want to log out?")) {
+      auth.signOut();
+      setUserData(null);
+    } else {
+      return;
+    }
+  };
+
+  const handleClick = () => {
+    if (userData) {
+      handleSignOut();
+    } else {
+      handleSignIn();
+    }
+  };
+
+  if (userData) {
+    return (
+      <button onClick={handleClick} className="btn btn-sm btn-ghost">
+        Logout
+      </button>
+    );
+  } else {
+    return (
+      <button onClick={handleClick} className="btn btn-sm btn-ghost">
+        Login
+      </button>
+    );
+  }
+};
 
 const Navbar = () => {
+  const { userData } = useAuthStore();
+  console.log({ userData });
   const [search, setSearch] = useState("");
 
   const router = useRouter();
@@ -85,6 +132,10 @@ const Navbar = () => {
             />
           </div>
         </div>
+        <div>
+          {userData ? <div className="mx-4">{userData.displayName}</div> : ""}
+        </div>
+        <AuthButton />
       </div>
     </div>
   );

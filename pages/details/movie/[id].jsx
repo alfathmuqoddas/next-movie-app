@@ -1,5 +1,6 @@
 import Layout from "../../../components/Layout";
 import Head from "next/head";
+import { useEffect } from "react";
 // import { lazy, Suspense } from "react";
 import { CardSmall } from "../../../components/Card";
 import TemplateFront from "../../../components/TemplateFront";
@@ -13,6 +14,18 @@ import {
 import YoutubeIcons from "../../../components/YoutubeIcons";
 import RadialRating from "../../../components/RadialRating";
 import Hero from "../../../components/Hero";
+import { db } from "../../../lib/firebase";
+import useAuthStore from "../../../store/useAuthStore";
+import {
+  collection,
+  addDoc,
+  getDocs,
+  where,
+  doc,
+  query,
+  onSnapshot,
+  deleteDoc,
+} from "firebase/firestore";
 
 export async function getServerSideProps(context) {
   const { id } = context.query;
@@ -49,6 +62,7 @@ export const mediaDetails = ({
   videoSelected,
   similarData,
 }) => {
+  const { userData } = useAuthStore();
   const director =
     crews.length > 0 ? crews.filter((el) => el.job === "Director") : [];
 
@@ -57,6 +71,70 @@ export const mediaDetails = ({
   const titleName = `${
     mediaDetails.original_title
   } (${mediaDetails.release_date.substring(0, 4)}) | ALEFAST`;
+
+  const checkDocumentExistsByField = async () => {
+    try {
+      const q = query(
+        collection(db, "alefast-favorite"),
+        where("userId", "==", userData?.uid),
+        where("movieId", "==", mediaDetails.id)
+      );
+      const querySnapshot = await getDocs(q);
+      const data = [];
+      querySnapshot.forEach((doc) => {
+        data.push(...data, doc.data());
+      });
+      if (data.length > 0) {
+        return true;
+      } else {
+        return false;
+      }
+    } catch (error) {
+      console.error("Error checking document existence:", error);
+      return false;
+    }
+  };
+
+  const addMovieToFav = async () => {
+    try {
+      await addDoc(collection(db, "alefast-favorite"), {
+        username: userData?.displayName,
+        profilePicture: userData?.photoURL,
+        userId: userData?.uid,
+        movieId: mediaDetails.id,
+        moviePoster: mediaDetails.poster_path,
+        createdAt: new Date(),
+      });
+      alert("Movie added to favorites!");
+    } catch (error) {
+      console.log(error);
+      alert("Movie already added to favorites!");
+    }
+  };
+
+  const removeMovieFromFav = async () => {
+    await deleteDoc(
+      collection(db, "alefast-favorite"),
+      where("userId", "==", userData?.uid),
+      where("movieId", "==", mediaDetails.id),
+      (doc) => {
+        alert("Movie removed from favorites!" + doc.id);
+      }
+    );
+  };
+
+  const AddMovieToFavButton = () => {
+    return (
+      <>
+        <button className="btn btn-primary" onClick={removeMovieFromFav}>
+          Remove from Favorites
+        </button>
+        <button onClick={addMovieToFav} className="btn btn-primary">
+          Add to Favorites
+        </button>
+      </>
+    );
+  };
 
   const {
     backdrop_path,
@@ -83,7 +161,7 @@ export const mediaDetails = ({
           title={title}
           tagline={tagline}
         />
-
+        <AddMovieToFavButton />
         <div className="max-w-4xl px-4 mx-auto">
           <div id="text-part">
             <div className="genres">
