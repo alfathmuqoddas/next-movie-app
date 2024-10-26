@@ -15,7 +15,6 @@ import YoutubeIcons from "../../../components/YoutubeIcons";
 import RadialRating from "../../../components/RadialRating";
 import Hero from "../../../components/Hero";
 import AddToFavorites from "../../../components/AddToFavorites";
-import useAuthStore from "../../../store/useAuthStore";
 
 export async function getServerSideProps(context) {
   const { id } = context.query;
@@ -60,8 +59,6 @@ export const mediaDetails = ({
   const titleName = `${
     mediaDetails.original_title
   } (${mediaDetails.release_date.substring(0, 4)}) | ALEFAST`;
-
-  const { userData } = useAuthStore();
 
   const {
     backdrop_path,
