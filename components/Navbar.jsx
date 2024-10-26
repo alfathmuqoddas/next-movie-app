@@ -1,3 +1,4 @@
+"use client";
 import Link from "next/link";
 import { useState } from "react";
 import { useRouter } from "next/router";
@@ -13,6 +14,7 @@ const AuthButton = () => {
   const handleSignIn = () => {
     signInWithPopup(auth, provider).then((result) => {
       setUserData(result.user);
+
       alert("Succesfully logged in!");
     });
   };
@@ -36,13 +38,19 @@ const AuthButton = () => {
 
   if (userData) {
     return (
-      <button onClick={handleClick} className="btn btn-sm btn-ghost">
+      <button
+        onClick={handleClick}
+        className="btn btn-sm bg-red-500 hover:bg-red-600 text-white"
+      >
         Logout
       </button>
     );
   } else {
     return (
-      <button onClick={handleClick} className="btn btn-sm btn-ghost">
+      <button
+        onClick={handleClick}
+        className="btn btn-sm bg-blue-500 text-white hover:bg-blue-600"
+      >
         Login
       </button>
     );
@@ -51,7 +59,7 @@ const AuthButton = () => {
 
 const Navbar = () => {
   const { userData } = useAuthStore();
-  console.log({ userData });
+  // console.log({ userData });
   const [search, setSearch] = useState("");
 
   const router = useRouter();
