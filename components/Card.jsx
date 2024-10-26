@@ -12,24 +12,26 @@ export const CardSmall = ({
   video = false,
 }) => {
   return (
-    <Link href={link} className="focus:bg-neutral-900 mb-1 rounded-[16px]">
+    <Link href={link} className="focus:bg-neutral-900 rounded-[16px]">
       <div className={size}>
         <figure>
           <img
             src={img}
             alt="cardSmall-thumbnail"
-            className="rounded-[16px]"
+            className={`rounded-[16px] ${video && "border border-neutral-900"}`}
             loading="lazy"
           />
         </figure>
-        <div className={`${video ? "text-left py-2" : "text-center xl:py-4"}`}>
-          <h5 className="font-semibold">{title}</h5>
-          <h6 className="font-light">{subtitle}</h6>
-          <div className="flex gap-2">
-            <div>{flexSubtitle1}</div>
-            <div>{flexSubtitle2}</div>
+        {title && (
+          <div
+            className={`py-2 ${video ? "flex gap-2 text-left" : "text-center"}`}
+          >
+            <h5 className="font-semibold">{title}</h5>
+            <h6 className={`font-light ${video && "font-semibold"}`}>
+              {subtitle}
+            </h6>
           </div>
-        </div>
+        )}
       </div>
     </Link>
   );
@@ -81,7 +83,7 @@ export const CardWrap = ({ content, size, link }) => {
   } = content;
   return (
     <Link
-      className="no-underline focus:bg-neutral-900 rounded-[16px] mb-2"
+      className="no-underline focus:bg-neutral-900 rounded-[16px]"
       href={
         media_type == "movie"
           ? `/details/movie/${id}`
@@ -102,11 +104,7 @@ export const CardWrap = ({ content, size, link }) => {
           </figure>
           <div className="py-2 px-1 xl:py-4">
             <h5 className="font-semibold text-center">
-              {title ? title : name} (
-              {release_date
-                ? release_date.substring(0, 4)
-                : first_air_date.substring(0, 4)}
-              )
+              {title ? title : name}
             </h5>
           </div>
         </div>
