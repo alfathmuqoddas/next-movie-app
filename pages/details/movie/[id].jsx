@@ -1,5 +1,6 @@
 import Layout from "../../../components/Layout";
 import Head from "next/head";
+// import { useEffect } from "react";
 // import { lazy, Suspense } from "react";
 import { CardSmall } from "../../../components/Card";
 import TemplateFront from "../../../components/TemplateFront";
@@ -13,6 +14,7 @@ import {
 import YoutubeIcons from "../../../components/YoutubeIcons";
 import RadialRating from "../../../components/RadialRating";
 import Hero from "../../../components/Hero";
+import AddToFavorites from "../../../components/AddToFavorites";
 
 export async function getServerSideProps(context) {
   const { id } = context.query;
@@ -60,6 +62,7 @@ export const mediaDetails = ({
 
   const {
     backdrop_path,
+    poster_path,
     release_date,
     title,
     tagline,
@@ -69,6 +72,7 @@ export const mediaDetails = ({
     runtime,
     budget,
     revenue,
+    id,
   } = mediaDetails;
 
   function formatNumber(num) {
