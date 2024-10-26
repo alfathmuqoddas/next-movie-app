@@ -84,30 +84,25 @@ export const mediaDetails = ({
           tagline={tagline}
         />
 
-        <div className="max-w-4xl px-4 mx-auto">
-          <div id="text-part">
-            <div className="genres">
-              <div className="my-2 md:my-5 flex gap-y-2 flex-wrap">
-                {genres.map((genre, index) => (
-                  <div
-                    key={index}
-                    className="btn btn-outline rounded-full mr-2"
-                  >
-                    {genre.name}
-                  </div>
-                ))}
+        <div className="max-w-4xl px-4 mx-auto flex flex-col gap-8 mt-8">
+          <div className="flex gap-y-2 flex-wrap">
+            {genres.map((genre, index) => (
+              <div key={index} className="btn btn-outline rounded-full mr-2">
+                {genre.name}
               </div>
-            </div>
-            <RadialRating rating={vote_average} size="4rem" />
-            <div className="overview my-5">
+            ))}
+          </div>
+          <RadialRating rating={vote_average} size="4rem" />
+          <div>
+            <div className="overview">
               <h3 className="text-2xl font-bold">Overview</h3>
               <p>{overview}</p>
             </div>
-            <div className="mb-5">
+            <div className="mt-4">
               <div className="crew">Director: {directorName}</div>
               <div>Runtime: {runtime} minutes</div>
-              <div>Budget: {budget.toLocaleString()} USD</div>
-              <div>Box Office: {revenue.toLocaleString()} USD</div>
+              <div>Budget: {budget} USD</div>
+              <div>Box Office: {revenue} USD</div>
               <div>Vote Average: {Math.round(vote_average * 10)}</div>
             </div>
           </div>

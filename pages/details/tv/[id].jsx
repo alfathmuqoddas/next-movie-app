@@ -90,26 +90,21 @@ export const mediaDetails = ({
           title={name}
           tagline={tagline}
         />
-        <div className="max-w-4xl px-4 mx-auto">
-          <div id="text-part">
-            <div className="genres">
-              <div className="my-2 md:my-5 flex gap-y-2 flex-wrap">
-                {genres.map((genre, index) => (
-                  <div
-                    key={index}
-                    className="btn btn-outline rounded-full mr-2"
-                  >
-                    {genre.name}
-                  </div>
-                ))}
+        <div className="max-w-4xl px-4 mx-auto flex flex-col gap-8 mt-8">
+          <div className="flex gap-y-2 flex-wrap">
+            {genres.map((genre, index) => (
+              <div key={index} className="btn btn-outline rounded-full mr-2">
+                {genre.name}
               </div>
-            </div>
-            <RadialRating rating={vote_average} size="4rem" />
-            <div className="overview my-5">
+            ))}
+          </div>
+          <RadialRating rating={vote_average} size="4rem" />
+          <div>
+            <div className="overview">
               <h3 className="text-2xl font-bold">Overview</h3>
               <p>{overview}</p>
             </div>
-            <div className="mb-5">
+            <div className="mt-4">
               <div className="crew">Director: {directorName}</div>
               <div>Runtime: {episode_run_time[0]} minutes</div>
               <div>Number of Episodes: {number_of_episodes}</div>
@@ -119,8 +114,8 @@ export const mediaDetails = ({
             </div>
           </div>
 
-          <div className="my-5 px-4 border rounded-[20px] border-gray-700">
-            <h3 className="text-2xl font-bold py-5">Seasons</h3>
+          <div className="px-4 border rounded-[20px] border-gray-700">
+            <h3 className="text-2xl font-bold py-4">Seasons</h3>
             <div className="max-h-[360px] overflow-auto flex flex-col gap-4 pb-4">
               {seasons.map((season) => {
                 const {
