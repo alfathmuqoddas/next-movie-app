@@ -34,6 +34,8 @@ const AuthButton = () => {
     }
   };
 
+  console.log({ userData });
+
   if (userData) {
     return (
       <div className="dropdown dropdown-end">

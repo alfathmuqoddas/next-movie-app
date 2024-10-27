@@ -184,7 +184,7 @@ export const mediaDetails = ({
             )}
           </TemplateFront>
 
-          <hr className="border-neutral-900" />
+          <hr className="border-neutral-500" />
 
           <TemplateFront templateName={"Pictures"}>
             {picSelected.length > 0 ? (
@@ -208,7 +208,7 @@ export const mediaDetails = ({
             )}
           </TemplateFront>
 
-          <hr className="border-neutral-900" />
+          <hr className="border-neutral-500" />
 
           <TemplateFront templateName={"Videos"}>
             {videoSelected.length > 0 ? (
@@ -233,7 +233,7 @@ export const mediaDetails = ({
             )}
           </TemplateFront>
 
-          <hr className="border-neutral-900" />
+          <hr className="border-neutral-500" />
 
           <TemplateFront templateName={"Recommendations"}>
             {similarData.length > 0 ? (
