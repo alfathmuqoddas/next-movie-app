@@ -128,7 +128,7 @@ export const mediaDetails = ({
             </div>
           </div>
 
-          <div className="px-4 border rounded-[20px] border-neutral-900">
+          <div className="px-4 border rounded-[20px] border-neutral-500">
             <h3 className="text-2xl font-bold py-4">Seasons</h3>
             <div className="max-h-[360px] overflow-auto flex flex-col gap-4 pb-4">
               {seasons.map((season) => {
@@ -188,7 +188,7 @@ export const mediaDetails = ({
                     }
                     title={name}
                     subtitle={character}
-                    size="w-36"
+                    size="w-32"
                     link={`/celebrity/${id}`}
                   />
                 );

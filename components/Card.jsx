@@ -10,6 +10,7 @@ export const CardSmall = ({
   size,
   flexSubtitle2,
   video = false,
+  cast = false,
 }) => {
   return (
     <Link href={link} className="focus:bg-neutral-900 rounded-[16px]">

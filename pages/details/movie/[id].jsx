@@ -139,8 +139,9 @@ export const mediaDetails = ({
                     }
                     title={name}
                     subtitle={character}
-                    size="w-36"
+                    size="w-32"
                     link={`/celebrity/${id}`}
+                    cast
                   />
                 );
               })
