@@ -1,31 +1,19 @@
-"use client";
-
-import { useEffect } from "react";
-import {
-  signInWithRedirect,
-  GoogleAuthProvider,
-  getRedirectResult,
-} from "firebase/auth";
+import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import useAuthStore from "../store/useAuthStore";
 import { auth } from "../lib/firebase";
 
 const AuthButton = () => {
   const { setUserData, userData } = useAuthStore();
   const provider = new GoogleAuthProvider();
-
   const handleSignIn = () => {
-    signInWithRedirect(auth, provider).catch((error) => {
-      console.log(error);
-    });
-
-    getRedirectResult(auth)
+    signInWithPopup(auth, provider)
       .then((result) => {
-        if (result) {
-          setUserData(result.user);
-        }
+        setUserData(result.user);
+
+        alert("Succesfully logged in!");
       })
       .catch((error) => {
-        console.log(error);
+        alert("Error: " + error.message);
       });
   };
 
@@ -45,8 +33,6 @@ const AuthButton = () => {
       handleSignIn();
     }
   };
-
-  console.log({ userData });
 
   if (userData) {
     return (
