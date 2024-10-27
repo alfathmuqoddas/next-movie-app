@@ -26,28 +26,32 @@ const Comments = ({ comments, movieId }) => {
                 <div className="flex gap-4">
                   <figure>
                     <img
-                      src={comment.userDisplayPicture}
+                      src={
+                        comment?.userDisplayPicture
+                          ? comment.userDisplayPicture
+                          : `https://avatar.iran.liara.run/username?username=${comment.userName}`
+                      }
                       alt="user-profile"
-                      className="w-8 h-8 rounded-full"
+                      className="w-8 h-8 rounded-full mt-2"
                     />
                   </figure>
                   <div className="flex flex-col gap-2">
                     <div>
-                      <div className="text-lg font-semibold">
-                        {comment.userName}
-                      </div>
+                      <div className="font-semibold">{comment.userName}</div>
                       <div className="text-xs">{comment.createdAt}</div>
                     </div>
                     <div>{comment.content}</div>
 
                     {userData?.uid === comment.userId ? (
-                      <div
-                        className="text-red-500 text-sm hover:cursor-pointer hover:text-red-600"
-                        onClick={() =>
-                          handleDeleteComment(movieId, comment.id, router)
-                        }
-                      >
-                        Delete
+                      <div>
+                        <button
+                          onClick={() =>
+                            handleDeleteComment(movieId, comment.id, router)
+                          }
+                          className="text-red-500 text-sm hover:cursor-pointer hover:text-red-600"
+                        >
+                          Delete
+                        </button>
                       </div>
                     ) : (
                       <></>
