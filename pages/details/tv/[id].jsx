@@ -101,7 +101,7 @@ export const mediaDetails = ({
           title={name}
           tagline={tagline}
         />
-        <div className="max-w-4xl px-4 mx-auto flex flex-col gap-12 mt-12">
+        <div className="max-w-4xl px-4 mx-auto flex flex-col gap-12 my-12">
           <div className="flex flex-col gap-8">
             <div className="flex gap-y-2 flex-wrap">
               {genres.map((genre, index) => (
@@ -171,7 +171,9 @@ export const mediaDetails = ({
               })}
             </div>
           </div>
+        </div>
 
+        <div className="md:max-w-4xl md:px-4 md:mx-auto flex flex-col gap-12">
           <TemplateFront templateName={"Cast"}>
             {casts.length > 0 ? (
               casts.map((cast, index) => {
@@ -196,8 +198,6 @@ export const mediaDetails = ({
             )}
           </TemplateFront>
 
-          <hr className="border-neutral-500" />
-
           <TemplateFront templateName={"Pictures"}>
             {picSelected.length > 0 ? (
               picSelected.map((picSelect, index) => {
@@ -219,8 +219,6 @@ export const mediaDetails = ({
               <>Data Unavailable</>
             )}
           </TemplateFront>
-
-          <hr className="border-neutral-500" />
 
           <TemplateFront templateName={"Videos"}>
             {videoSelected.length > 0 ? (
@@ -245,8 +243,6 @@ export const mediaDetails = ({
             )}
           </TemplateFront>
 
-          <hr className="border-neutral-500" />
-
           <TemplateFront templateName={"Recommendations"}>
             {similarData.length > 0 ? (
               similarData.map((similarDat, index) => {
@@ -269,7 +265,9 @@ export const mediaDetails = ({
               <>Data Unavailable</>
             )}
           </TemplateFront>
-          <hr className="border-neutral-500" />
+        </div>
+
+        <div className="max-w-4xl px-4 mx-auto mt-12">
           <Comments comments={comments} movieId={id} />
         </div>
       </Layout>

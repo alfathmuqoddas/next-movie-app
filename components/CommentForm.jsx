@@ -38,7 +38,7 @@ const CommentForm = ({ id }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="my-8">
+    <form onSubmit={handleSubmit} className="mb-8">
       <input
         type="text"
         value={content}

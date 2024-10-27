@@ -37,9 +37,9 @@ export const TemplateFront2 = ({
 export const TemplateFront = ({ children, templateName }) => {
   return (
     <div className="">
-      <h3 className="text-2xl font-bold mb-4">{templateName}</h3>
+      <h3 className="px-4 md:px-0 text-2xl font-bold mb-4">{templateName}</h3>
       <div className="overflow-auto">
-        <div className="flex flex-nowrap gap-4">{children}</div>
+        <div className="flex flex-nowrap gap-4 mx-4 md:mx-0">{children}</div>
       </div>
     </div>
   );

@@ -18,7 +18,7 @@ export const CardSmall = ({
           <img
             src={img}
             alt="cardSmall-thumbnail"
-            className={`rounded-[16px] ${video && "border border-neutral-900"}`}
+            className={`rounded-[16px] ${video && "border border-neutral-500"}`}
             loading="lazy"
           />
         </figure>
