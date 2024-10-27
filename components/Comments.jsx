@@ -18,7 +18,7 @@ const Comments = ({ comments, movieId }) => {
       {comments.length > 0 ? (
         <div className="flex flex-col gap-4">
           {comments.map((comment) => (
-            <div className="flex justify-between gap-4">
+            <div className="flex justify-between gap-4" key={comment.id}>
               <div
                 key={comment.id}
                 className="flex flex-col gap-1 rounded-2xl w-full"
