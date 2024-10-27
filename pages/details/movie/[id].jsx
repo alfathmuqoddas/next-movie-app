@@ -14,7 +14,7 @@ import {
 import YoutubeIcons from "../../../components/YoutubeIcons";
 import RadialRating from "../../../components/RadialRating";
 import Hero from "../../../components/Hero";
-import AddToFavorites from "../../../components/AddToFavorites";
+// import AddToFavorites from "../../../components/AddToFavorites";
 
 export async function getServerSideProps(context) {
   const { id } = context.query;
