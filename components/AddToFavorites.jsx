@@ -1,5 +1,5 @@
 "use client";
-
+import { useState } from "react";
 import {
   collection,
   query,
@@ -13,8 +13,10 @@ import { db } from "../lib/firebase";
 
 const AddToFavorites = ({ payload, type = "movie" }) => {
   const { userData } = useAuthStore();
+  const [loading, setLoading] = useState(false);
 
   const handleAddToFavorites = async () => {
+    setLoading(true);
     try {
       let favoritesCollection;
       if (type === "movie") {
@@ -33,13 +35,15 @@ const AddToFavorites = ({ payload, type = "movie" }) => {
         );
       } else {
         alert("Invalid content type specified");
+        setLoading(false);
         return;
       }
 
-      const q = query(favoritesCollection, where("movieId", "==", payload.id));
+      const q = query(favoritesCollection, where("id", "==", payload.id));
       const snapshot = await getDocs(q);
       if (!snapshot.empty) {
         alert("You have already submitted this movie to favorites.");
+        setLoading(false);
         return;
       }
       const docRef = await addDoc(favoritesCollection, {
@@ -49,26 +53,28 @@ const AddToFavorites = ({ payload, type = "movie" }) => {
         createdAt: serverTimestamp(),
       });
       alert("Movie added to favorites successfully!");
+      setLoading(false);
     } catch (error) {
       console.error("Error adding to favorites: ", error);
       alert("Error adding to favorites: ", error);
+      setLoading(false);
     }
   };
 
-  if (userData) {
-    return (
-      <div>
-        <button
-          onClick={handleAddToFavorites}
-          className="hover:cursor-pointer border rounded-full px-2 hover:bg-white hover:text-black transition-colors duration-300"
-        >
-          Add to Favorites +
-        </button>
-      </div>
-    );
-  } else {
+  if (!userData) {
     return <div>Login to add to favorites</div>;
   }
+
+  return (
+    <div>
+      <button
+        onClick={handleAddToFavorites}
+        className="hover:cursor-pointer border rounded-full px-2 hover:bg-white hover:text-black transition-colors duration-300"
+      >
+        {loading ? "loading..." : "Add to Favorites +"}
+      </button>
+    </div>
+  );
 };
 
 export default AddToFavorites;
