@@ -69,6 +69,7 @@ export const mediaDetails = ({
     number_of_seasons,
     networks,
     seasons,
+    id,
   } = mediaDetails;
 
   const director =
@@ -264,7 +265,7 @@ export const mediaDetails = ({
             )}
           </TemplateFront>
           <hr className="border-neutral-500" />
-          <Comments comments={comments} />
+          <Comments comments={comments} movieId={id} />
         </div>
       </Layout>
     </>

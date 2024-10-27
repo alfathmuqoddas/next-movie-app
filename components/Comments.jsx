@@ -1,22 +1,60 @@
-const Comments = ({ comments }) => {
+import CommentForm from "./CommentForm";
+import useAuthStore from "../store/useAuthStore";
+import { handleDeleteComment } from "../lib/getData";
+import { useRouter } from "next/router";
+
+const Comments = ({ comments, movieId }) => {
+  const { userData } = useAuthStore();
+  const router = useRouter();
+
   return (
     <div>
       <h2 className="text-2xl font-bold mb-4">Comments</h2>
+      {userData ? (
+        <CommentForm id={movieId} />
+      ) : (
+        <div className="my-4">Login to add a comment</div>
+      )}
       {comments.length > 0 ? (
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-4">
           {comments.map((comment) => (
-            <div key={comment.id} className="flex flex-col gap-2">
-              <div className="flex items-center gap-4">
-                <figure>
-                  <img
-                    src={comment.userDisplayPicture}
-                    alt="user-profile"
-                    className="w-8 h-8 rounded-full"
-                  />
-                </figure>
-                <div className="text-xl font-semibold">{comment.userName}</div>
+            <div className="flex justify-between gap-4">
+              <div
+                key={comment.id}
+                className="flex flex-col gap-1 rounded-2xl w-full"
+              >
+                <div className="flex gap-4">
+                  <figure>
+                    <img
+                      src={comment.userDisplayPicture}
+                      alt="user-profile"
+                      className="w-8 h-8 rounded-full"
+                    />
+                  </figure>
+                  <div className="flex flex-col gap-2">
+                    <div>
+                      <div className="text-lg font-semibold">
+                        {comment.userName}
+                      </div>
+                      <div className="text-xs">{comment.createdAt}</div>
+                    </div>
+                    <div>{comment.content}</div>
+
+                    {userData?.uid === comment.userId ? (
+                      <div
+                        className="text-red-500 text-sm hover:cursor-pointer hover:text-red-600"
+                        onClick={() =>
+                          handleDeleteComment(movieId, comment.id, router)
+                        }
+                      >
+                        Delete
+                      </div>
+                    ) : (
+                      <></>
+                    )}
+                  </div>
+                </div>
               </div>
-              <div>{comment.content}</div>
             </div>
           ))}
         </div>

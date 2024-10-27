@@ -240,7 +240,7 @@ export const mediaDetails = ({
 
           <hr className="border-neutral-500" />
 
-          <Comments comments={comments} />
+          <Comments comments={comments} movieId={id} />
         </div>
       </Layout>
     </>
