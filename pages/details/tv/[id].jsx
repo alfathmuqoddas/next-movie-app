@@ -15,6 +15,7 @@ import YoutubeIcons from "../../../components/YoutubeIcons";
 import RadialRating from "../../../components/RadialRating";
 import Hero from "../../../components/Hero";
 import Comments from "../../../components/Comments";
+import AddToFavorites from "../../../components/AddToFavorites";
 
 export async function getServerSideProps(context) {
   const { id } = context.query;
@@ -60,6 +61,7 @@ export const mediaDetails = ({
     first_air_date,
     last_air_date,
     backdrop_path,
+    poster_path,
     tagline,
     genres,
     overview,
@@ -71,6 +73,8 @@ export const mediaDetails = ({
     seasons,
     id,
   } = mediaDetails;
+
+  const payload = { id, title: name, poster_path };
 
   const director =
     crews.length > 0 ? crews.filter((el) => el.job === "Director") : [];
@@ -107,6 +111,7 @@ export const mediaDetails = ({
               ))}
             </div>
             <RadialRating rating={vote_average} size="4rem" />
+            <AddToFavorites payload={payload} type="tv" />
             <div>
               <div className="overview">
                 <h3 className="text-2xl font-bold">Overview</h3>

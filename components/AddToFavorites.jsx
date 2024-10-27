@@ -1,85 +1,74 @@
-import { useState, useEffect } from "react";
-import { MdFavorite, MdFavoriteBorder } from "react-icons/md";
-import { db } from "../lib/firebase";
+"use client";
+
 import {
-  arrayUnion,
-  doc,
-  updateDoc,
+  collection,
+  query,
+  where,
+  getDocs,
+  addDoc,
   serverTimestamp,
-  getDoc,
 } from "firebase/firestore";
 import useAuthStore from "../store/useAuthStore";
+import { db } from "../lib/firebase";
 
-const AddToFavorites = ({ payload }) => {
+const AddToFavorites = ({ payload, type = "movie" }) => {
   const { userData } = useAuthStore();
-  //   const { uid } = userData;
-  const [isFavorite, setIsFavorite] = useState(false);
-  const { id, poster_path, title, releaseYear } = payload;
 
-  const addMovieToFavorite = async () => {
-    await updateDoc(doc(db, "movies-favorite", id), {
-      users: arrayUnion({
-        uid: uid,
-        displayName: userData.displayName,
-        photoURL: userData.photoURL,
-        dateAdded: serverTimestamp(),
-      }),
-    });
+  const handleAddToFavorites = async () => {
+    try {
+      let favoritesCollection;
+      if (type === "movie") {
+        favoritesCollection = collection(
+          db,
+          "movieFavorites",
+          userData.uid.toString(),
+          "favorites"
+        );
+      } else if (type === "tv") {
+        favoritesCollection = collection(
+          db,
+          "tvFavorites",
+          userData.uid.toString(),
+          "favorites"
+        );
+      } else {
+        alert("Invalid content type specified");
+        return;
+      }
+
+      const q = query(favoritesCollection, where("movieId", "==", payload.id));
+      const snapshot = await getDocs(q);
+      if (!snapshot.empty) {
+        alert("You have already submitted this movie to favorites.");
+        return;
+      }
+      const docRef = await addDoc(favoritesCollection, {
+        id: payload.id,
+        title: payload.title,
+        poster_path: payload.poster_path,
+        createdAt: serverTimestamp(),
+      });
+      alert("Movie added to favorites successfully!");
+    } catch (error) {
+      console.error("Error adding to favorites: ", error);
+      alert("Error adding to favorites: ", error);
+    }
   };
 
-  const addToUserFavorites = async () => {
-    await updateDoc(doc(db, "user-favorites", uid), {
-      movies: arrayUnion({
-        id: id,
-        poster_path: poster_path,
-        title: title,
-        releaseYear: releaseYear,
-        dateAdded: serverTimestamp(),
-      }),
-    });
-  };
-
-  const removeUserFromMoviesFavorites = async () => {
-    await updateDoc(doc(db, "movies-favorite", id), {
-      users: arrayRemove({
-        uid: uid,
-        displayName: userData.displayName,
-        photoURL: userData.photoURL,
-      }),
-    });
-  };
-
-  const addToFavorites = async () => {
-    await addMovieToFavorite();
-    await addToUserFavorites();
-  };
-
-  //   useEffect(() => {
-  //     const docRef = doc(db, "movies-favorite", id);
-  //     const getUsersWhoFavTheMovie = async () => {
-  //       const favMovie = await getDoc(docRef);
-  //       setIsFavorite(favMovie.data().users.includes(uid));
-  //     };
-  //     getUsersWhoFavTheMovie();
-  //   }, []);
-
-  return (
-    <>
-      {userData ? (
-        <div>
-          {isFavorite ? (
-            <button onClick={removeUserFromMoviesFavorites}>
-              Remove from Favorites
-            </button>
-          ) : (
-            <button onClick={addToFavorites}>Add To Favorites</button>
-          )}
-        </div>
-      ) : (
-        <></>
-      )}
-    </>
-  );
+  if (userData) {
+    return (
+      <div>
+        <button
+          onClick={handleAddToFavorites}
+          className="hover:cursor-pointer border rounded-full px-2 hover:bg-white hover:text-black transition-colors duration-300"
+        >
+          Add to Favorites +
+        </button>
+      </div>
+    );
+  } else {
+    return <div>Login to add to favorites</div>;
+  }
 };
 
 export default AddToFavorites;

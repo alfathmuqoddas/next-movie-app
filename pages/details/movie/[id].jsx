@@ -16,7 +16,8 @@ import YoutubeIcons from "../../../components/YoutubeIcons";
 import RadialRating from "../../../components/RadialRating";
 import Hero from "../../../components/Hero";
 import Comments from "../../../components/Comments.jsx";
-// import AddToFavorites from "../../../components/AddToFavorites";
+import { formatNumber } from "../../../lib/helper";
+import AddToFavorites from "../../../components/AddToFavorites";
 
 export async function getServerSideProps(context) {
   const { id } = context.query;
@@ -81,24 +82,7 @@ export const mediaDetails = ({
     id,
   } = mediaDetails;
 
-  function formatNumber(num) {
-    let formattedNum;
-
-    if (num >= 1e9) {
-      formattedNum = (num / 1e9).toFixed(2) + " billion";
-    } else if (num >= 1e6) {
-      formattedNum = (num / 1e6).toFixed(2) + " million";
-    } else if (num >= 1e3) {
-      formattedNum = (num / 1e3).toFixed(2) + " thousand";
-    } else {
-      formattedNum = num.toString();
-    }
-
-    // Remove trailing zeros
-    formattedNum = formattedNum.replace(/\.00\b/, "");
-
-    return formattedNum;
-  }
+  const payload = { id, title, poster_path };
 
   return (
     <>
@@ -123,6 +107,7 @@ export const mediaDetails = ({
               ))}
             </div>
             <RadialRating rating={vote_average} size="4rem" />
+            <AddToFavorites payload={payload} />
             <div>
               <div className="overview">
                 <h3 className="text-2xl font-bold">Overview</h3>
