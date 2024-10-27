@@ -9,10 +9,12 @@ import {
   getCreditData,
   getVideosData,
   getSimilarData,
+  getComments,
 } from "../../../lib/getData";
 import YoutubeIcons from "../../../components/YoutubeIcons";
 import RadialRating from "../../../components/RadialRating";
 import Hero from "../../../components/Hero";
+import Comments from "../../../components/Comments";
 
 export async function getServerSideProps(context) {
   const { id } = context.query;
@@ -29,6 +31,8 @@ export async function getServerSideProps(context) {
   const { results: similarData } = similarDataRes;
   const { cast: casts, crew: crews } = credits;
 
+  const comments = await getComments(id);
+
   return {
     props: {
       mediaDetails,
@@ -37,6 +41,7 @@ export async function getServerSideProps(context) {
       picSelected,
       videoSelected,
       similarData,
+      comments,
     },
   };
 }
@@ -48,6 +53,7 @@ export const mediaDetails = ({
   picSelected,
   videoSelected,
   similarData,
+  comments,
 }) => {
   const {
     name,
@@ -257,6 +263,8 @@ export const mediaDetails = ({
               <>Data Unavailable</>
             )}
           </TemplateFront>
+          <hr className="border-neutral-500" />
+          <Comments comments={comments} />
         </div>
       </Layout>
     </>

@@ -15,7 +15,7 @@ import {
 import YoutubeIcons from "../../../components/YoutubeIcons";
 import RadialRating from "../../../components/RadialRating";
 import Hero from "../../../components/Hero";
-import Comments from "../../../components/Comments.jsx.bak";
+import Comments from "../../../components/Comments.jsx";
 // import AddToFavorites from "../../../components/AddToFavorites";
 
 export async function getServerSideProps(context) {
@@ -240,32 +240,7 @@ export const mediaDetails = ({
 
           <hr className="border-neutral-500" />
 
-          <div>
-            <h2 className="text-2xl font-bold mb-4">Comments</h2>
-            {comments.length > 0 ? (
-              <div className="flex flex-col gap-2">
-                {comments.map((comment) => (
-                  <div key={comment.id} className="flex flex-col gap-2">
-                    <div className="flex items-center gap-4">
-                      <figure>
-                        <img
-                          src={comment.userDisplayPicture}
-                          alt="user-profile"
-                          className="w-8 h-8 rounded-full"
-                        />
-                      </figure>
-                      <div className="text-xl font-semibold">
-                        {comment.userName}
-                      </div>
-                    </div>
-                    <div>{comment.content}</div>
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <p>No comments yet</p>
-            )}
-          </div>
+          <Comments comments={comments} />
         </div>
       </Layout>
     </>
