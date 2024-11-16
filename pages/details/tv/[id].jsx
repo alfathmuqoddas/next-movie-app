@@ -9,8 +9,8 @@ import {
   getCreditData,
   getVideosData,
   getSimilarData,
-  getComments,
 } from "../../../lib/getData";
+import { getComments } from "../../../lib/firebaseQuery";
 import YoutubeIcons from "../../../components/YoutubeIcons";
 import RadialRating from "../../../components/RadialRating";
 import Hero from "../../../components/Hero";
@@ -34,16 +34,51 @@ export async function getServerSideProps(context) {
 
   const comments = await getComments(id);
 
-  return {
-    props: {
-      mediaDetails,
-      casts,
-      crews,
-      picSelected,
-      videoSelected,
-      similarData,
-      comments,
+  const props = {
+    mediaDetails: {
+      name: mediaDetails.name,
+      first_air_date: mediaDetails.first_air_date,
+      last_air_date: mediaDetails.last_air_date,
+      backdrop_path: mediaDetails.backdrop_path,
+      poster_path: mediaDetails.poster_path,
+      tagline: mediaDetails.tagline,
+      genres: mediaDetails.genres,
+      overview: mediaDetails.overview,
+      vote_average: mediaDetails.vote_average,
+      episode_run_time: mediaDetails.episode_run_time,
+      number_of_episodes: mediaDetails.number_of_episodes,
+      number_of_seasons: mediaDetails.number_of_seasons,
+      networks: mediaDetails.networks,
+      seasons: mediaDetails.seasons,
+      id: mediaDetails.id,
     },
+    casts: casts.map((c) => ({
+      profile_path: c.profile_path,
+      name: c.name,
+      character: c.character,
+      id: c.id,
+    })),
+    crews: crews.filter((el) => el.job === "Director"),
+    picSelected: picSelected.slice(0, 50).map((pic) => ({
+      file_path: pic.file_path,
+    })),
+    videoSelected: videoSelected.map((video) => ({
+      key: video.key,
+      name: video.name,
+    })),
+    similarData: similarData.map((similar) => ({
+      id: similar.id,
+      poster_path: similar.poster_path,
+      name: similar.name,
+    })),
+    comments,
+  };
+
+  const dataSize = JSON.stringify(props).length;
+  console.log(`Data size: ${dataSize / 1024} KB`);
+
+  return {
+    props,
   };
 }
 
@@ -76,11 +111,7 @@ export const mediaDetails = ({
 
   const payload = { id, title: name, poster_path };
 
-  const director =
-    crews.length > 0 ? crews.filter((el) => el.job === "Director") : [];
-
-  const directorName =
-    director.length > 0 ? director[0].name : "data not available";
+  const directorName = crews.length > 0 ? crews[0].name : "data not available";
   const titleName = `${mediaDetails.name} (${first_air_date.substring(
     0,
     4
@@ -246,7 +277,7 @@ export const mediaDetails = ({
           <TemplateFront templateName={"Recommendations"}>
             {similarData.length > 0 ? (
               similarData.map((similarDat, index) => {
-                const { id, poster_path, name, first_air_date } = similarDat;
+                const { id, poster_path, name } = similarDat;
                 return (
                   <CardSmall
                     key={index}

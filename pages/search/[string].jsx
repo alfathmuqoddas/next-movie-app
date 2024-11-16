@@ -20,12 +20,31 @@ export const getServerSideProps = async (context) => {
   const { results: searchDatas } = searchData;
   const { results: searchTVDatas } = searchTVData;
 
+  const props = {
+    searchDatas: searchDatas.map((s) => ({
+      id: s.id,
+      poster_path: s.poster_path,
+      title: s.title,
+      release_date: s.release_date,
+      vote_average: s.vote_average,
+      overview: s.overview,
+    })),
+    string,
+    searchTVDatas: searchTVDatas.map((s) => ({
+      id: s.id,
+      poster_path: s.poster_path,
+      name: s.name,
+      first_air_date: s.first_air_date,
+      vote_average: s.vote_average,
+      overview: s.overview,
+    })),
+  };
+
+  const dataSize = JSON.stringify(props).length;
+  console.log(`Data size: ${dataSize / 1024} KB`);
+
   return {
-    props: {
-      searchDatas,
-      string,
-      searchTVDatas,
-    },
+    props,
   };
 };
 
@@ -57,7 +76,7 @@ const SearchResult = ({ searchDatas, searchTVDatas, string }) => {
   return (
     <>
       <Head>
-        <title>Search results for {string} | ALEFAST</title>
+        <title>{`Search results for ${string} | ALEFAST`}</title>
       </Head>
       <Layout>
         <div className="container max-w-4xl px-4 mx-auto">

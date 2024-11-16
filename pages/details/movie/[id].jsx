@@ -10,8 +10,8 @@ import {
   getPicsData,
   getVideosData,
   getSimilarData,
-  getComments,
 } from "../../../lib/getData";
+import { getComments } from "../../../lib/firebaseQuery.js";
 import YoutubeIcons from "../../../components/YoutubeIcons";
 import RadialRating from "../../../components/RadialRating";
 import Hero from "../../../components/Hero";
@@ -33,19 +33,51 @@ export async function getServerSideProps(context) {
   const { results: videoSelected } = vid;
   const { results: similarData } = similarDataRes;
   const { cast: casts, crew: crews } = credits;
-
   const comments = await getComments(id);
 
-  return {
-    props: {
-      mediaDetails,
-      casts,
-      crews,
-      picSelected,
-      videoSelected,
-      similarData,
-      comments,
+  const props = {
+    mediaDetails: {
+      original_title: mediaDetails.original_title,
+      backdrop_path: mediaDetails.backdrop_path,
+      poster_path: mediaDetails.poster_path,
+      release_date: mediaDetails.release_date,
+      title: mediaDetails.title,
+      tagline: mediaDetails.tagline,
+      genres: mediaDetails.genres,
+      vote_average: mediaDetails.vote_average,
+      overview: mediaDetails.overview,
+      runtime: mediaDetails.runtime,
+      budget: mediaDetails.budget,
+      revenue: mediaDetails.revenue,
+      id: mediaDetails.id,
     },
+    casts: casts.map((c) => ({
+      profile_path: c.profile_path,
+      name: c.name,
+      character: c.character,
+      id: c.id,
+    })),
+    crews: crews.filter((el) => el.job === "Director"),
+    picSelected: picSelected
+      .slice(0, 50)
+      .map((pic) => ({ file_path: pic.file_path })),
+    videoSelected: videoSelected.map((video) => ({
+      key: video.key,
+      name: video.name,
+    })),
+    similarData: similarData.map((similar) => ({
+      id: similar.id,
+      poster_path: similar.poster_path,
+      title: similar.title,
+    })),
+    comments,
+  };
+
+  const dataSize = JSON.stringify(props).length;
+  console.log(`Data size: ${dataSize / 1024} KB`);
+
+  return {
+    props,
   };
 }
 
@@ -58,11 +90,17 @@ export const mediaDetails = ({
   similarData,
   comments,
 }) => {
-  const director =
-    crews.length > 0 ? crews.filter((el) => el.job === "Director") : [];
+  // console.log({
+  //   mediaDetails: mediaDetails,
+  //   casts: casts,
+  //   crews: crews,
+  //   picSelected: picSelected,
+  //   videoSelected: videoSelected,
+  //   similarData: similarData,
+  //   comments: comments,
+  // });
 
-  const directorName =
-    director.length > 0 ? director[0].name : "data not available";
+  const directorName = crews.length > 0 ? crews[0].name : "data not available";
   const titleName = `${
     mediaDetails.original_title
   } (${mediaDetails.release_date.substring(0, 4)}) | ALEFAST`;

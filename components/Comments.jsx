@@ -1,9 +1,11 @@
+import { useState } from "react";
 import CommentForm from "./CommentForm";
 import useAuthStore from "../store/useAuthStore";
-import { handleDeleteComment } from "../lib/getData";
+import { handleDeleteComment } from "../lib/firebaseQuery";
 import { useRouter } from "next/router";
 
 const Comments = ({ comments, movieId }) => {
+  const [isDisabled, setIsDisabled] = useState(false);
   const { userData } = useAuthStore();
   const router = useRouter();
 
@@ -45,8 +47,14 @@ const Comments = ({ comments, movieId }) => {
                     {userData?.uid === comment.userId ? (
                       <div>
                         <button
+                          disabled={isDisabled}
                           onClick={() =>
-                            handleDeleteComment(movieId, comment.id, router)
+                            handleDeleteComment(
+                              movieId,
+                              comment.id,
+                              router,
+                              setIsDisabled
+                            )
                           }
                           className="text-red-500 text-sm hover:cursor-pointer hover:text-red-600"
                         >

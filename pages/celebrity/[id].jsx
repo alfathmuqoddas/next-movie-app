@@ -13,16 +13,29 @@ export const getServerSideProps = async (context) => {
       getCelebData(id, "/tv_credits"),
     ]);
 
-  return {
-    props: {
-      personDetails,
-      personMovieCredits,
-      personTVCredits,
+  const props = {
+    personDetails: {
+      name: personDetails.name,
+      biography: personDetails.biography,
+      birthday: personDetails.birthday,
+      place_of_birth: personDetails.place_of_birth,
+      known_for_department: personDetails.known_for_department,
+      deathday: personDetails.deathday,
+      profile_path: personDetails.profile_path,
     },
+    personMovieCredits: { cast: personMovieCredits.cast },
+    personTVCredits: { cast: personTVCredits.cast },
+  };
+
+  const dataSize = JSON.stringify(props).length;
+  console.log(`Data size: ${dataSize / 1024} KB`);
+
+  return {
+    props,
   };
 };
 
-const TableData = ({ data, isMovie }) => {
+const TableData = ({ data, isMovie = false }) => {
   return (
     <div className="mb-8">
       <h1 className="text-xl mb-2 font-bold">
@@ -41,8 +54,8 @@ const TableData = ({ data, isMovie }) => {
           </thead>
           <tbody>
             {data.length > 0 ? (
-              data.map((dat) => (
-                <tr key={dat.id} className="">
+              data.map((dat, index) => (
+                <tr key={index} className="">
                   <th>{data.indexOf(dat) + 1}</th>
                   <td>
                     {isMovie
@@ -123,15 +136,15 @@ const Celebrity = ({ personDetails, personMovieCredits, personTVCredits }) => {
     name,
     biography,
     birthday,
-    gender,
     place_of_birth,
-    imdb_id,
     known_for_department,
     deathday,
     profile_path,
   } = personDetails;
   const { cast } = personMovieCredits;
   const { cast: tvCast } = personTVCredits;
+
+  console.log({ personDetails, personMovieCredits, personTVCredits });
 
   return (
     <>
@@ -157,7 +170,7 @@ const Celebrity = ({ personDetails, personMovieCredits, personTVCredits }) => {
           />
           <div className="mt-8">
             <TableData data={sortByDate(cast)} isMovie />
-            <TableData data={sortByDate(tvCast, false)} isMovie={false} />
+            <TableData data={sortByDate(tvCast, false)} />
           </div>
           {/* <>{JSON.stringify(personTVCredits.cast)}</> */}
         </div>
