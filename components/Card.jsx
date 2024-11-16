@@ -105,7 +105,11 @@ export const CardWrap = ({ content, size, link }) => {
           </figure>
           <div className="py-2 px-1 xl:py-4">
             <h5 className="font-semibold text-center">
-              {title ? title : name}
+              {media_type == "movie"
+                ? title
+                : media_type == "tv"
+                ? name
+                : title}
             </h5>
           </div>
         </div>
