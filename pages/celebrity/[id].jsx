@@ -23,8 +23,26 @@ export const getServerSideProps = async (context) => {
       deathday: personDetails.deathday,
       profile_path: personDetails.profile_path,
     },
-    personMovieCredits: { cast: personMovieCredits.cast },
-    personTVCredits: { cast: personTVCredits.cast },
+    personMovieCredits: {
+      cast: personMovieCredits.cast?.map((cast) => ({
+        poster_path: cast.poster_path,
+        title: cast.title,
+        vote_average: cast.vote_average,
+        id: cast.id,
+        release_date: cast.release_date,
+        character: cast.character,
+      })),
+    },
+    personTVCredits: {
+      cast: personTVCredits.cast?.map((cast) => ({
+        poster_path: cast.poster_path,
+        name: cast.name,
+        vote_average: cast.vote_average,
+        id: cast.id,
+        first_air_date: cast.first_air_date,
+        character: cast.character,
+      })),
+    },
   };
 
   const dataSize = JSON.stringify(props).length;
