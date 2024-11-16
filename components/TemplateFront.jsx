@@ -17,7 +17,7 @@ export const TemplateFront2 = ({
           </Link>
         </div> */}
         <div className="pt-6">
-          <div className="px-4 md:px-8 flex flex-nowrap overflow-auto gap-4">
+          <div className="px-4 md:px-8 flex flex-nowrap overflow-auto">
             {content &&
               content.map((contentData) => (
                 <CardWrap
@@ -39,7 +39,7 @@ export const TemplateFront = ({ children, templateName }) => {
     <div className="">
       <h3 className="px-4 md:px-0 text-2xl font-bold mb-4">{templateName}</h3>
       <div className="overflow-auto">
-        <div className="flex flex-nowrap gap-4 mx-4 md:mx-0">{children}</div>
+        <div className="flex flex-nowrap mx-4 md:mx-0">{children}</div>
       </div>
     </div>
   );

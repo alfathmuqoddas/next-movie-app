@@ -14,12 +14,14 @@ export const CardSmall = ({
 }) => {
   return (
     <Link href={link} className="focus:bg-neutral-900 rounded-[16px]">
-      <div className={size}>
+      <div className={`${size} mx-2 mt-2 mb-0`}>
         <figure>
           <img
             src={img}
             alt="cardSmall-thumbnail"
-            className={`rounded-[16px] ${video && "border border-neutral-500"}`}
+            className={`rounded-[16px] ${
+              video && "border border-neutral-500"
+            } hover:scale-105 transition-transform duration-300`}
             loading="lazy"
           />
         </figure>
@@ -93,25 +95,15 @@ export const CardWrap = ({ content, size, link }) => {
           : `details${link}/${id}`
       }
     >
-      <div className="">
-        <div className={`p-0 ${size}`}>
-          <figure>
-            <img
-              src={`https://image.tmdb.org/t/p/w342/${poster_path}`}
-              alt="card-thumbnail"
-              className="rounded-[16px] w-full"
-              loading="lazy"
-            />
-          </figure>
-          <div className="py-2 px-1 xl:py-4">
-            <h5 className="font-semibold text-center">
-              {media_type == "movie"
-                ? title
-                : media_type == "tv"
-                ? name
-                : title}
-            </h5>
-          </div>
+      <div className={`p-0 ${size} m-2 mb-0`}>
+        <img
+          src={`https://image.tmdb.org/t/p/w342/${poster_path}`}
+          alt="card-thumbnail"
+          className="rounded-[16px] w-full hover:scale-105 transition-transform duration-300"
+          loading="lazy"
+        />
+        <div className="py-2 px-1 xl:py-4">
+          <h5 className="font-semibold text-center">{title || name}</h5>
         </div>
       </div>
     </Link>

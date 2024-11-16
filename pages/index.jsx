@@ -58,9 +58,9 @@ export const getStaticProps = async () => {
         tDay.poster_path ||
         `https://via.placeholder.com/185x278?text=Data+Unavailable`,
       release_date: tDay.release_date || `Data Unavailable`,
-      title: tDay.title || `Data Unavailable`,
+      title: tDay.title || tDay.name,
       first_air_date: tDay.first_air_date || `Data Unavailable`,
-      name: tDay.name || `Data Unavailable`,
+      name: tDay.name || tDay.title,
       media_type: tDay.media_type || `Data Unavailable`,
     })),
     trendingDatasWeek: trendingDatasWeek.map((tWeek, index) => ({
@@ -93,16 +93,9 @@ export default function Index({
   trendingDatasDay,
   trendingDatasWeek,
 }) {
+  console.log({ popularTvDatas });
   const [trendingTime, setTrendingTime] = useState("day");
   const [popularType, setPopularType] = useState("movie");
-
-  console.log({
-    trendingDatasDay,
-    trendingDatasWeek,
-    popularDatas,
-    popularTvDatas,
-    nowPlayingDatas,
-  });
 
   const handleTrendingChange = (e) => {
     setTrendingTime(e.target.value);
