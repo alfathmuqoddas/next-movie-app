@@ -100,7 +100,7 @@ export const CardWrap = ({ content, size, link }) => {
           src={`https://image.tmdb.org/t/p/w342/${poster_path}`}
           alt="card-thumbnail"
           className="rounded-[16px] w-full hover:scale-105 transition-transform duration-300"
-          loading="lazy"
+          // loading="lazy"
           width="192"
           height="288"
         />
