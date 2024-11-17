@@ -14,7 +14,7 @@ export const CardSmall = ({
 }) => {
   return (
     <Link href={link} className="focus:bg-neutral-900 rounded-[16px]">
-      <div className={`${size} mx-2 mt-2 mb-0`}>
+      <div className={`${size} m-2`}>
         <figure>
           <img
             src={img}
@@ -101,6 +101,8 @@ export const CardWrap = ({ content, size, link }) => {
           alt="card-thumbnail"
           className="rounded-[16px] w-full hover:scale-105 transition-transform duration-300"
           loading="lazy"
+          width="192"
+          height="288"
         />
         <div className="py-2 px-1 xl:py-4">
           <h5 className="font-semibold text-center">{title || name}</h5>
