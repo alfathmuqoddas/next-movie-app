@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      '@next/font':
+        specifier: ^14.2.15
+        version: 14.2.15(next@13.0.5(react-dom@18.2.0(react@18.2.0))(react@18.2.0))
       daisyui:
         specifier: ^4.12.10
         version: 4.12.10(postcss@8.4.33)
@@ -301,6 +304,11 @@ packages:
 
   '@next/eslint-plugin-next@13.0.5':
     resolution: {integrity: sha512-H9U9B1dFnCDmylDZ6/dYt95Ie1Iu+SLBMcO6rkIGIDcj5UK+DNyMiWm83xWBZ1gREM8cfp5Srv1g6wqf8pM4lw==}
+
+  '@next/font@14.2.15':
+    resolution: {integrity: sha512-QopYhBmCDDrNDynbi+ZD1hDZXmQXVFo7TmAFp4DQgO/kogz1OLbQ92hPigJbj572eZ3GaaVxNIyYVn3/eAsehg==}
+    peerDependencies:
+      next: '*'
 
   '@next/swc-android-arm-eabi@13.0.5':
     resolution: {integrity: sha512-YO691dxHlviy6H0eghgwqn+5kU9J3iQnKERHTDSppqjjGDBl6ab4wz9XfI5AhljjkaTg3TknHoIEWFDoZ4Ve8g==}
@@ -2211,6 +2219,10 @@ snapshots:
   '@next/eslint-plugin-next@13.0.5':
     dependencies:
       glob: 7.1.7
+
+  '@next/font@14.2.15(next@13.0.5(react-dom@18.2.0(react@18.2.0))(react@18.2.0))':
+    dependencies:
+      next: 13.0.5(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
 
   '@next/swc-android-arm-eabi@13.0.5':
     optional: true
