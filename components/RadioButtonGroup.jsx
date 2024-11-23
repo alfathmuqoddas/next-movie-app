@@ -1,6 +1,6 @@
 const RadioButtonGroup = ({ contents, onChange, checkedFunction }) => {
   const RadioChildrenStyle =
-    "rounded-full bg-black text-white peer-checked:bg-white transition-all peer-checked:text-black py-1 px-4";
+    "rounded-full bg-black text-white peer-checked:bg-white peer-checked:text-black py-1 px-4";
   const RadioParentStyle = "peer sr-only";
   return (
     <>

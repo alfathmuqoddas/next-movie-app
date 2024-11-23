@@ -1,11 +1,41 @@
+"use client";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import SearchInput from "./SearchInput";
 import AuthButton from "./AuthButton";
 import { SearchInputButton } from "./SearchInputButton";
 
 const Navbar = () => {
+  const [showNavbar, setShowNavbar] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
+
+  const handleScroll = () => {
+    if (typeof window !== "undefined") {
+      const currentScrollY = window.scrollY;
+      if (currentScrollY > lastScrollY && currentScrollY > 64) {
+        setShowNavbar(false);
+      } else {
+        setShowNavbar(true);
+      }
+      setLastScrollY(currentScrollY);
+    }
+  };
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      window.addEventListener("scroll", handleScroll);
+      return () => {
+        window.removeEventListener("scroll", handleScroll);
+      };
+    }
+  }, [lastScrollY]);
+
   return (
-    <div className="navbar w-full mx-auto bg-gradient-to-b from-base-100 from-70% to-transparent">
+    <div
+      className={`navbar absolute top-0 ${
+        showNavbar ? "" : "-translate-y-32"
+      } w-full mx-auto bg-base-100 transition-transform duration-300 ease-in-out`}
+    >
       <div className="navbar-start">
         <div className="dropdown">
           <label tabIndex={0} className="btn btn-ghost btn-md rounded-full">
@@ -55,7 +85,7 @@ const Navbar = () => {
         </Link>
       </div>
       <div className="navbar-end">
-        <div className="hidden xl:block">
+        <div className="hidden xl:block me-1">
           <SearchInput />
         </div>
         <SearchInputButton />
