@@ -1,6 +1,5 @@
 import Link from "next/link";
-
-import { SearchInput } from "./SearchInput";
+import SearchInput from "./SearchInput";
 import AuthButton from "./AuthButton";
 import { SearchInputButton } from "./SearchInputButton";
 

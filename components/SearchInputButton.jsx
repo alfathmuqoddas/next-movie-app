@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
 import SearchLogo from "./SearchLogo";
-import { SearchInput } from "./SearchInput";
+import SearchInput from "./SearchInput";
 
 export const SearchInputButton = () => {
   // console.log({ userData });

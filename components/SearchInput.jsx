@@ -3,7 +3,7 @@ import { useState, forwardRef } from "react";
 import { useRouter } from "next/navigation";
 import SearchLogo from "./SearchLogo";
 
-export const SearchInput = forwardRef((props, ref) => {
+const SearchInput = forwardRef((props, ref) => {
   // console.log({ userData });
   const [search, setSearch] = useState("");
 
@@ -21,7 +21,7 @@ export const SearchInput = forwardRef((props, ref) => {
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           type="text"
-          placeholder="Search for a movie or tv show"
+          placeholder="Search here"
           className="grow"
           ref={ref}
         />
@@ -30,3 +30,5 @@ export const SearchInput = forwardRef((props, ref) => {
     </form>
   );
 });
+
+export default SearchInput;
