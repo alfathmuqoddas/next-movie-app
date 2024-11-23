@@ -31,4 +31,6 @@ const SearchInput = forwardRef((props, ref) => {
   );
 });
 
+SearchInput.displayName = "SearchInput";
+
 export default SearchInput;
