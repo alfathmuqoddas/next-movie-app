@@ -126,14 +126,14 @@ export const mediaDetails = ({
           content={`${name} is a movie released in ${last_air_date.substring(
             0,
             4
-          )}. It has a rating of ${vote_average} by the users. It has ${seasons} seasons`}
+          )}. It has a rating of ${vote_average} by the users. It has ${number_of_seasons} seasons`}
         />
         <meta
           name="keywords"
           content={`${name}, series, ${last_air_date.substring(
             0,
             4
-          )}, ${vote_average}, ${seasons} seasons`}
+          )}, ${vote_average}, ${number_of_seasons} seasons`}
         />
         <meta property="og:title" content={`${name} | ALEFAST`} />
         <meta
