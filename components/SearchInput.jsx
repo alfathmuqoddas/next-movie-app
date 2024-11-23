@@ -16,13 +16,13 @@ const SearchInput = forwardRef((props, ref) => {
 
   return (
     <form className="form-control" onSubmit={searchMovies}>
-      <label className="input input-bordered input-sm rounded-full flex gap-2 items-center">
+      <label className="input input-sm bg-neutral-900 hover:bg-neutral-800 rounded-full flex gap-2 items-center transition-colors duration-200 ease-in-out">
         <input
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           type="text"
           placeholder="Search here"
-          className="grow"
+          className="grow "
           ref={ref}
         />
         <SearchLogo size={"16"} />
