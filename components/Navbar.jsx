@@ -1,22 +1,10 @@
-"use client";
 import Link from "next/link";
-import { useState } from "react";
-import { useRouter } from "next/router";
-import SearchLogo from "./SearchLogo";
+
 import { SearchInput } from "./SearchInput";
 import AuthButton from "./AuthButton";
+import { SearchInputButton } from "./SearchInputButton";
 
 const Navbar = () => {
-  // console.log({ userData });
-  const [search, setSearch] = useState("");
-
-  const router = useRouter();
-
-  const searchMovies = async (e) => {
-    e.preventDefault();
-    router.push(`/search/${search}`);
-  };
-
   return (
     <div className="navbar w-full mx-auto bg-gradient-to-b from-base-100 from-70% to-transparent">
       <div className="navbar-start">
@@ -69,25 +57,9 @@ const Navbar = () => {
       </div>
       <div className="navbar-end">
         <div className="hidden xl:block">
-          <SearchInput
-            onChange={(e) => setSearch(e.target.value)}
-            searchValue={search}
-            onSubmit={searchMovies}
-            small
-          />
+          <SearchInput />
         </div>
-        <div className="block xl:hidden dropdown dropdown-end ">
-          <label tabIndex={0} className="btn btn-ghost">
-            <SearchLogo />
-          </label>
-          <div className="menu dropdown-content bg-black rounded-full p-2">
-            <SearchInput
-              onChange={(e) => setSearch(e.target.value)}
-              searchValue={search}
-              onSubmit={searchMovies}
-            />
-          </div>
-        </div>
+        <SearchInputButton />
         <AuthButton />
       </div>
     </div>

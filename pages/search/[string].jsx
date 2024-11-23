@@ -50,18 +50,18 @@ export const getServerSideProps = async (context) => {
 
 const SearchResult = ({ searchDatas, searchTVDatas, string }) => {
   const [showComponent, setShowComponent] = useState("movie");
-  const [searchString, setSearchString] = useState("");
+  // const [searchString, setSearchString] = useState("");
 
   const router = useRouter();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (searchString) {
-      router.push(`/search/${searchString}`);
-    } else {
-      alert("Please enter the movie/tv show name");
-    }
-  };
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   if (searchString) {
+  //     router.push(`/search/${searchString}`);
+  //   } else {
+  //     alert("Please enter the movie/tv show name");
+  //   }
+  // };
 
   const handleToggle = (e) => {
     setShowComponent(e.target.value);
@@ -80,7 +80,7 @@ const SearchResult = ({ searchDatas, searchTVDatas, string }) => {
       </Head>
       <Layout>
         <div className="container max-w-4xl px-4 mx-auto">
-          <div className="mt-8 xl:hidden">
+          {/* <div className="mt-8 xl:hidden">
             <form onSubmit={handleSubmit}>
               <label className="input input-bordered rounded-full flex items-center gap-2">
                 <input
@@ -93,7 +93,7 @@ const SearchResult = ({ searchDatas, searchTVDatas, string }) => {
                 <SearchLogo />
               </label>
             </form>
-          </div>
+          </div> */}
 
           <div className="">
             <div className="flex justify-center">

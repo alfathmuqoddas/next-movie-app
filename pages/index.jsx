@@ -93,7 +93,6 @@ export default function Index({
   trendingDatasDay,
   trendingDatasWeek,
 }) {
-  console.log({ popularTvDatas });
   const [trendingTime, setTrendingTime] = useState("day");
   const [popularType, setPopularType] = useState("movie");
 
@@ -121,57 +120,59 @@ export default function Index({
         <title>ALEFAST</title>
       </Head>
       <Layout>
-        <div className="py-8">
-          <div className="flex gap-4 px-4 md:px-8">
-            <h1 className="text-2xl font-bold">TRENDING</h1>
-            <div className="flex border rounded-full">
-              <RadioButtonGroup
-                contents={trendingOptions}
-                checkedFunction={trendingTime}
-                onChange={handleTrendingChange}
-              />
+        <div className="flex flex-col gap-16 pt-8">
+          <div>
+            <div className="flex gap-4 px-4 md:px-8">
+              <h1 className="text-2xl font-bold">TRENDING</h1>
+              <div className="flex border rounded-full">
+                <RadioButtonGroup
+                  contents={trendingOptions}
+                  checkedFunction={trendingTime}
+                  onChange={handleTrendingChange}
+                />
+              </div>
             </div>
+            {trendingTime === "day" ? (
+              <TemplateFront2 content={trendingDatasDay} contentLink="" />
+            ) : trendingTime === "week" ? (
+              <TemplateFront2 content={trendingDatasWeek} contentLink="" />
+            ) : (
+              <></>
+            )}
           </div>
-          {trendingTime === "day" ? (
-            <TemplateFront2 content={trendingDatasDay} contentLink="" />
-          ) : trendingTime === "week" ? (
-            <TemplateFront2 content={trendingDatasWeek} contentLink="" />
-          ) : (
-            <></>
-          )}
-        </div>
 
-        <div className="py-8">
-          <div className="flex gap-4 px-4 md:px-8">
-            <h1 className="text-2xl font-bold">POPULAR</h1>
-            <div className="flex border rounded-full">
-              <RadioButtonGroup
-                contents={popularRadio}
-                onChange={handlePopularChange}
-                checkedFunction={popularType}
-              />
+          <div>
+            <div className="flex gap-4 px-4 md:px-8">
+              <h1 className="text-2xl font-bold">POPULAR</h1>
+              <div className="flex border rounded-full">
+                <RadioButtonGroup
+                  contents={popularRadio}
+                  onChange={handlePopularChange}
+                  checkedFunction={popularType}
+                />
+              </div>
             </div>
+
+            {popularType === "movie" ? (
+              <TemplateFront2 content={popularDatas} contentLink="/movie" />
+            ) : (
+              <TemplateFront2 content={popularTvDatas} contentLink="/tv" />
+            )}
           </div>
 
-          {popularType === "movie" ? (
-            <TemplateFront2 content={popularDatas} contentLink="/movie" />
-          ) : (
-            <TemplateFront2 content={popularTvDatas} contentLink="/tv" />
-          )}
-        </div>
-
-        <div className="py-8">
-          <div className="px-4 md:px-8">
-            <h1 className="text-2xl font-bold">NOW PLAYING</h1>
+          <div>
+            <div className="px-4 md:px-8">
+              <h1 className="text-2xl font-bold">NOW PLAYING</h1>
+            </div>
+            <TemplateFront2 content={nowPlayingDatas} contentLink="/movie" />
           </div>
-          <TemplateFront2 content={nowPlayingDatas} contentLink="/movie" />
-        </div>
-        {/* <div className="py-8">
+          {/* <div className="py-8">
           <div className="px-8">
             <h1 className="text-2xl font-bold">Top Rated</h1>
           </div>
           <TemplateFront2 content={topRatedDatas} contentLink="/top-rated" />
         </div> */}
+        </div>
       </Layout>
     </div>
   );
