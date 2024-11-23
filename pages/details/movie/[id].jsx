@@ -131,10 +131,9 @@ export const mediaDetails = ({
           content={`${title} is a movie released in ${release_date.substring(
             0,
             4
-          )}. It has a rating of ${vote_average} by the users. It has a runtime of ${runtime} minutes
-            . It has a budget of ${formatNumber(
-              budget
-            )} and a revenue of ${formatNumber(revenue)}`}
+          )} directed by ${directorName}. It has a rating of ${vote_average} by the users. It has a runtime of ${runtime} minutes. It has a budget of ${formatNumber(
+            budget
+          )} and a revenue of ${formatNumber(revenue)}`}
         />
         <meta
           name="keywords"
@@ -149,7 +148,7 @@ export const mediaDetails = ({
           content={`${title} is a movie released in ${release_date.substring(
             0,
             4
-          )}. It has a rating of ${vote_average} by the users. It has a runtime of ${runtime} minutes. It has a budget of ${formatNumber(
+          )} directed by ${directorName}. It has a rating of ${vote_average} by the users. It has a runtime of ${runtime} minutes. It has a budget of ${formatNumber(
             budget
           )} and a revenue of ${formatNumber(revenue)}`}
         />
@@ -167,7 +166,7 @@ export const mediaDetails = ({
           content={`${title} is a movie released in ${release_date.substring(
             0,
             4
-          )}. It has a rating of ${vote_average} by the users. It has a runtime of ${runtime} minutes. It has a budget of ${formatNumber(
+          )} directed by ${directorName}. It has a rating of ${vote_average} by the users. It has a runtime of ${runtime} minutes. It has a budget of ${formatNumber(
             budget
           )} and a revenue of ${formatNumber(revenue)}`}
         />
