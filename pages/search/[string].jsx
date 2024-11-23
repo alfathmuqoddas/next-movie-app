@@ -77,6 +77,14 @@ const SearchResult = ({ searchDatas, searchTVDatas, string }) => {
     <>
       <Head>
         <title>{`Search results for ${string} | ALEFAST`}</title>
+        <meta
+          name="description"
+          content={`Search results for ${string}. Find movies and TV series related to the search term. | ALEFAST`}
+        />
+        <meta
+          name="keywords"
+          content={`${string}, search, movies, TV series, related`}
+        />
       </Head>
       <Layout>
         <div className="container max-w-4xl px-4 mx-auto">

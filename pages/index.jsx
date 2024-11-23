@@ -118,6 +118,33 @@ export default function Index({
     <div>
       <Head>
         <title>ALEFAST</title>
+        <meta
+          name="description"
+          content="Alefast Discover the latest trending movies and TV series. Get information, reviews, and recommendations on the hottest entertainment."
+        />
+        <meta
+          name="keywords"
+          content="trending movies, trending TV series, latest movies, popular TV shows, movie reviews, TV series recommendations, entertainment news"
+        />
+        <meta
+          property="og:title"
+          content="Alefast Trending Movies and TV Series"
+        />
+        <meta
+          property="og:description"
+          content="Stay updated with the latest trending movies and TV series. Find reviews, ratings, and watch trailers."
+        />
+        {/* <meta property="og:image" content="URL_to_image" /> */}
+        <meta property="og:url" content="https://alefast.vercel.app" />
+        <meta
+          name="twitter:title"
+          content="Alefast Trending Movies and TV Series"
+        />
+        <meta
+          name="twitter:description"
+          content="Stay updated with the latest trending movies and TV series. Find reviews, ratings, and watch trailers."
+        />
+        <meta name="twitter:card" content="summary_large_image" />
       </Head>
       <Layout>
         <div className="flex flex-col gap-16 pt-8">

@@ -121,6 +121,45 @@ export const mediaDetails = ({
     <>
       <Head>
         <title>{titleName}</title>
+        <meta
+          name="description"
+          content={`${name} is a movie released in ${last_air_date.substring(
+            0,
+            4
+          )}. It has a rating of ${vote_average} by the users. It has ${seasons} of seasons`}
+        />
+        <meta
+          name="keywords"
+          content={`${name}, series, ${last_air_date.substring(
+            0,
+            4
+          )}, ${vote_average}, ${seasons}`}
+        />
+        <meta property="og:title" content={`${name} | ALEFAST`} />
+        <meta
+          property="og:description"
+          content={`${name} is a series released in ${last_air_date.substring(
+            0,
+            4
+          )}. It has a rating of ${vote_average} by the users.`}
+        />
+        <meta
+          property="og:image"
+          content={`https://image.tmdb.org/t/p/w342${poster_path}`}
+        />
+        <meta
+          property="og:url"
+          content={`https://alefast.vercel.app/details/tv/${id}`}
+        />
+        <meta name="twitter:title" content={`${name} | ALEFAST`} />
+        <meta
+          name="twitter:description"
+          content={`${name} is a series released in ${last_air_date.substring(
+            0,
+            4
+          )}. It has a rating of ${vote_average} by the users.`}
+        />
+        <meta name="twitter:card" content="summary_large_image" />
       </Head>
       <Layout>
         <Hero

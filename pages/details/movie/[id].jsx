@@ -126,6 +126,52 @@ export const mediaDetails = ({
     <>
       <Head>
         <title>{titleName}</title>
+        <meta
+          name="description"
+          content={`${title} is a movie released in ${release_date.substring(
+            0,
+            4
+          )}. It has a rating of ${vote_average} by the users. It has a runtime of ${runtime} minutes
+            . It has a budget of ${formatNumber(
+              budget
+            )} and a revenue of ${formatNumber(revenue)}`}
+        />
+        <meta
+          name="keywords"
+          content={`${title}, movies, ${release_date.substring(
+            0,
+            4
+          )}, ${vote_average}, ${runtime}, ${budget}, ${revenue}`}
+        />
+        <meta property="og:title" content={`${title} | ALEFAST`} />
+        <meta
+          property="og:description"
+          content={`${title} is a movie released in ${release_date.substring(
+            0,
+            4
+          )}. It has a rating of ${vote_average} by the users. It has a runtime of ${runtime} minutes. It has a budget of ${formatNumber(
+            budget
+          )} and a revenue of ${formatNumber(revenue)}`}
+        />
+        <meta
+          property="og:image"
+          content={`https://image.tmdb.org/t/p/w342${poster_path}`}
+        />
+        <meta
+          property="og:url"
+          content={`https://alefast.vercel.app/details/movie/${id}`}
+        />
+        <meta name="twitter:title" content={`${title} | ALEFAST`} />
+        <meta
+          name="twitter:description"
+          content={`${title} is a movie released in ${release_date.substring(
+            0,
+            4
+          )}. It has a rating of ${vote_average} by the users. It has a runtime of ${runtime} minutes. It has a budget of ${formatNumber(
+            budget
+          )} and a revenue of ${formatNumber(revenue)}`}
+        />
+        <meta name="twitter:card" content="summary_large_image" />
       </Head>
       <Layout>
         <Hero
