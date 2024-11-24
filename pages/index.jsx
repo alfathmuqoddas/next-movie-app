@@ -1,37 +1,25 @@
 import Layout from "../components/Layout";
 import Head from "next/head";
 // import { useState } from "react";
-import {
-  getPopularData,
-  // getTopRatedData,
-  getNowPlayingData,
-  getTrendingData,
-} from "../lib/getData";
+import { fetchData } from "../lib/getData";
 import { TemplateFront2 } from "../components/TemplateFront";
 // import RadioButtonGroup from "../components/RadioButtonGroup";
 // import HomeHero from "../components/HomeHero";
 
 export const getStaticProps = async () => {
-  const [
-    popularData,
-    popularTvData,
-    nowPlayingData,
-    // topRatedData,
-    trendingDataDay,
-    // trendingDataWeek,
-  ] = await Promise.all([
-    getPopularData("movie"),
-    getPopularData("tv"),
-    getNowPlayingData(),
-    // getTopRatedData(),
-    getTrendingData("day", 1),
-    // getTrendingData("week", 1),
-  ]);
+  const [popularData, popularTvData, nowPlayingData, trendingDataDay] =
+    await Promise.all([
+      fetchData("movie/popular"),
+      fetchData("tv/popular"),
+      fetchData("movie/now_playing"),
+      fetchData("trending/all/day"),
+    ]);
 
   const { results: popularDatas } = popularData;
   const { results: popularTvDatas } = popularTvData;
   const { results: nowPlayingDatas } = nowPlayingData;
   const { results: trendingDatasDay } = trendingDataDay;
+
   // const { results: trendingDatasWeek } = trendingDataWeek;
   // const { results: topRatedDatas } = topRatedData;
 
