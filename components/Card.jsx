@@ -13,7 +13,11 @@ export const CardSmall = ({
   cast = false,
 }) => {
   return (
-    <Link href={link} className="focus:bg-neutral-900 rounded-[16px]">
+    <Link
+      href={link}
+      className="focus:bg-neutral-900 rounded-[16px]"
+      title={video ? subtitle : title}
+    >
       <div className={`${size} mx-2 mt-2 mb-0`}>
         <figure>
           <img
@@ -21,6 +25,8 @@ export const CardSmall = ({
             alt="cardSmall-thumbnail"
             className={`rounded-[16px] ${
               video && "border border-neutral-500"
+            } ${
+              cast && "h-32 w-full object-cover rounded-full"
             } hover:scale-105 transition-transform duration-300`}
             loading="lazy"
           />
@@ -29,8 +35,10 @@ export const CardSmall = ({
           <div
             className={`py-2 ${video ? "flex gap-2 text-left" : "text-center"}`}
           >
-            <h5 className="font-semibold">{title}</h5>
-            <h6 className={`font-light ${video && "font-semibold"}`}>
+            <h5 className="font-semibold line-clamp-2">{title}</h5>
+            <h6
+              className={`font-light ${video && "font-semibold"} line-clamp-2`}
+            >
               {subtitle}
             </h6>
           </div>
@@ -63,9 +71,9 @@ export const CardHorizontal = ({
           loading="lazy"
         />
       </figure>
-      <div className={`shrink leading-tight ${cardBodyPadding}`}>
-        <h5 className="font-semibold text-xl pb-4">{title}</h5>
-        <p className="text-sm hidden lg:block pb-2">{subtitle}</p>
+      <div className={`${cardBodyPadding}`}>
+        <h5 className="font-semibold">{title}</h5>
+        <p className="text-sm line-clamp-4">{subtitle}</p>
         <div className="text-sm">{subtitle2}</div>
         <div className="text-sm">{subtitle3}</div>
         <div className="text-sm">{subtitle4}</div>

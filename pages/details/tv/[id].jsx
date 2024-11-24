@@ -260,6 +260,7 @@ export const mediaDetails = ({
                     subtitle={character}
                     size="w-32"
                     link={`/celebrity/${id}`}
+                    cast
                   />
                 );
               })

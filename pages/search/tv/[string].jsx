@@ -52,7 +52,7 @@ const SearchResult = ({ searchTVDatas, string }) => {
               overview,
             } = searchTVData;
             return (
-              <Link key={id} href={`/details/tv/${id}`}>
+              <Link key={id} href={`/details/tv/${id}`} title={overview ?? ""}>
                 <CardHorizontal
                   img={
                     poster_path
@@ -62,11 +62,7 @@ const SearchResult = ({ searchTVDatas, string }) => {
                   title={`${name} (${
                     first_air_date ? first_air_date.substring(0, 4) : "TBA"
                   })`}
-                  subtitle={
-                    overview.length > 240
-                      ? overview.slice(0, 240) + "..."
-                      : overview
-                  }
+                  subtitle={overview ?? "Data Unavailable"}
                   subtitle2={<RadialRating rating={vote_average} size="2rem" />}
                   imgSize={36}
                 />
