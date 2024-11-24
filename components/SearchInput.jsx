@@ -11,7 +11,7 @@ const SearchInput = forwardRef((props, ref) => {
 
   const searchMovies = async (e) => {
     e.preventDefault();
-    router.push(`/search/${search}`);
+    router.push(`/search/movie/${search}`);
   };
 
   return (
