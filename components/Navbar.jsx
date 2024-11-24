@@ -34,7 +34,7 @@ const Navbar = () => {
     <div
       className={`navbar absolute top-0 ${
         showNavbar ? "" : "-translate-y-32"
-      } w-full mx-auto bg-base-100 transition-transform duration-300 ease-in-out`}
+      } w-full mx-auto bg-base-100/80 transition-transform duration-300 ease-in-out backdrop-blur`}
     >
       <div className="navbar-start">
         <div className="dropdown">
