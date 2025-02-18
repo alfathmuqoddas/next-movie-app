@@ -228,6 +228,8 @@ export const mediaDetails = ({
                           ? `https://image.tmdb.org/t/p/w342${poster_path}`
                           : "https://placehold.co/185x278?text=Data+Unavailable"
                       }
+                      imgWidth="342"
+                      imgHeight="513"
                       subtitle2={`${
                         air_date ? air_date.substring(0, 4) : "Data Unavailable"
                       }, ${episode_count} Episode(s)`}

@@ -29,8 +29,8 @@ export const CardSmall = ({
               cast && "h-32 w-full object-cover rounded-full"
             } hover:scale-105 transition-transform duration-300`}
             loading="lazy"
-            width="auto"
-            height="auto"
+            width="185"
+            height="278"
           />
         </figure>
         {title && (
@@ -52,6 +52,8 @@ export const CardSmall = ({
 
 export const CardHorizontal = ({
   img,
+  imgWidth,
+  imgHeight,
   title,
   subtitle,
   subtitle2,
@@ -70,8 +72,8 @@ export const CardHorizontal = ({
           src={img}
           alt="cardSmall-thumbnail"
           className="rounded-[16px]"
-          width="auto"
-          height="auto"
+          width={imgWidth}
+          height={imgHeight}
           loading="lazy"
         />
       </figure>
@@ -112,8 +114,8 @@ export const CardWrap = ({ content, size, link }) => {
           src={`https://image.tmdb.org/t/p/w342/${poster_path}`}
           alt="card-thumbnail"
           className="rounded-[16px] w-full hover:scale-105 transition-transform duration-300"
-          width="auto"
-          height="auto"
+          width="342"
+          height="513"
           loading="lazy"
         />
         <div className="py-2 px-1 xl:py-4">

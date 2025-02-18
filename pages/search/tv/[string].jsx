@@ -59,6 +59,8 @@ const SearchResult = ({ searchTVDatas, string }) => {
                       ? `https://image.tmdb.org/t/p/w342/${poster_path}`
                       : "https://placehold.co/185x278?text=Data+Unavailable"
                   }
+                  imgWidth="342"
+                  imgHeight="513"
                   title={`${name} (${
                     first_air_date ? first_air_date.substring(0, 4) : "TBA"
                   })`}
