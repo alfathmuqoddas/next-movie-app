@@ -9,10 +9,8 @@ const Layout = ({ children }) => {
         <meta charSet="UTF-8" />
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
-      <>
-        <Navbar />
-        <main className="mx-auto pt-16">{children}</main>
-      </>
+      <Navbar />
+      <main className="mx-auto pt-16">{children}</main>
       <Footer />
     </>
   );

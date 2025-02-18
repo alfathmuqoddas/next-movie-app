@@ -192,22 +192,22 @@ export const mediaDetails = ({
             <RadialRating rating={vote_average} size="4rem" />
             <AddToFavorites payload={payload} />
             <div>
-              <div className="overview">
+              <article className="overview">
                 <h3 className="text-2xl font-bold">Overview</h3>
                 <p>{overview}</p>
-              </div>
-              <div className="mt-4">
+              </article>
+              <article className="mt-4">
                 <div className="crew">Director: {directorName}</div>
                 <div>Runtime: {runtime} minutes</div>
                 <div>Budget: ${formatNumber(budget)}</div>
                 <div>Box Office: ${formatNumber(revenue)}</div>
                 <div>Vote Average: {Math.round(vote_average * 10)}</div>
-              </div>
+              </article>
             </div>
           </div>
         </div>
 
-        <div className="md:max-w-4xl md:px-4 md:mx-auto flex flex-col gap-12">
+        <section className="md:max-w-5xl md:px-4 md:mx-auto flex flex-col gap-12">
           <TemplateFront templateName={"Cast"}>
             {casts.length > 0 ? (
               casts.map((cast, index) => {
@@ -302,11 +302,11 @@ export const mediaDetails = ({
               <>Data Unavailable</>
             )}
           </TemplateFront>
-        </div>
+        </section>
 
-        <div className="max-w-4xl px-4 mx-auto mt-12">
+        <section className="max-w-4xl px-4 mx-auto mt-12">
           <Comments comments={comments} movieId={id} />
-        </div>
+        </section>
       </Layout>
     </>
   );

@@ -15,7 +15,7 @@ const Comments = ({ comments, movieId }) => {
       {userData ? (
         <CommentForm id={movieId} />
       ) : (
-        <div className="my-4">Login to add a comment</div>
+        <p className="my-4">Login to add a comment</p>
       )}
       {comments.length > 0 ? (
         <div className="flex flex-col gap-4">
@@ -39,10 +39,10 @@ const Comments = ({ comments, movieId }) => {
                   </figure>
                   <div className="flex flex-col gap-2">
                     <div>
-                      <div className="font-semibold">{comment.userName}</div>
-                      <div className="text-xs">{comment.createdAt}</div>
+                      <h5 className="font-semibold">{comment.userName}</h5>
+                      <p className="text-xs">{comment.createdAt}</p>
                     </div>
-                    <div>{comment.content}</div>
+                    <p>{comment.content}</p>
 
                     {userData?.uid === comment.userId ? (
                       <div>

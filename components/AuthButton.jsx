@@ -54,7 +54,7 @@ const AuthButton = () => {
     return (
       <button
         onClick={handleClick}
-        className="btn btn-sm bg-blue-500 text-white hover:bg-blue-600 m-1"
+        className="btn btn-sm bg-[#094FC3] text-white hover:bg-blue-600 m-1"
       >
         Login
       </button>

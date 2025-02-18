@@ -20,7 +20,7 @@ export const CardSmall = ({
       className="focus:bg-neutral-900 rounded-[16px]"
       title={video ? subtitle : title}
     >
-      <div className={`${size} mx-2 mt-2 mb-0`}>
+      <article className={`${size} mx-2 mt-2 mb-0`}>
         <figure>
           <img
             src={img}
@@ -40,14 +40,14 @@ export const CardSmall = ({
             className={`py-2 ${video ? "flex gap-2 text-left" : "text-center"}`}
           >
             <h5 className="font-semibold line-clamp-2">{title}</h5>
-            <h6
+            <p
               className={`font-light ${video && "font-semibold"} line-clamp-2`}
             >
               {subtitle}
-            </h6>
+            </p>
           </div>
         )}
-      </div>
+      </article>
     </Link>
   );
 };
@@ -66,7 +66,7 @@ export const CardHorizontal = ({
   cardBodyPadding = "p-4",
 }) => {
   return (
-    <div
+    <article
       className={`flex active:bg-neutral-900 rounded-[16px] max-w-screen ${flexType}`}
     >
       <figure className={`flex-none w-${imgSize}`}>
@@ -86,7 +86,7 @@ export const CardHorizontal = ({
         <div className="text-sm">{subtitle3}</div>
         <div className="text-sm">{subtitle4}</div>
       </div>
-    </div>
+    </article>
   );
 };
 
@@ -111,19 +111,21 @@ export const CardWrap = ({ content, size, link }) => {
           : `details${link}/${id}`
       }
     >
-      <div className={`p-0 ${size} m-2 mb-0`}>
-        <img
-          src={`https://image.tmdb.org/t/p/w342/${poster_path}`}
-          alt="card-thumbnail"
-          className="rounded-[16px] w-full hover:scale-105 transition-transform duration-300"
-          width="342"
-          height="513"
-          loading="lazy"
-        />
+      <article className={`p-0 ${size} m-2 mb-0`}>
+        <figure>
+          <img
+            src={`https://image.tmdb.org/t/p/w342/${poster_path}`}
+            alt="card-thumbnail"
+            className="rounded-[16px] w-full hover:scale-105 transition-transform duration-300"
+            width="342"
+            height="513"
+            loading="lazy"
+          />
+        </figure>
         <div className="py-2 px-1 xl:py-4">
           <h5 className="font-semibold text-center">{title || name}</h5>
         </div>
-      </div>
+      </article>
     </Link>
   );
 };

@@ -8,38 +8,28 @@ export const TemplateFront2 = ({
   contentLink,
 }) => {
   return (
-    <>
-      {/* <div className="flex justify-between items-center px-8">
-          <h3 className="text-2xl font-extrabold">{templateName}</h3>
-          <Link href={`/${seeAll}`}>
-            <h4 className="hover:underline">See More →</h4>
-          </Link>
-        </div> */}
-      <div className="pt-6">
-        <div className="px-4 md:px-8 flex flex-nowrap overflow-auto">
-          {content &&
-            content.map((contentData) => (
-              <CardWrap
-                key={contentData.id}
-                size="w-48"
-                link={contentLink}
-                content={contentData}
-              />
-            ))}
-        </div>
-      </div>
-    </>
+    <section className="pt-6 px-4 md:px-8 flex flex-nowrap overflow-auto">
+      {content &&
+        content.map((contentData) => (
+          <CardWrap
+            key={contentData.id}
+            size="w-48"
+            link={contentLink}
+            content={contentData}
+          />
+        ))}
+    </section>
   );
 };
 
 export const TemplateFront = ({ children, templateName }) => {
   return (
-    <div className="">
+    <section aria-label={templateName}>
       <h3 className="px-4 md:px-0 text-2xl font-bold mb-4">{templateName}</h3>
       <div className="overflow-auto">
         <div className="flex flex-nowrap mx-4 md:mx-0">{children}</div>
       </div>
-    </div>
+    </section>
   );
 };
 

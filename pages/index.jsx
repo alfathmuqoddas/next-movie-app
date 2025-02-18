@@ -148,7 +148,7 @@ export default function Index({
       </Head>
       <Layout>
         <div className="flex flex-col gap-16 pt-8 max-w-5xl mx-auto">
-          <section name="trending">
+          <section aria-label="trending">
             <div className="flex gap-4 px-4 md:px-8">
               <h1 className="text-2xl font-black">TRENDING</h1>
               <div className="flex border rounded-full">
@@ -168,7 +168,7 @@ export default function Index({
             )}
           </section>
 
-          <section name="popular">
+          <section aria-label="popular">
             <div className="flex gap-4 px-4 md:px-8">
               <h1 className="text-2xl font-black">POPULAR</h1>
               <div className="flex border rounded-full">
@@ -187,7 +187,7 @@ export default function Index({
             )}
           </section>
 
-          <section name="now-playing">
+          <section aria-label="now-playing">
             <div className="px-4 md:px-8">
               <h1 className="text-2xl font-black">NOW PLAYING</h1>
             </div>

@@ -62,7 +62,7 @@ const AddToFavorites = ({ payload, type = "movie" }) => {
   };
 
   if (!userData) {
-    return <div>Login to add to favorites</div>;
+    return <p>Login to add to favorites</p>;
   }
 
   return (

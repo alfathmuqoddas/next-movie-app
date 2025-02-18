@@ -245,7 +245,7 @@ export const mediaDetails = ({
           </div>
         </div>
 
-        <div className="md:max-w-4xl md:px-4 md:mx-auto flex flex-col gap-12">
+        <div className="md:max-w-5xl md:px-4 md:mx-auto flex flex-col gap-12">
           <TemplateFront templateName={"Cast"}>
             {casts.length > 0 ? (
               casts.map((cast, index) => {
