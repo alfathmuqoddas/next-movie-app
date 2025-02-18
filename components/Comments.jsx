@@ -10,7 +10,7 @@ const Comments = ({ comments, movieId }) => {
   const router = useRouter();
 
   return (
-    <div>
+    <section className="max-w-5xl px-4 mx-auto mt-12">
       <h2 className="text-2xl font-bold mb-4">Comments</h2>
       {userData ? (
         <CommentForm id={movieId} />
@@ -73,7 +73,7 @@ const Comments = ({ comments, movieId }) => {
       ) : (
         <p>No comments yet</p>
       )}
-    </div>
+    </section>
   );
 };
 

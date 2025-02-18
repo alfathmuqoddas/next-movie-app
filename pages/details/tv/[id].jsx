@@ -342,9 +342,7 @@ export const mediaDetails = ({
           </TemplateFront>
         </div>
 
-        <div className="max-w-4xl px-4 mx-auto mt-12">
-          <Comments comments={comments} movieId={id} />
-        </div>
+        <Comments comments={comments} movieId={id} />
       </Layout>
     </>
   );
