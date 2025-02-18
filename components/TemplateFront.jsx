@@ -9,25 +9,23 @@ export const TemplateFront2 = ({
 }) => {
   return (
     <>
-      <div className="">
-        {/* <div className="flex justify-between items-center px-8">
+      {/* <div className="flex justify-between items-center px-8">
           <h3 className="text-2xl font-extrabold">{templateName}</h3>
           <Link href={`/${seeAll}`}>
             <h4 className="hover:underline">See More →</h4>
           </Link>
         </div> */}
-        <div className="pt-6">
-          <div className="px-4 md:px-8 flex flex-nowrap overflow-auto">
-            {content &&
-              content.map((contentData) => (
-                <CardWrap
-                  key={contentData.id}
-                  size="w-48"
-                  link={contentLink}
-                  content={contentData}
-                />
-              ))}
-          </div>
+      <div className="pt-6">
+        <div className="px-4 md:px-8 flex flex-nowrap overflow-auto">
+          {content &&
+            content.map((contentData) => (
+              <CardWrap
+                key={contentData.id}
+                size="w-48"
+                link={contentLink}
+                content={contentData}
+              />
+            ))}
         </div>
       </div>
     </>

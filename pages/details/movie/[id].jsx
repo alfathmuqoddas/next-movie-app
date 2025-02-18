@@ -180,7 +180,7 @@ export const mediaDetails = ({
           tagline={tagline}
         />
 
-        <div className="max-w-4xl px-4 mx-auto flex flex-col gap-12 my-12">
+        <div className="max-w-5xl px-4 mx-auto flex flex-col gap-12 my-12">
           <div className="flex flex-col gap-8">
             <div className="flex gap-y-2 flex-wrap">
               {genres.map((genre, index) => (

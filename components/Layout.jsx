@@ -4,19 +4,17 @@ import Head from "next/head";
 
 const Layout = ({ children }) => {
   return (
-    <div className="">
+    <>
       <Head>
         <meta charSet="UTF-8" />
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
-      <div className="relative">
-        <div className="fixed min-w-full z-50">
-          <Navbar />
-        </div>
-        <div className="mx-auto pt-16">{children}</div>
-      </div>
+      <>
+        <Navbar />
+        <main className="mx-auto pt-16">{children}</main>
+      </>
       <Footer />
-    </div>
+    </>
   );
 };
 

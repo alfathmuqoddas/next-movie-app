@@ -115,7 +115,7 @@ export default function Index({
   ];
 
   return (
-    <div>
+    <>
       <Head>
         <title>ALEFAST</title>
         <meta
@@ -147,10 +147,10 @@ export default function Index({
         <meta name="twitter:card" content="summary_large_image" />
       </Head>
       <Layout>
-        <div className="flex flex-col gap-16 pt-8">
-          <div>
+        <div className="flex flex-col gap-16 pt-8 max-w-5xl mx-auto">
+          <section name="trending">
             <div className="flex gap-4 px-4 md:px-8">
-              <h1 className="text-2xl font-bold">TRENDING</h1>
+              <h1 className="text-2xl font-black">TRENDING</h1>
               <div className="flex border rounded-full">
                 <RadioButtonGroup
                   contents={trendingOptions}
@@ -166,11 +166,11 @@ export default function Index({
             ) : (
               <></>
             )}
-          </div>
+          </section>
 
-          <div>
+          <section name="popular">
             <div className="flex gap-4 px-4 md:px-8">
-              <h1 className="text-2xl font-bold">POPULAR</h1>
+              <h1 className="text-2xl font-black">POPULAR</h1>
               <div className="flex border rounded-full">
                 <RadioButtonGroup
                   contents={popularRadio}
@@ -185,14 +185,14 @@ export default function Index({
             ) : (
               <TemplateFront2 content={popularTvDatas} contentLink="/tv" />
             )}
-          </div>
+          </section>
 
-          <div>
+          <section name="now-playing">
             <div className="px-4 md:px-8">
-              <h1 className="text-2xl font-bold">NOW PLAYING</h1>
+              <h1 className="text-2xl font-black">NOW PLAYING</h1>
             </div>
             <TemplateFront2 content={nowPlayingDatas} contentLink="/movie" />
-          </div>
+          </section>
           {/* <div className="py-8">
           <div className="px-8">
             <h1 className="text-2xl font-bold">Top Rated</h1>
@@ -201,6 +201,6 @@ export default function Index({
         </div> */}
         </div>
       </Layout>
-    </div>
+    </>
   );
 }
