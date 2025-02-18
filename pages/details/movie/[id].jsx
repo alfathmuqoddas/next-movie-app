@@ -269,6 +269,8 @@ export const mediaDetails = ({
                       name.length > 32 ? `${name.substring(0, 32)}...` : name
                     }
                     size="w-64"
+                    imgWidth="480"
+                    imgHeight="360"
                     video={true}
                   />
                 );

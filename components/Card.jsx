@@ -4,6 +4,8 @@ import Link from "next/link";
 export const CardSmall = ({
   link,
   img,
+  imgWidth = "185",
+  imgHeight = "278",
   title,
   subtitle,
   flexSubtitle1,
@@ -29,8 +31,8 @@ export const CardSmall = ({
               cast && "h-32 w-full object-cover rounded-full"
             } hover:scale-105 transition-transform duration-300`}
             loading="lazy"
-            width="185"
-            height="278"
+            width={imgWidth}
+            height={imgHeight}
           />
         </figure>
         {title && (
