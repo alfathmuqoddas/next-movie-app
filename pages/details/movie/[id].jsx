@@ -18,6 +18,7 @@ import Hero from "../../../components/Hero";
 import Comments from "../../../components/Comments.jsx";
 import { formatNumber } from "../../../lib/helper";
 import AddToFavorites from "../../../components/AddToFavorites";
+import Link from "next/link";
 
 export async function getServerSideProps(context) {
   const { id } = context.query;
@@ -183,10 +184,15 @@ export const mediaDetails = ({
         <div className="max-w-5xl px-4 mx-auto flex flex-col gap-12 my-12">
           <div className="flex flex-col gap-8">
             <div className="flex gap-y-2 flex-wrap">
-              {genres.map((genre, index) => (
-                <div key={index} className="btn btn-outline rounded-full mr-2">
-                  {genre.name}
-                </div>
+              {genres.map((genre) => (
+                <Link
+                  key={genre.id}
+                  href={`/discover?media_type=movie&genreId=${genre.id}`}
+                >
+                  <div className="btn btn-outline rounded-full mr-2">
+                    {genre.name}
+                  </div>
+                </Link>
               ))}
             </div>
             <RadialRating rating={vote_average} size="4rem" />
