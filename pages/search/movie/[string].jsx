@@ -70,7 +70,6 @@ const SearchResult = ({ searchDatas, string }) => {
                   })`}
                   subtitle={overview ?? "Data Unavailable"}
                   subtitle2={<RadialRating rating={vote_average} size="2rem" />}
-                  imgSize={36}
                 />
               </Link>
             );

@@ -236,7 +236,6 @@ export const mediaDetails = ({
                       subtitle3={
                         <RadialRating rating={vote_average} size="2rem" />
                       }
-                      imgSize={"36"}
                     />
                   </div>
                 );
@@ -260,7 +259,6 @@ export const mediaDetails = ({
                     }
                     title={name}
                     subtitle={character}
-                    size="w-32"
                     link={`/celebrity/${id}`}
                     cast
                   />
@@ -284,7 +282,6 @@ export const mediaDetails = ({
                         : "https://placehold.co/185x278?text=Data+Unavailable"
                     }
                     link={`https://image.tmdb.org/t/p/original${file_path}`}
-                    size="w-36"
                   />
                 );
               })
@@ -306,7 +303,6 @@ export const mediaDetails = ({
                     subtitle={
                       name.length > 32 ? `${name.substring(0, 32)}...` : name
                     }
-                    size="w-64"
                     imgWidth="480"
                     imgHeight="360"
                     video={true}
@@ -332,7 +328,6 @@ export const mediaDetails = ({
                         : "https://placehold.co/185x278?text=Data+Unavailable"
                     }
                     title={name}
-                    size="w-36"
                   />
                 );
               })

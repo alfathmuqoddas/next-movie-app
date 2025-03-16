@@ -182,7 +182,6 @@ const Celebrity = ({ personDetails, personMovieCredits, personTVCredits }) => {
             subtitle2={`Known For: ${known_for_department}`}
             subtitle3={`Born: ${place_of_birth}, ${birthday}`}
             subtitle4={`Died: ${deathday}`}
-            imgSize="36"
             imgWidth="185"
             imgHeight="278"
             flexType="items-start"

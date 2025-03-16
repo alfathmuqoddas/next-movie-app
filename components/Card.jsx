@@ -20,7 +20,11 @@ export const CardSmall = ({
       className="focus:bg-neutral-900 rounded-[16px]"
       title={video ? subtitle : title}
     >
-      <article className={`${size} mx-2 mt-2 mb-0`}>
+      <article
+        className={`${
+          !video ? "w-20 lg:w-36" : "w-32 lg:w-64"
+        } mx-2 mt-2 mb-0 text-sm lg:text-base`}
+      >
         <figure>
           <img
             src={img}
@@ -28,7 +32,7 @@ export const CardSmall = ({
             className={`rounded-[16px] ${
               video && "border border-neutral-500"
             } ${
-              cast && "h-32 w-full object-cover rounded-full"
+              cast && "h-20 lg:h-36 w-full object-cover rounded-full"
             } hover:scale-105 transition-transform duration-300`}
             loading="lazy"
             width={imgWidth}
@@ -37,7 +41,11 @@ export const CardSmall = ({
         </figure>
         {title && (
           <div
-            className={`py-2 ${video ? "flex gap-2 text-left" : "text-center"}`}
+            className={`py-2 ${
+              video
+                ? "flex gap-2 text-left flex-col md:flex-row"
+                : "text-center"
+            }`}
           >
             <h5 className="font-semibold line-clamp-2">{title}</h5>
             <p
@@ -61,7 +69,6 @@ export const CardHorizontal = ({
   subtitle2,
   subtitle3,
   subtitle4,
-  imgSize,
   flexType = "items-start",
   cardBodyPadding = "p-4",
 }) => {
@@ -69,7 +76,7 @@ export const CardHorizontal = ({
     <article
       className={`flex active:bg-neutral-900 rounded-[16px] max-w-screen ${flexType}`}
     >
-      <figure className={`flex-none w-${imgSize}`}>
+      <figure className={`flex-none w-20 lg:w-36`}>
         <img
           src={img}
           alt="cardSmall-thumbnail"
@@ -81,7 +88,7 @@ export const CardHorizontal = ({
       </figure>
       <div className={`${cardBodyPadding}`}>
         <h5 className="font-semibold">{title}</h5>
-        <p className="text-sm line-clamp-4">{subtitle}</p>
+        <p className="text-sm line-clamp-4 hidden lg:flex">{subtitle}</p>
         <div className="text-sm">{subtitle2}</div>
         <div className="text-sm">{subtitle3}</div>
         <div className="text-sm">{subtitle4}</div>
