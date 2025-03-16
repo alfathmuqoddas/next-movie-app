@@ -22,7 +22,7 @@ export const CardSmall = ({
     >
       <article
         className={`${
-          !video ? "w-20 lg:w-36" : "w-32 lg:w-64"
+          !video ? "w-24 lg:w-36" : "w-32 lg:w-64"
         } mx-2 mt-2 mb-0 text-sm lg:text-base`}
       >
         <figure>
@@ -32,7 +32,7 @@ export const CardSmall = ({
             className={`rounded-[16px] ${
               video && "border border-neutral-500"
             } ${
-              cast && "h-20 lg:h-36 w-full object-cover rounded-full"
+              cast && "h-24 lg:h-36 w-full object-cover rounded-full"
             } hover:scale-105 transition-transform duration-300`}
             loading="lazy"
             width={imgWidth}

@@ -3,7 +3,7 @@ import Head from "next/head";
 import Layout from "../../components/Layout";
 import { useRouter } from "next/router";
 import { CardSmall } from "../../components/Card";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export const getServerSideProps = async (context) => {
   const {
@@ -15,15 +15,21 @@ export const getServerSideProps = async (context) => {
   const data = await getDiscover(primary_year, genreId, page, media_type);
   const genres = await getGenres(media_type);
   return {
-    props: { page, genreId, data, year: primary_year, genres, media_type },
+    props: { data, genres },
   };
 };
 
-const Discover = ({ page, genreId, data, year, genres, media_type }) => {
+const Discover = ({ data, genres }) => {
   const router = useRouter();
+  const { page = 1, genreId, primary_year, media_type } = router.query;
   const { results, page: dataPage, total_pages, total_results } = data;
   const { genres: genresData } = genres;
   const [customPage, setCustomPage] = useState(page);
+
+  // Ensure input stays in sync with actual page changes
+  useEffect(() => {
+    setCustomPage(page);
+  }, [page]);
 
   const goToPage = (newPage) => {
     if (newPage < 1 || newPage > total_pages) return;
@@ -97,7 +103,7 @@ const Discover = ({ page, genreId, data, year, genres, media_type }) => {
               </option>
             </select>
           </div>
-          <article className="grid grid-cols-2 md:grid-cols-5 gap-4">
+          <article className="grid grid-cols-3 md:grid-cols-5 gap-4">
             {results.map((result) => (
               <CardSmall
                 key={result.id}
