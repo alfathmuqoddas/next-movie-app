@@ -63,16 +63,10 @@ const Navbar = () => {
                 <Link href="/">Home</Link>
               </li>
               <li>
-                <Link href="/trending">Trending</Link>
+                <Link href="/discover">Discover</Link>
               </li>
               <li>
-                <Link href="/popular">Popular Movies</Link>
-              </li>
-              <li>
-                <Link href="/popular-tv">Popular TV</Link>
-              </li>
-              <li>
-                <Link href="/now-playing">Now Playing</Link>
+                <Link href="/favorites">Favorites</Link>
               </li>
             </ul>
           </div>

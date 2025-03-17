@@ -60,6 +60,36 @@ export const CardSmall = ({
   );
 };
 
+export const CardGrid = ({
+  link,
+  img,
+  imgWidth = "185",
+  imgHeight = "278",
+  title,
+  subtitle,
+}) => {
+  return (
+    <Link href={link} className="rounded-[16px]" title={title}>
+      <article className="w-24 lg:w-36 mx-2 mt-2 mb-0 text-sm lg:text-base">
+        <figure>
+          <img
+            src={img}
+            alt="cardSmall-thumbnail"
+            className={`rounded-[16px] hover:scale-105 transition-transform duration-300`}
+            loading="lazy"
+            width={imgWidth}
+            height={imgHeight}
+          />
+        </figure>
+        <div className="py-2 text-center">
+          <h5 className="font-semibold line-clamp-2">{title}</h5>
+          <p className="font-light line-clamp-2">{subtitle}</p>
+        </div>
+      </article>
+    </Link>
+  );
+};
+
 export const CardHorizontal = ({
   img,
   imgWidth,

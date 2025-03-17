@@ -2,7 +2,7 @@ import { getDiscover, getGenres } from "../../lib/getData";
 import Head from "next/head";
 import Layout from "../../components/Layout";
 import { useRouter } from "next/router";
-import { CardSmall } from "../../components/Card";
+import { CardGrid } from "../../components/Card";
 import { useState, useEffect } from "react";
 
 export const getServerSideProps = async (context) => {
@@ -21,7 +21,12 @@ export const getServerSideProps = async (context) => {
 
 const Discover = ({ data, genres }) => {
   const router = useRouter();
-  const { page = 1, genreId, primary_year, media_type } = router.query;
+  const {
+    page = 1,
+    genreId,
+    primary_year,
+    media_type = "movie",
+  } = router.query;
   const { results, page: dataPage, total_pages, total_results } = data;
   const { genres: genresData } = genres;
   const [customPage, setCustomPage] = useState(page);
@@ -105,7 +110,7 @@ const Discover = ({ data, genres }) => {
           </div>
           <article className="grid grid-cols-3 md:grid-cols-5 gap-4">
             {results.map((result) => (
-              <CardSmall
+              <CardGrid
                 key={result.id}
                 img={
                   result.poster_path
