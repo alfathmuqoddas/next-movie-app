@@ -1,13 +1,31 @@
 import { useState } from "react";
 import CommentForm from "./CommentForm";
 import useAuthStore from "../store/useAuthStore";
-import { handleDeleteComment } from "../lib/firebaseQuery";
+import { deleteComment } from "../lib/firebaseQuery";
 import { useRouter } from "next/router";
 
 const Comments = ({ comments, movieId }) => {
   const [isDisabled, setIsDisabled] = useState(false);
   const { userData } = useAuthStore();
   const router = useRouter();
+
+  const handleDeleteComment = async (movieId, commentId) => {
+    if (window.confirm("Are you sure you want to delete this comment?")) {
+      setIsDisabled(true);
+      try {
+        await deleteComment(movieId, commentId);
+        alert("Comment deleted successfully!");
+        setIsDisabled(false);
+        router.reload();
+      } catch (error) {
+        console.error("Error deleting comment: ", error);
+        alert("Error deleting comment: " + error.message);
+        setIsDisabled(false);
+      }
+    } else {
+      setIsDisabled(false);
+    }
+  };
 
   return (
     <section className="max-w-5xl px-4 mx-auto mt-12">
@@ -49,12 +67,7 @@ const Comments = ({ comments, movieId }) => {
                         <button
                           disabled={isDisabled}
                           onClick={() =>
-                            handleDeleteComment(
-                              movieId,
-                              comment.id,
-                              router,
-                              setIsDisabled
-                            )
+                            handleDeleteComment(movieId, comment.id)
                           }
                           className="text-red-500 text-sm hover:cursor-pointer hover:text-red-600"
                         >

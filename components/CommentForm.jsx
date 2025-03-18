@@ -1,5 +1,3 @@
-"use client";
-
 import { useState, useEffect } from "react";
 import useAuthStore from "../store/useAuthStore";
 import { useRouter } from "next/router";
@@ -13,23 +11,16 @@ const CommentForm = ({ id }) => {
   const { userData } = useAuthStore();
   const router = useRouter();
 
-  const handleChange = (e) => {
-    setCommentText(e.target.value);
-  };
-
   useEffect(() => {
     if (errorMessage) {
       alert(`Error: ${errorMessage}`);
-      // Optionally clear the error message after displaying the alert
       setErrorMessage("");
     }
   }, [errorMessage]);
 
-  // Optional: Effect to display success alerts
   useEffect(() => {
     if (successMessage) {
       alert(successMessage);
-      // Optionally clear the success message after displaying the alert
       setSuccessMessage("");
     }
   }, [successMessage]);
@@ -74,7 +65,7 @@ const CommentForm = ({ id }) => {
       <input
         type="text"
         value={commentText}
-        onChange={handleChange}
+        onChange={(e) => setCommentText(e.target.value)}
         placeholder="Add a comment..."
         className="w-full rounded-lg border border-neutral-500 p-2 text-sm"
       />
