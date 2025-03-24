@@ -69,8 +69,8 @@ export const CardGrid = ({
   subtitle,
 }) => {
   return (
-    <Link href={link} className="rounded-[16px]" title={title}>
-      <article className="w-24 lg:w-36 mx-2 mt-2 mb-0 text-sm lg:text-base">
+    <Link href={link} className="rounded-[16px] w-full" title={title}>
+      <article className="max-w-full mx-2 mt-2 mb-0 text-sm lg:text-base">
         <figure>
           <img
             src={img}
