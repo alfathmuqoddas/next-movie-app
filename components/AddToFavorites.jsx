@@ -1,15 +1,7 @@
 "use client";
 import { useState } from "react";
-import {
-  collection,
-  query,
-  where,
-  getDocs,
-  addDoc,
-  serverTimestamp,
-} from "firebase/firestore";
 import useAuthStore from "../store/useAuthStore";
-import { db } from "../lib/firebase";
+import { addToFavorites, checkIsFavorite } from "../lib/firebaseQuery";
 
 const AddToFavorites = ({ payload, type = "movie" }) => {
   const { userData } = useAuthStore();
@@ -17,47 +9,13 @@ const AddToFavorites = ({ payload, type = "movie" }) => {
 
   const handleAddToFavorites = async () => {
     setLoading(true);
-    try {
-      let favoritesCollection;
-      if (type === "movie") {
-        favoritesCollection = collection(
-          db,
-          "movieFavorites",
-          userData.uid.toString(),
-          "favorites"
-        );
-      } else if (type === "tv") {
-        favoritesCollection = collection(
-          db,
-          "tvFavorites",
-          userData.uid.toString(),
-          "favorites"
-        );
-      } else {
-        alert("Invalid content type specified");
-        setLoading(false);
-        return;
-      }
-
-      const q = query(favoritesCollection, where("id", "==", payload.id));
-      const snapshot = await getDocs(q);
-      if (!snapshot.empty) {
-        alert("You have already submitted this movie to favorites.");
-        setLoading(false);
-        return;
-      }
-      const docRef = await addDoc(favoritesCollection, {
-        id: payload.id,
-        title: payload.title,
-        poster_path: payload.poster_path,
-        createdAt: serverTimestamp(),
-      });
-      alert("Movie added to favorites successfully!");
+    const result = await addToFavorites(payload, type, userData.uid);
+    if (result.success) {
       setLoading(false);
-    } catch (error) {
-      console.error("Error adding to favorites: ", error);
-      alert("Error adding to favorites: ", error);
+      alert("Successfully added to favorites");
+    } else {
       setLoading(false);
+      alert(result.error);
     }
   };
 
