@@ -1,16 +1,20 @@
 # NEXT MOVIE APP
 
+Your one stop place for all your movies and tv shows. Get info about the current popular, trending, and now playing movies & tv.
+
 ## Screenshot
 
-1. [homepage-screenshot](https://prnt.sc/SQBazP8FgfnX)
-2. [popular page](https://prnt.sc/ufGTwT4W1pXw)
-3. [movie detail page](https://prnt.sc/AJX_oQMuua3a)
+![Screenshot1](./screenshot/1.png)
+![Screenshot2](./screenshot/2.png)
+![Screenshot3](./screenshot/3.png)
 
 ## Features
 
 1. Get Info about the current popular, trending, and now playing movies & tv.
 2. Get detailed info about the movies or tv show.
 3. Search for all available movies or tv shows
+4. Add movies or tv shows to your favorite list
+5. Add comments to your favorite movies or tv shows
 
 ## Tech Stack
 
