@@ -63,11 +63,11 @@ const Favorites = () => {
         router.reload();
       } else {
         console.error("Error deleting favorite: ", result.error);
-        alert("Error deleting favorite: ", result.error);
+        alert(`Error deleting favorite: ${result.error}`);
       }
     } catch (error) {
       console.error("Error deleting favorite: ", error);
-      alert("Error deleting favorite: ", error);
+      alert(`Error deleting favorite: ${error}`);
     }
   };
 
