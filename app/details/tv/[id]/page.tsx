@@ -29,8 +29,6 @@ async function getTvDetailsData(id: string) {
   const { results: similarData } = similarDataRes;
   const { cast: casts, crew: crews } = credits;
 
-  const comments = await getComments(id);
-
   const props = {
     mediaDetails: {
       name: mediaDetails.name,
@@ -68,7 +66,6 @@ async function getTvDetailsData(id: string) {
       poster_path: similar.poster_path,
       name: similar.name,
     })),
-    comments,
   };
 
   const dataSize = JSON.stringify(props).length;
@@ -133,7 +130,6 @@ export default async function Page({
     picSelected,
     videoSelected,
     similarData,
-    comments,
   } = props;
 
   const {
@@ -344,7 +340,7 @@ export default async function Page({
         </TemplateFront>
       </div>
 
-      <Comments comments={comments} movieId={id} />
+      <Comments movieId={id} />
     </>
   );
 }

@@ -1,6 +1,6 @@
 const Footer = () => {
   return (
-    <footer className="container mx-auto mt-32 mb-8">
+    <footer className="container mx-auto py-8">
       <div className="text-center">
         <>Alfath Muqoddas ©2022</>
         <br />

@@ -40,7 +40,7 @@ const Layout = ({ children }: { children: ReactNode }) => {
     <html lang="en" suppressHydrationWarning>
       <body>
         <Navbar />
-        <main className="mx-auto pt-16">{children}</main>
+        <main className="mx-auto py-16">{children}</main>
         <Footer />
       </body>
     </html>

@@ -1,15 +1,33 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import CommentForm from "./CommentForm";
 import useAuthStore from "../store/useAuthStore";
 import { deleteComment } from "../lib/firebaseQuery";
-import { useRouter } from "next/compat/router";
+import { useRouter } from "next/navigation";
+import { getComments } from "../lib/firebaseQuery";
 
-const Comments = ({ comments, movieId }) => {
+const Comments = ({ movieId }) => {
   const [isDisabled, setIsDisabled] = useState(false);
+  const [comments, setComments] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   const { userData } = useAuthStore();
   const router = useRouter();
+
+  useEffect(() => {
+    const fetchComments = async () => {
+      setIsLoading(true);
+      try {
+        const comments = await getComments(movieId);
+        setComments(comments);
+      } catch (error) {
+        console.error("Error fetching comments: ", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchComments();
+  }, [movieId]);
 
   const handleDeleteComment = async (movieId, commentId) => {
     if (window.confirm("Are you sure you want to delete this comment?")) {
@@ -28,6 +46,8 @@ const Comments = ({ comments, movieId }) => {
       setIsDisabled(false);
     }
   };
+
+  if (isLoading) return <div>Loading...</div>;
 
   return (
     <section className="max-w-5xl px-4 mx-auto mt-12">
