@@ -15,7 +15,7 @@ import Comments from "@/components/Comments";
 import AddToFavorites from "@/components/AddToFavorites";
 import Link from "next/link";
 
-export async function getTvDetailsData(id: string) {
+async function getTvDetailsData(id: string) {
   const [mediaDetails, credits, pic, vid, similarDataRes] = await Promise.all([
     getMediaDetails("tv", id),
     getCreditData("tv", id),
@@ -119,11 +119,11 @@ export const generateMetadata = async ({
   };
 };
 
-export const MediaDetails = async ({
+export default async function Page({
   params,
 }: {
   params: Promise<{ id: string }>;
-}) => {
+}) {
   const { id: tvId } = await params;
   const { props } = await getTvDetailsData(tvId);
   const {
@@ -347,6 +347,4 @@ export const MediaDetails = async ({
       <Comments comments={comments} movieId={id} />
     </>
   );
-};
-
-export default MediaDetails;
+}

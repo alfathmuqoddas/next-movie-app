@@ -7,19 +7,19 @@ import {
 } from "../lib/getData";
 import { TemplateFront2 } from "../components/TemplateFront";
 
-export const fetchingFunction = async () => {
+async function fetchingFunction() {
   const [
     popularData,
     popularTvData,
     nowPlayingData,
-    topRatedData,
+    // topRatedData,
     trendingDataDay,
     trendingDataWeek,
   ] = await Promise.all([
     getPopularData("movie"),
     getPopularData("tv"),
     getNowPlayingData(),
-    getTopRatedData(),
+    // getTopRatedData(),
     getTrendingData("day", 1),
     getTrendingData("week", 1),
   ]);
@@ -78,7 +78,7 @@ export const fetchingFunction = async () => {
   return {
     props,
   };
-};
+}
 
 export const metadata = {
   title: "ALEFAST",
@@ -89,7 +89,9 @@ export const metadata = {
   image: "https://alefast.vercel.app/images/alefast-logo.png",
 };
 
-export default async function Index() {
+export const revalidate = 3600;
+
+export default async function Page() {
   const { props } = await fetchingFunction();
   const {
     popularDatas,

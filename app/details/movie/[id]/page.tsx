@@ -16,7 +16,7 @@ import { formatNumber } from "../../../../lib/helper";
 import AddToFavorites from "../../../../components/AddToFavorites";
 import Link from "next/link";
 
-const getServerSideProps = async (id: string) => {
+async function getMovieDetails(id: string) {
   const [mediaDetails, credits, pic, vid, similarDataRes] = await Promise.all([
     getMediaDetails("movie", id),
     getCreditData("movie", id),
@@ -75,7 +75,7 @@ const getServerSideProps = async (id: string) => {
   return {
     props,
   };
-};
+}
 
 export async function generateMetadata({
   params,
@@ -83,7 +83,7 @@ export async function generateMetadata({
   params: Promise<{ id: string }>;
 }): Promise<any> {
   const { id: movieId } = await params;
-  const { props } = await getServerSideProps(movieId);
+  const { props } = await getMovieDetails(movieId);
   const { mediaDetails } = props;
 
   return {
@@ -117,13 +117,13 @@ export async function generateMetadata({
   };
 }
 
-export const MediaDetails = async ({
+export default async function Page({
   params,
 }: {
   params: Promise<{ id: string }>;
-}) => {
+}) {
   const { id: movieId } = await params;
-  const { props } = await getServerSideProps(movieId);
+  const { props } = await getMovieDetails(movieId);
   const {
     mediaDetails,
     casts,
@@ -306,6 +306,4 @@ export const MediaDetails = async ({
       <Comments comments={comments} movieId={id} />
     </>
   );
-};
-
-export default MediaDetails;
+}
