@@ -118,19 +118,19 @@ export default async function Page() {
           <TemplateFront2 content={trendingDatasDay} contentLink="" />
         </section>
 
+        <section aria-label="popular">
+          <div className="flex gap-4 px-4 md:px-8">
+            <h1 className="text-2xl font-black">POPULAR MOVIES</h1>
+          </div>
+          <TemplateFront2 content={popularDatas} contentLink="/movie" />
+        </section>
+
         <section aria-label="popular-today">
           <div className="flex gap-4 px-4 md:px-8">
-            <h1 className="text-2xl font-black">POPULAR TODAY</h1>
+            <h1 className="text-2xl font-black">POPULAR SERIES</h1>
           </div>
 
           <TemplateFront2 content={popularTvDatas} contentLink="/tv" />
-        </section>
-
-        <section aria-label="popular">
-          <div className="flex gap-4 px-4 md:px-8">
-            <h1 className="text-2xl font-black">POPULAR THIS WEEK</h1>
-          </div>
-          <TemplateFront2 content={popularDatas} contentLink="/movie" />
         </section>
 
         <section aria-label="now-playing">

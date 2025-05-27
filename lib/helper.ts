@@ -16,3 +16,11 @@ export const formatNumber = (num) => {
 
   return formattedNum;
 };
+
+export const sortByDate = (data: any, isMovie: boolean = true) => {
+  return data.sort((obj1: any, obj2: any) => {
+    const date1 = new Date(isMovie ? obj1.release_date : obj1.first_air_date);
+    const date2 = new Date(isMovie ? obj2.release_date : obj2.first_air_date);
+    return date1.getTime() - date2.getTime();
+  });
+};

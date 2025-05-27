@@ -52,7 +52,7 @@ export const GridTemplate = ({
       <div className="">
         <div className="grid grid-cols-3 md:grid-cols-4 xl:grid-cols-6 gap-2 md:gap-4 xl:gap-8">
           {content &&
-            content.map((contentData: any, index) => (
+            content.map((contentData: any, index: number) => (
               <div key={index}>
                 <CardWrap size="" link={contentLink} content={contentData} />
               </div>

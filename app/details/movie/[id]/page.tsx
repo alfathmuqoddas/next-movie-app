@@ -234,21 +234,23 @@ export default async function Page({
 
         <TemplateFront templateName={"Pictures"}>
           {picSelected.length > 0 ? (
-            picSelected.map((picSelect, index) => {
-              const { file_path } = picSelect;
-              return (
-                <div key={index}>
-                  <CardSmall
-                    img={
-                      file_path
-                        ? `https://image.tmdb.org/t/p/w185${file_path}`
-                        : "https://placehold.co/185x278?text=Data+Unavailable"
-                    }
-                    link={`https://image.tmdb.org/t/p/original${file_path}`}
-                  />
-                </div>
-              );
-            })
+            picSelected.map(
+              (picSelect: { file_path: string }, index: number) => {
+                const { file_path } = picSelect;
+                return (
+                  <div key={index}>
+                    <CardSmall
+                      img={
+                        file_path
+                          ? `https://image.tmdb.org/t/p/w185${file_path}`
+                          : "https://placehold.co/185x278?text=Data+Unavailable"
+                      }
+                      link={`https://image.tmdb.org/t/p/original${file_path}`}
+                    />
+                  </div>
+                );
+              }
+            )
           ) : (
             <>Data Unavailable</>
           )}
