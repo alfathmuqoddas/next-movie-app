@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { ReactNode } from "react";
 // import Image from "next/image";
 
 export const CardSmall = ({
@@ -8,17 +9,23 @@ export const CardSmall = ({
   imgHeight = "278",
   title,
   subtitle,
-  flexSubtitle1,
-  size,
-  flexSubtitle2,
   video = false,
   cast = false,
+}: {
+  link: string;
+  img: string;
+  imgWidth?: string;
+  imgHeight?: string;
+  title?: string | ReactNode;
+  subtitle?: string;
+  video?: boolean;
+  cast?: boolean;
 }) => {
   return (
     <Link
       href={link}
       className="focus:bg-neutral-900 rounded-[16px]"
-      title={video ? subtitle : title}
+      // title={video ? subtitle : title}
     >
       <article
         className={`${
@@ -101,6 +108,20 @@ export const CardHorizontal = ({
   subtitle4,
   flexType = "items-start",
   cardBodyPadding = "p-4",
+}: {
+  img: string;
+  imgWidth?: string;
+  imgHeight?: string;
+  title?: string | ReactNode;
+  subtitle?: string;
+  video?: boolean;
+  cast?: boolean;
+  link?: string;
+  subtitle2?: string;
+  subtitle3?: ReactNode;
+  subtitle4?: string;
+  flexType?: string;
+  cardBodyPadding?: string;
 }) => {
   return (
     <article

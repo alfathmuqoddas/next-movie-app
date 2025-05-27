@@ -1,8 +1,10 @@
+"use client";
+
 import { useState } from "react";
 import CommentForm from "./CommentForm";
 import useAuthStore from "../store/useAuthStore";
 import { deleteComment } from "../lib/firebaseQuery";
-import { useRouter } from "next/router";
+import { useRouter } from "next/compat/router";
 
 const Comments = ({ comments, movieId }) => {
   const [isDisabled, setIsDisabled] = useState(false);

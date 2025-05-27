@@ -1,17 +1,41 @@
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import "../styles/globals.css";
+import { ReactNode } from "react";
 
-export const metadata = {
-  title: "ALEFAST",
-  description:
-    "Alefast Discover the latest trending movies and TV series. Get information, reviews, and recommendations on the hottest entertainment.",
-  keywords:
-    "trending movies, trending TV series, latest movies, popular TV shows, movie reviews, TV series recommendations, entertainment news",
-  image: "https://alefast.vercel.app/images/alefast-logo.png",
+export const generateMetadata = ({ children }: { children: ReactNode }) => {
+  return {
+    title: "ALEFAST",
+    description: "Movie and TV App",
+    openGraph: {
+      title: "ALEFAST",
+      description: "Movie and TV App",
+      images: [
+        {
+          url: "https://alefast.vercel.app/favicon.ico",
+          width: 342,
+          height: 513,
+          alt: "ALEFAST",
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: "ALEFAST",
+      description: "Movie and TV App",
+      images: [
+        {
+          url: "https://alefast.vercel.app/favicon.ico",
+          width: 342,
+          height: 513,
+          alt: "ALEFAST",
+        },
+      ],
+    },
+  };
 };
 
-const Layout = ({ children }) => {
+const Layout = ({ children }: { children: ReactNode }) => {
   return (
     <html lang="en" suppressHydrationWarning>
       <body>
