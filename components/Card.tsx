@@ -117,7 +117,7 @@ export const CardHorizontal = ({
   video?: boolean;
   cast?: boolean;
   link?: string;
-  subtitle2?: string;
+  subtitle2?: string | ReactNode;
   subtitle3?: ReactNode;
   subtitle4?: string;
   flexType?: string;

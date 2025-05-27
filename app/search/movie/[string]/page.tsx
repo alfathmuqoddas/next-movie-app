@@ -1,19 +1,16 @@
 import Link from "next/link";
-import { CardHorizontal } from "../../../components/Card";
-import RadialRating from "../../../components/RadialRating";
-import { queryData } from "../../../lib/getData";
-import SearchLayout from "../SearchLayout";
-import ButtonSearchToggle from "../ButtonSearchToggle";
+import { CardHorizontal } from "../../../../components/Card";
+import RadialRating from "../../../../components/RadialRating";
+import { queryData } from "../../../../lib/getData";
+import ButtonSearchToggle from "../../../../components/ButtonSearchToggle";
 
-export const getServerSideProps = async (context) => {
-  const { string } = context.query;
-
+async function getMovieSearchResult(string: string) {
   const searchData = await queryData("movie", string);
 
   const { results: searchDatas } = searchData;
 
   const props = {
-    searchDatas: searchDatas.map((s) => ({
+    searchDatas: searchDatas.map((s: any) => ({
       id: s.id,
       poster_path: s.poster_path,
       title: s.title,
@@ -30,11 +27,18 @@ export const getServerSideProps = async (context) => {
   return {
     props,
   };
-};
+}
 
-const SearchResult = ({ searchDatas, string }) => {
+export default async function Page({
+  params,
+}: {
+  params: Promise<{ string: string }>;
+}) {
+  const { string } = await params;
+  const { props } = await getMovieSearchResult(string);
+  const { searchDatas } = props;
   return (
-    <SearchLayout string={string}>
+    <>
       <ButtonSearchToggle
         mediaType="tv"
         string={string}
@@ -80,8 +84,6 @@ const SearchResult = ({ searchDatas, string }) => {
           </div>
         )}
       </div>
-    </SearchLayout>
+    </>
   );
-};
-
-export default SearchResult;
+}

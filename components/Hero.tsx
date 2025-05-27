@@ -1,6 +1,16 @@
 import Image from "next/image";
 
-const Hero = ({ backdrop_path, release_date, title, tagline }) => {
+const Hero = ({
+  backdrop_path,
+  release_date,
+  title,
+  tagline,
+}: {
+  backdrop_path: string;
+  release_date: string;
+  title: string;
+  tagline: string;
+}) => {
   return (
     <section className="relative">
       <div className="overflow-hidden h-[32rem]">

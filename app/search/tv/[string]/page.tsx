@@ -1,13 +1,10 @@
 import Link from "next/link";
-import { CardHorizontal } from "../../../components/Card";
-import RadialRating from "../../../components/RadialRating";
-import { queryData } from "../../../lib/getData";
-import SearchLayout from "../SearchLayout";
-import ButtonSearchToggle from "../ButtonSearchToggle";
+import { CardHorizontal } from "../../../../components/Card";
+import RadialRating from "../../../../components/RadialRating";
+import { queryData } from "../../../../lib/getData";
+import ButtonSearchToggle from "../../../../components/ButtonSearchToggle";
 
-export const getServerSideProps = async (context) => {
-  const { string } = context.query;
-
+async function getTvSearchResults(string: string) {
   const searchTVData = await queryData("tv", string);
 
   const { results: searchTVDatas } = searchTVData;
@@ -30,11 +27,19 @@ export const getServerSideProps = async (context) => {
   return {
     props,
   };
-};
+}
 
-const SearchResult = ({ searchTVDatas, string }) => {
+export default async function Page({
+  params,
+}: {
+  params: Promise<{ string: string }>;
+}) {
+  const { string } = await params;
+  const { props } = await getTvSearchResults(string);
+  const { searchTVDatas } = props;
+
   return (
-    <SearchLayout string={string}>
+    <>
       <ButtonSearchToggle
         mediaType="movie"
         string={string}
@@ -76,8 +81,6 @@ const SearchResult = ({ searchTVDatas, string }) => {
           </div>
         )}
       </div>
-    </SearchLayout>
+    </>
   );
-};
-
-export default SearchResult;
+}

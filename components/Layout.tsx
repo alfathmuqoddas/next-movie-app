@@ -1,8 +1,9 @@
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 import Head from "next/head";
+import { ReactNode } from "react";
 
-const Layout = ({ children }) => {
+const Layout = ({ children }: { children: ReactNode }) => {
   return (
     <>
       <Head>
