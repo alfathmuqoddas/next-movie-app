@@ -178,6 +178,7 @@ export default async function Page({
               <Link
                 key={genre.id}
                 href={`/discover?media_type=movie&genreId=${genre.id}`}
+                scroll={false}
               >
                 <div className="btn btn-outline rounded-full mr-2">
                   {genre.name}
