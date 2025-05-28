@@ -43,7 +43,6 @@ export default function TableData({ data, isMovie = false }) {
                         <Link
                           href={`/details/movie/${dat.id}`}
                           className="active:underline hover:underline text-blue-500"
-                          scroll={false}
                         >
                           {dat.title}
                         </Link>
@@ -63,7 +62,6 @@ export default function TableData({ data, isMovie = false }) {
                         <Link
                           href={`/details/tv/${dat.id}`}
                           className="active:underline hover:underline text-blue-500"
-                          scroll={false}
                         >
                           {dat.name}
                         </Link>

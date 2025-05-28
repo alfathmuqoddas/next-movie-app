@@ -125,7 +125,6 @@ export default async function SearchPage({
                 key={id}
                 href={`/details/${mediaType}/${id}`} // Use mediaType in href
                 title={overview ?? ""}
-                scroll={false}
               >
                 <CardHorizontal
                   img={

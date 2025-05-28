@@ -13,6 +13,7 @@ import RadialRating from "@/components/RadialRating";
 import Hero from "@/components/Hero";
 import Comments from "@/components/Comments";
 import AddToFavorites from "@/components/AddToFavorites";
+import ScrollRestore from "@/components/ScrollRestore";
 import Link from "next/link";
 
 async function getTvDetailsData(id: string) {
@@ -160,6 +161,7 @@ export default async function Page({
 
   return (
     <>
+      <ScrollRestore />
       <Hero
         backdrop_path={backdrop_path}
         release_date={`${first_air_date.substring(
@@ -176,7 +178,6 @@ export default async function Page({
               <Link
                 key={genre.id}
                 href={`/discover?media_type=tv&genreId=${genre.id}`}
-                scroll={false}
               >
                 <div className="btn btn-outline rounded-full mr-2">
                   {genre.name}

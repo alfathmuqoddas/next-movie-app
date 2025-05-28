@@ -25,7 +25,6 @@ export const CardSmall = ({
     <Link
       href={link}
       className="focus:bg-neutral-900 rounded-[16px]"
-      scroll={false}
       // title={video ? subtitle : title}
     >
       <article
@@ -77,12 +76,7 @@ export const CardGrid = ({
   subtitle,
 }) => {
   return (
-    <Link
-      href={link}
-      className="rounded-[16px] w-full"
-      title={title}
-      scroll={false}
-    >
+    <Link href={link} className="rounded-[16px] w-full" title={title}>
       <article className="max-w-full mx-2 mt-2 mb-0 text-sm lg:text-base">
         <figure>
           <img
@@ -174,7 +168,6 @@ export const CardWrap = ({ content, size, link }) => {
           ? `details/tv/${id}`
           : `details${link}/${id}`
       }
-      scroll={false}
     >
       <article className={`p-0 ${size} m-2 mb-0`}>
         <figure>

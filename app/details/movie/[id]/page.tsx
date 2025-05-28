@@ -14,6 +14,7 @@ import Hero from "../../../../components/Hero";
 import Comments from "../../../../components/Comments";
 import { formatNumber } from "../../../../lib/helper";
 import AddToFavorites from "../../../../components/AddToFavorites";
+import ScrollRestore from "@/components/ScrollRestore";
 import Link from "next/link";
 
 async function getMovieDetails(id: string) {
@@ -130,15 +131,6 @@ export default async function Page({
     videoSelected,
     similarData,
   } = props;
-  // console.log({
-  //   mediaDetails: mediaDetails,
-  //   casts: casts,
-  //   crews: crews,
-  //   picSelected: picSelected,
-  //   videoSelected: videoSelected,
-  //   similarData: similarData,
-  //   comments: comments,
-  // });
 
   const directorName = crews.length > 0 ? crews[0].name : "data not available";
   const titleName = `${
@@ -164,6 +156,7 @@ export default async function Page({
 
   return (
     <>
+      <ScrollRestore />
       <Hero
         backdrop_path={backdrop_path}
         release_date={release_date.substring(0, 4)}
@@ -178,7 +171,6 @@ export default async function Page({
               <Link
                 key={genre.id}
                 href={`/discover?media_type=movie&genreId=${genre.id}`}
-                scroll={false}
               >
                 <div className="btn btn-outline rounded-full mr-2">
                   {genre.name}
