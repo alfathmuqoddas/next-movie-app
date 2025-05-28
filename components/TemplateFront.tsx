@@ -7,6 +7,11 @@ export const TemplateFront2 = ({
   templateName,
   seeAll,
   contentLink,
+}: {
+  content: any;
+  templateName?: string;
+  seeAll?: string;
+  contentLink: string;
 }) => {
   return (
     <section className="pt-6 px-4 md:px-8 flex flex-nowrap overflow-auto">
