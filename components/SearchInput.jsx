@@ -1,4 +1,3 @@
-"use client";
 import { useState, forwardRef } from "react";
 import { useRouter } from "next/navigation";
 import SearchLogo from "./SearchLogo";
