@@ -1,7 +1,7 @@
 import { getDiscover, getGenres } from "../../lib/getData";
 import Head from "next/head";
 import Layout from "../../components/Layout";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { CardGrid } from "../../components/Card";
 import { useState, useEffect } from "react";
 

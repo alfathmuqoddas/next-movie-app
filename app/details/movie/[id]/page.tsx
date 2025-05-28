@@ -295,7 +295,7 @@ export default async function Page({
         </TemplateFront>
       </section>
 
-      {/* <Comments movieId={movieId} /> */}
+      <Comments movieId={movieId} />
     </>
   );
 }

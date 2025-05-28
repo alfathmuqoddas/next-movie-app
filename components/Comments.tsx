@@ -40,6 +40,7 @@ const Comments = ({ movieId }) => {
         await deleteComment(movieId, commentId);
         alert("Comment deleted successfully!");
         setIsDisabled(false);
+        router.refresh();
       } catch (error) {
         console.error("Error deleting comment: ", error);
         alert("Error deleting comment: " + error.message);

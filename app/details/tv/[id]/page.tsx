@@ -342,7 +342,7 @@ export default async function Page({
         </TemplateFront>
       </div>
 
-      {/* <Comments movieId={id} /> */}
+      <Comments movieId={tvId} />
     </>
   );
 }

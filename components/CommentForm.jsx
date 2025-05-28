@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import useAuthStore from "../store/useAuthStore";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { addComment } from "../lib/firebaseQuery";
 
 const CommentForm = ({ id }) => {
@@ -56,7 +56,7 @@ const CommentForm = ({ id }) => {
     if (result?.success) {
       setCommentText("");
       setSuccessMessage("Comment added successfully!");
-      router.reload();
+      router.refresh();
     } else {
       setErrorMessage(result?.error || "Error adding comment");
     }
