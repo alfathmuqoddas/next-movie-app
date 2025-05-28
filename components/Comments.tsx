@@ -9,17 +9,21 @@ import { getComments } from "../lib/firebaseQuery";
 
 const Comments = ({ movieId }) => {
   const [isDisabled, setIsDisabled] = useState(false);
-  const [comments, setComments] = useState([]);
+  const [comments, setComments] = useState<any>([]);
   const [isLoading, setIsLoading] = useState(false);
   const { userData } = useAuthStore();
   const router = useRouter();
 
   useEffect(() => {
     const fetchComments = async () => {
-      setIsLoading(true);
       try {
+        setIsLoading(true);
         const comments = await getComments(movieId);
-        setComments(comments);
+        if (comments) {
+          setComments(comments);
+        } else {
+          setComments([]);
+        }
       } catch (error) {
         console.error("Error fetching comments: ", error);
       } finally {
@@ -36,7 +40,6 @@ const Comments = ({ movieId }) => {
         await deleteComment(movieId, commentId);
         alert("Comment deleted successfully!");
         setIsDisabled(false);
-        router.reload();
       } catch (error) {
         console.error("Error deleting comment: ", error);
         alert("Error deleting comment: " + error.message);
@@ -60,11 +63,8 @@ const Comments = ({ movieId }) => {
       {comments.length > 0 ? (
         <div className="flex flex-col gap-4">
           {comments.map((comment) => (
-            <div className="flex justify-between gap-4" key={comment.id}>
-              <div
-                key={comment.id}
-                className="flex flex-col gap-1 rounded-2xl w-full"
-              >
+            <div className="flex justify-between gap-4" key={comment?.id}>
+              <div className="flex flex-col gap-1 rounded-2xl w-full">
                 <div className="flex gap-4">
                   <figure>
                     <img

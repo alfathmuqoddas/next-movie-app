@@ -1,16 +1,37 @@
-import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import {
+  signInWithPopup,
+  GoogleAuthProvider,
+  onAuthStateChanged,
+} from "firebase/auth";
+import { useEffect } from "react"; // Import useEffect
 import useAuthStore from "../store/useAuthStore";
 import { auth } from "../lib/firebase";
 
 const AuthButton = () => {
   const { setUserData, userData } = useAuthStore();
   const provider = new GoogleAuthProvider();
+
+  // Add onAuthStateChanged to listen for auth state changes
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        // User is signed in
+        setUserData(user);
+      } else {
+        // User is signed out
+        setUserData(null);
+      }
+    });
+
+    // Clean up the subscription when the component unmounts
+    return () => unsubscribe();
+  }, [setUserData]); // Re-run effect if setUserData changes (though it's stable)
+
   const handleSignIn = () => {
     signInWithPopup(auth, provider)
       .then((result) => {
-        setUserData(result.user);
-
-        alert("Succesfully logged in!");
+        // setUserData is already handled by onAuthStateChanged
+        alert("Successfully logged in!");
       })
       .catch((error) => {
         alert("Error: " + error.message);
@@ -19,8 +40,15 @@ const AuthButton = () => {
 
   const handleSignOut = () => {
     if (confirm("Are you sure you want to log out?")) {
-      auth.signOut();
-      setUserData(null);
+      auth
+        .signOut()
+        .then(() => {
+          // setUserData(null) is already handled by onAuthStateChanged
+          alert("Successfully logged out!");
+        })
+        .catch((error) => {
+          alert("Error: " + error.message);
+        });
     } else {
       return;
     }
