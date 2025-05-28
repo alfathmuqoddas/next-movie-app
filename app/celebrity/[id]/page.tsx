@@ -2,6 +2,7 @@ import TableData from "@/components/TableData";
 import { CardHorizontal } from "../../../components/Card";
 import { getCelebData } from "../../../lib/getData";
 import { sortByDate } from "@/lib/helper";
+import ScrollRestore from "@/components/ScrollRestore";
 
 async function getCelebDetails(id: string) {
   const [personDetails, personMovieCredits, personTVCredits] =
@@ -115,6 +116,7 @@ export default async function Page({
 
   return (
     <>
+      <ScrollRestore />
       <div className="max-w-4xl px-4 mx-auto mb-4 mt-12">
         <CardHorizontal
           img={
