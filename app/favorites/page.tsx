@@ -11,12 +11,20 @@ import { Trash } from "lucide-react";
 const Favorites = () => {
   const { userData } = useAuthStore();
   const router = useRouter();
-  const [favorites, setFavorites] = useState({
+  const [favorites, setFavorites] = useState<{
+    data: any;
+    currentPage: number;
+    totalPages: number;
+  }>({
     data: [],
     currentPage: 0,
     totalPages: 0,
   });
-  const [favoritesTv, setFavoritesTv] = useState({
+  const [favoritesTv, setFavoritesTv] = useState<{
+    data: any;
+    currentPage: number;
+    totalPages: number;
+  }>({
     data: [],
     currentPage: 0,
     totalPages: 0,
