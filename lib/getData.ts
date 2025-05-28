@@ -1,57 +1,57 @@
-export const getPopularData = async (type, page) => {
+export const getPopularData = async (type: string, page?: number) => {
   // Call an external API endpoint to get posts
   try {
     const res = await fetch(
       `https://api.themoviedb.org/3/${type}/popular?api_key=${
         process.env.API_KEY
-      }&language=en-US&page=${page | 1}`,
+      }&language=en-US&page=${page || 1}`,
       { next: { revalidate: 3600 } }
     );
     if (!res.ok) {
       throw new Error("Failed to fetch Popular data");
     }
-    const popularData = await res.json();
-    return popularData;
+    const { results } = await res.json();
+    return results;
   } catch (error) {
     console.error("Error fetching popular tv data:", error.message);
     throw error;
   }
 };
 
-export const getTrendingData = async (timeframe, page) => {
+export const getTrendingData = async (timeframe: string, page?: number) => {
   // Call an external API endpoint to get posts
   try {
     const res = await fetch(
       `https://api.themoviedb.org/3/trending/all/${timeframe}?api_key=${
         process.env.API_KEY
-      }&language=en-US&page=${page | 1}`,
+      }&language=en-US&page=${page || 1}`,
       { next: { revalidate: 3600 } }
     );
     if (!res.ok) {
       throw new Error("Failed to fetch trending data");
     }
-    const trendingData = await res.json();
-    return trendingData;
+    const { results } = await res.json();
+    return results;
   } catch (error) {
     console.error("Error fetching trending data:", error.message);
     throw error;
   }
 };
 
-export const getNowPlayingData = async (page) => {
+export const getNowPlayingData = async (page?: number) => {
   // Call an external API endpoint to get posts
   try {
     const res = await fetch(
       `https://api.themoviedb.org/3/movie/now_playing?api_key=${
         process.env.API_KEY
-      }&page=${page | 1}`,
+      }&page=${page || 1}`,
       { next: { revalidate: 3600 } }
     );
     if (!res.ok) {
       throw new Error("Failed to fetch Now playing data");
     }
-    const nowPlayingData = await res.json();
-    return nowPlayingData;
+    const { results } = await res.json();
+    return results;
   } catch (error) {
     console.error("Error fetching now playing data:", error.message);
     throw error;

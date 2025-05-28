@@ -58,7 +58,7 @@ export const generateMetadata = async ({
 }): Promise<any> => {
   const { id: celebId } = await params;
   const { props } = await getCelebDetails(celebId);
-  const { personDetails, personMovieCredits, personTVCredits } = props;
+  const { personDetails } = props;
 
   return {
     title: personDetails.name,

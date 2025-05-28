@@ -1,7 +1,5 @@
-// import Layout from "./components/Layout";
 import {
   getPopularData,
-  getTopRatedData,
   getNowPlayingData,
   getTrendingData,
 } from "../lib/getData";
@@ -11,28 +9,20 @@ import Popular from "@/components/Popular";
 
 async function fetchingFunction() {
   const [
-    popularData,
-    popularTvData,
-    nowPlayingData,
-    // topRatedData,
-    trendingDataDay,
-    trendingDataWeek,
+    popularDatas,
+    popularTvDatas,
+    nowPlayingDatas,
+    trendingDatasDay,
+    trendingDatasWeek,
   ] = await Promise.all([
     getPopularData("movie"),
     getPopularData("tv"),
     getNowPlayingData(),
-    // getTopRatedData(),
     getTrendingData("day", 1),
     getTrendingData("week", 1),
   ]);
 
-  const { results: popularDatas } = popularData;
-  const { results: popularTvDatas } = popularTvData;
-  const { results: nowPlayingDatas } = nowPlayingData;
-  const { results: trendingDatasDay } = trendingDataDay;
-  const { results: trendingDatasWeek } = trendingDataWeek;
-  // const { results: topRatedDatas } = topRatedData;
-
+  //select which data to display
   const props = {
     popularDatas: popularDatas.map((p) => ({
       id: p.id,
@@ -50,8 +40,8 @@ async function fetchingFunction() {
       poster_path: p.poster_path,
       title: p.title,
     })),
-    trendingDatasDay: trendingDatasDay.map((tDay, index) => ({
-      id: tDay.id || index,
+    trendingDatasDay: trendingDatasDay.map((tDay) => ({
+      id: tDay.id,
       poster_path:
         tDay.poster_path ||
         `https://via.placeholder.com/185x278?text=Data+Unavailable`,
@@ -61,8 +51,8 @@ async function fetchingFunction() {
       name: tDay.name || tDay.title,
       media_type: tDay.media_type || `Data Unavailable`,
     })),
-    trendingDatasWeek: trendingDatasWeek.map((tWeek, index) => ({
-      id: tWeek.id || index,
+    trendingDatasWeek: trendingDatasWeek.map((tWeek) => ({
+      id: tWeek.id,
       poster_path:
         tWeek.poster_path ||
         `https://via.placeholder.com/185x278?text=Data+Unavailable`,
@@ -75,7 +65,7 @@ async function fetchingFunction() {
   };
 
   const dataSize = JSON.stringify(props).length;
-  console.log(`Data size: ${dataSize / 1024} KB`);
+  console.log(`Index page data size: ${dataSize / 1024} KB`);
 
   return {
     props,
