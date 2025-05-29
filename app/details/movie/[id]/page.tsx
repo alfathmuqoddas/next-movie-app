@@ -17,7 +17,6 @@ import { formatNumber } from "../../../../lib/helper";
 import AddToFavorites from "../../../../components/AddToFavorites";
 import ScrollRestore from "@/components/ScrollRestore";
 import Link from "next/link";
-import { Car } from "lucide-react";
 
 async function getMovieDetails(id: string) {
   const [mediaDetails, credits, pic, vid, similarDataRes] = await Promise.all([

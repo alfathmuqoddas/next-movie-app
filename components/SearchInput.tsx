@@ -1,14 +1,14 @@
-import { useState, forwardRef } from "react";
+import { useState, forwardRef, FormEvent } from "react";
 import { useRouter } from "next/navigation";
 import SearchLogo from "./SearchLogo";
 
-const SearchInput = forwardRef((props, ref) => {
+const SearchInput = forwardRef<HTMLInputElement, any>((_props, ref) => {
   // console.log({ userData });
   const [search, setSearch] = useState("");
 
   const router = useRouter();
 
-  const searchMovies = async (e) => {
+  const searchMovies = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     router.push(`/search/movie/${search}`);
   };
