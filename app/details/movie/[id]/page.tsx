@@ -1,4 +1,5 @@
-import { CardSmall } from "../../../../components/Card";
+import { CastCard, GalleryCard, VideoCard } from "@/components/card/index";
+import CardWrap from "@/components/Card";
 import TemplateFront from "../../../../components/TemplateFront";
 import {
   getMediaDetails,
@@ -16,6 +17,7 @@ import { formatNumber } from "../../../../lib/helper";
 import AddToFavorites from "../../../../components/AddToFavorites";
 import ScrollRestore from "@/components/ScrollRestore";
 import Link from "next/link";
+import { Car } from "lucide-react";
 
 async function getMovieDetails(id: string) {
   const [mediaDetails, credits, pic, vid, similarDataRes] = await Promise.all([
@@ -199,22 +201,20 @@ export default async function Page({
       <section className="md:max-w-5xl md:px-4 md:mx-auto flex flex-col gap-12">
         <TemplateFront templateName={"Cast"}>
           {casts.length > 0 ? (
-            casts.map((cast: any, index: number) => {
+            casts.map((cast: any) => {
               const { profile_path, name, character, id } = cast;
               return (
-                <div key={index}>
-                  <CardSmall
-                    img={
-                      profile_path
-                        ? `https://image.tmdb.org/t/p/w185${profile_path}`
-                        : "https://placehold.co/185x278?text=Data+Unavailable"
-                    }
-                    title={name}
-                    subtitle={character}
-                    link={`/celebrity/${id}`}
-                    cast
-                  />
-                </div>
+                <CastCard
+                  key={id}
+                  img={
+                    profile_path
+                      ? `https://image.tmdb.org/t/p/w185${profile_path}`
+                      : "https://placehold.co/185x278?text=Data+Unavailable"
+                  }
+                  title={name}
+                  subtitle={character}
+                  link={`/celebrity/${id}`}
+                />
               );
             })
           ) : (
@@ -224,23 +224,20 @@ export default async function Page({
 
         <TemplateFront templateName={"Pictures"}>
           {picSelected.length > 0 ? (
-            picSelected.map(
-              (picSelect: { file_path: string }, index: number) => {
-                const { file_path } = picSelect;
-                return (
-                  <div key={index}>
-                    <CardSmall
-                      img={
-                        file_path
-                          ? `https://image.tmdb.org/t/p/w185${file_path}`
-                          : "https://placehold.co/185x278?text=Data+Unavailable"
-                      }
-                      link={`https://image.tmdb.org/t/p/original${file_path}`}
-                    />
-                  </div>
-                );
-              }
-            )
+            picSelected.map((picSelect: { file_path: string }) => {
+              const { file_path } = picSelect;
+              return (
+                <GalleryCard
+                  key={file_path}
+                  img={
+                    file_path
+                      ? `https://image.tmdb.org/t/p/w185${file_path}`
+                      : "https://placehold.co/185x278?text=Data+Unavailable"
+                  }
+                  link={`https://image.tmdb.org/t/p/original${file_path}`}
+                />
+              );
+            })
           ) : (
             <>Data Unavailable</>
           )}
@@ -251,19 +248,14 @@ export default async function Page({
             videoSelected.map((vidSelect) => {
               const { key, name } = vidSelect;
               return (
-                <div key={key}>
-                  <CardSmall
-                    link={`https://youtube.com/watch?v=${key}`}
-                    img={`https://img.youtube.com/vi/${key}/0.jpg`}
-                    title={<YoutubeIcons />}
-                    subtitle={
-                      name.length > 32 ? `${name.substring(0, 32)}...` : name
-                    }
-                    imgWidth="480"
-                    imgHeight="360"
-                    video={true}
-                  />
-                </div>
+                <VideoCard
+                  key={key}
+                  link={`https://youtube.com/watch?v=${key}`}
+                  img={`https://img.youtube.com/vi/${key}/0.jpg`}
+                  subtitle={
+                    name.length > 32 ? `${name.substring(0, 32)}...` : name
+                  }
+                />
               );
             })
           ) : (
@@ -274,19 +266,14 @@ export default async function Page({
         <TemplateFront templateName={"Recommendations"}>
           {similarData.length > 0 ? (
             similarData.map((similarDat) => {
-              const { id, poster_path, title } = similarDat;
+              const { id, poster_path, title, media_type } = similarDat;
               return (
-                <div key={id}>
-                  <CardSmall
-                    link={`/details/movie/${id}`}
-                    img={
-                      poster_path
-                        ? `https://image.tmdb.org/t/p/w185/${poster_path}`
-                        : "https://placehold.co/185x278?text=Data+Unavailable"
-                    }
-                    title={title}
-                  />
-                </div>
+                <CardWrap
+                  key={id}
+                  content={{ id, poster_path, title, media_type }}
+                  size="w-24 lg:w-36"
+                  link="/movie"
+                />
               );
             })
           ) : (
