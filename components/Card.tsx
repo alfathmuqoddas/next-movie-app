@@ -2,71 +2,6 @@ import Link from "next/link";
 import { ReactNode } from "react";
 // import Image from "next/image";
 
-export const CardSmall = ({
-  link,
-  img,
-  imgWidth = "185",
-  imgHeight = "278",
-  title,
-  subtitle,
-  video = false,
-  cast = false,
-}: {
-  link: string;
-  img: string;
-  imgWidth?: string;
-  imgHeight?: string;
-  title?: string | ReactNode;
-  subtitle?: string;
-  video?: boolean;
-  cast?: boolean;
-}) => {
-  return (
-    <Link
-      href={link}
-      className="focus:bg-neutral-900 rounded-[16px]"
-      // title={video ? subtitle : title}
-    >
-      <article
-        className={`${
-          !video ? "w-24 lg:w-36" : "w-32 lg:w-64"
-        } mx-2 mt-2 mb-0 text-sm lg:text-base`}
-      >
-        <figure>
-          <img
-            src={img}
-            alt="cardSmall-thumbnail"
-            className={`rounded-[16px] ${
-              video && "border border-neutral-500"
-            } ${
-              cast && "h-24 lg:h-36 w-full object-cover rounded-full"
-            } hover:scale-105 transition-transform duration-300`}
-            loading="lazy"
-            width={imgWidth}
-            height={imgHeight}
-          />
-        </figure>
-        {title && (
-          <div
-            className={`py-2 ${
-              video
-                ? "flex gap-2 text-left flex-col md:flex-row"
-                : "text-center"
-            }`}
-          >
-            <h5 className="font-semibold line-clamp-2">{title}</h5>
-            <p
-              className={`font-light ${video && "font-semibold"} line-clamp-2`}
-            >
-              {subtitle}
-            </p>
-          </div>
-        )}
-      </article>
-    </Link>
-  );
-};
-
 export const CardGrid = ({
   link,
   img,
@@ -148,16 +83,16 @@ export const CardHorizontal = ({
   );
 };
 
-export const CardWrap = ({ content, size, link }) => {
-  const {
-    id,
-    poster_path,
-    release_date,
-    title,
-    first_air_date,
-    name,
-    media_type,
-  } = content;
+export const CardWrap = ({
+  content,
+  size,
+  link,
+}: {
+  content: any;
+  size: string;
+  link?: string;
+}) => {
+  const { id, poster_path, title, name, media_type } = content;
   return (
     <Link
       className="no-underline focus:bg-neutral-900 rounded-[16px]"
@@ -165,8 +100,8 @@ export const CardWrap = ({ content, size, link }) => {
         media_type == "movie"
           ? `/details/movie/${id}`
           : media_type == "tv"
-          ? `details/tv/${id}`
-          : `details${link}/${id}`
+          ? `/details/tv/${id}`
+          : `/details${link}/${id}`
       }
     >
       <article className={`p-0 ${size} m-2 mb-0`}>

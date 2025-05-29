@@ -1,4 +1,5 @@
-import { CardSmall, CardHorizontal } from "@/components/Card";
+import CardWrap, { CardHorizontal } from "@/components/Card";
+import { CastCard, GalleryCard, VideoCard } from "@/components/card/index";
 import TemplateFront from "@/components/TemplateFront";
 import {
   getMediaDetails,
@@ -255,7 +256,7 @@ export default async function Page({
             casts.map((cast, index) => {
               const { profile_path, name, character, id } = cast;
               return (
-                <CardSmall
+                <CastCard
                   key={index}
                   img={
                     profile_path
@@ -265,7 +266,6 @@ export default async function Page({
                   title={name}
                   subtitle={character}
                   link={`/celebrity/${id}`}
-                  cast
                 />
               );
             })
@@ -279,7 +279,7 @@ export default async function Page({
             picSelected.map((picSelect, index) => {
               const { file_path } = picSelect;
               return (
-                <CardSmall
+                <GalleryCard
                   key={index}
                   img={
                     file_path
@@ -300,17 +300,13 @@ export default async function Page({
             videoSelected.map((vidSelect) => {
               const { key, name } = vidSelect;
               return (
-                <CardSmall
+                <VideoCard
                   key={key}
                   link={`https://youtube.com/watch?v=${key}`}
                   img={`https://img.youtube.com/vi/${key}/0.jpg`}
-                  title={<YoutubeIcons />}
                   subtitle={
                     name.length > 32 ? `${name.substring(0, 32)}...` : name
                   }
-                  imgWidth="480"
-                  imgHeight="360"
-                  video={true}
                 />
               );
             })
@@ -324,15 +320,11 @@ export default async function Page({
             similarData.map((similarDat, index) => {
               const { id, poster_path, name } = similarDat;
               return (
-                <CardSmall
+                <CardWrap
                   key={index}
-                  link={`/details/tv/${id}`}
-                  img={
-                    poster_path
-                      ? `https://image.tmdb.org/t/p/w185/${poster_path}`
-                      : "https://placehold.co/185x278?text=Data+Unavailable"
-                  }
-                  title={name}
+                  link="/tv"
+                  content={{ id, poster_path, name }}
+                  size="w-24 lg:w-36"
                 />
               );
             })

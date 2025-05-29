@@ -4,6 +4,7 @@ import { CardHorizontal } from "../../../../components/Card";
 import RadialRating from "../../../../components/RadialRating";
 import { queryData } from "../../../../lib/getData";
 import ButtonSearchToggle from "../../../../components/ButtonSearchToggle";
+import ScrollRestore from "@/components/ScrollRestore";
 
 // Define a type for the search result item for better type safety
 type SearchResultItem = {
@@ -96,6 +97,7 @@ export default async function SearchPage({
 
   return (
     <>
+      <ScrollRestore />
       <ButtonSearchToggle
         mediaType={toggleMediaType}
         string={string}

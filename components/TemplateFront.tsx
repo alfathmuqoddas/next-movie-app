@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { CardWrap } from "./Card";
 import { ReactNode } from "react";
 
@@ -17,9 +16,12 @@ export const TemplateFront2 = ({
     <section className="pt-6 px-4 md:px-8 flex flex-nowrap overflow-auto">
       {content &&
         content.map((contentData: any) => (
-          <div key={contentData.id}>
-            <CardWrap size="w-48" link={contentLink} content={contentData} />
-          </div>
+          <CardWrap
+            size="w-48"
+            link={contentLink}
+            content={contentData}
+            key={contentData.id}
+          />
         ))}
     </section>
   );
