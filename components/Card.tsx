@@ -104,7 +104,7 @@ export const CardWrap = ({
           : `/details${link}/${id}`
       }
     >
-      <article className={`p-0 ${size} m-2 mb-0`}>
+      <article className={`p-0 ${size} m-2 mb-0 text-sm lg:text-base`}>
         <figure>
           <img
             src={`https://image.tmdb.org/t/p/w342/${poster_path}`}
