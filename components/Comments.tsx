@@ -1,66 +1,79 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import CommentForm from "./CommentForm";
 import useAuthStore from "../store/useAuthStore";
 import { deleteComment } from "../lib/firebaseQuery";
-import { useRouter } from "next/navigation";
 import { getComments } from "../lib/firebaseQuery";
 
 const Comments = ({ movieId }) => {
-  const [isDisabled, setIsDisabled] = useState(false);
+  const [isDeleting, setisDeleting] = useState(false);
   const [comments, setComments] = useState<any>([]);
   const [isLoading, setIsLoading] = useState(false);
   const { userData } = useAuthStore();
-  const router = useRouter();
 
-  useEffect(() => {
-    const fetchComments = async () => {
-      try {
-        setIsLoading(true);
-        const comments = await getComments(movieId);
-        if (comments) {
-          setComments(comments);
-        } else {
-          setComments([]);
-        }
-      } catch (error) {
-        console.error("Error fetching comments: ", error);
-      } finally {
-        setIsLoading(false);
+  const fetchComments = useCallback(async () => {
+    try {
+      setIsLoading(true);
+      const comments = await getComments(movieId);
+      if (comments) {
+        setComments(comments);
+      } else {
+        setComments([]);
       }
-    };
-    fetchComments();
+    } catch (error) {
+      console.error("Error fetching comments: ", error);
+    } finally {
+      setIsLoading(false);
+    }
   }, [movieId]);
 
-  const handleDeleteComment = async (movieId, commentId) => {
-    if (window.confirm("Are you sure you want to delete this comment?")) {
-      setIsDisabled(true);
-      try {
-        await deleteComment(movieId, commentId);
-        alert("Comment deleted successfully!");
-        setIsDisabled(false);
-        router.refresh();
-      } catch (error) {
-        console.error("Error deleting comment: ", error);
-        alert("Error deleting comment: " + error.message);
-        setIsDisabled(false);
-      }
-    } else {
-      setIsDisabled(false);
+  useEffect(() => {
+    fetchComments();
+  }, [fetchComments]);
+
+  console.log({ comments });
+
+  //this will be called by add comment form
+  const handleCommentAdded = () => {
+    fetchComments();
+  };
+
+  const handleDeleteComment = async (commentId: string) => {
+    if (!window.confirm("Are you sure you want to delete this comment?")) {
+      return; // User cancelled
+    }
+    setisDeleting(true);
+    try {
+      await deleteComment(movieId, commentId);
+      alert("Comment deleted successfully!");
+      await fetchComments();
+    } catch (error) {
+      console.error("Error deleting comment: ", error);
+      alert("Error deleting comment: " + error.message);
+    } finally {
+      setisDeleting(false);
     }
   };
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) {
+    return (
+      <section className="max-w-5xl px-4 mx-auto mt-12">
+        <div>Loading...</div>
+      </section>
+    );
+  }
 
   return (
     <section className="max-w-5xl px-4 mx-auto mt-12">
       <h2 className="text-2xl font-bold mb-4">Comments</h2>
+
       {userData ? (
-        <CommentForm id={movieId} />
+        <CommentForm id={movieId} onCommentAdded={handleCommentAdded} />
       ) : (
         <p className="my-4">Login to add a comment</p>
       )}
+
       {comments.length > 0 ? (
         <div className="flex flex-col gap-4">
           {comments.map((comment) => (
@@ -85,20 +98,16 @@ const Comments = ({ movieId }) => {
                     </div>
                     <p>{comment.content}</p>
 
-                    {userData?.uid === comment.userId ? (
+                    {userData?.uid === comment.userId && (
                       <div>
                         <button
-                          disabled={isDisabled}
-                          onClick={() =>
-                            handleDeleteComment(movieId, comment.id)
-                          }
+                          disabled={isDeleting}
+                          onClick={() => handleDeleteComment(comment.id)}
                           className="text-red-500 text-sm hover:cursor-pointer hover:text-red-600"
                         >
                           Delete
                         </button>
                       </div>
-                    ) : (
-                      <></>
                     )}
                   </div>
                 </div>
