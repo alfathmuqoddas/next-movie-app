@@ -1,6 +1,11 @@
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
 
+export interface IAuthStore {
+  userData: any;
+  setUserData: (userData: any) => void;
+}
+
 const useAuthStore = create(
   persist(
     (set) => ({

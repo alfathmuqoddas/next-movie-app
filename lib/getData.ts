@@ -81,8 +81,7 @@ export const getTopRatedData = async (page) => {
 export const getMediaDetails = async (type, id) => {
   try {
     const res = await fetch(
-      `https://api.themoviedb.org/3/${type}/${id}?api_key=${process.env.API_KEY}&language=en-US`,
-      { cache: "no-store" }
+      `https://api.themoviedb.org/3/${type}/${id}?api_key=${process.env.API_KEY}&language=en-US`
     );
     if (!res.ok) {
       throw new Error("Failed to fetch details data");
@@ -98,8 +97,7 @@ export const getMediaDetails = async (type, id) => {
 export const getCreditData = async (type, id) => {
   try {
     const credits = await fetch(
-      `https://api.themoviedb.org/3/${type}/${id}/credits?api_key=${process.env.API_KEY}&language=en-US`,
-      { cache: "no-store" }
+      `https://api.themoviedb.org/3/${type}/${id}/credits?api_key=${process.env.API_KEY}&language=en-US`
     );
     const credit = await credits.json();
     return credit;
@@ -128,8 +126,7 @@ export const getPicsData = async (type, id) => {
 export const getVideosData = async (type, id) => {
   try {
     const videos = await fetch(
-      `https://api.themoviedb.org/3/${type}/${id}/videos?api_key=${process.env.API_KEY}`,
-      { cache: "no-store" }
+      `https://api.themoviedb.org/3/${type}/${id}/videos?api_key=${process.env.API_KEY}`
     );
     if (!videos.ok) {
       throw new Error("Failed to fetch videos data");
@@ -145,8 +142,7 @@ export const getVideosData = async (type, id) => {
 export const getSimilarData = async (type, id) => {
   try {
     const similar = await fetch(
-      `https://api.themoviedb.org/3/${type}/${id}/recommendations?api_key=${process.env.API_KEY}&language=en-US&page=1`,
-      { cache: "no-store" }
+      `https://api.themoviedb.org/3/${type}/${id}/recommendations?api_key=${process.env.API_KEY}&language=en-US&page=1`
     );
     if (!similar.ok) {
       throw new Error("Failed to fetch similar data");
@@ -163,7 +159,7 @@ export const getCelebData = async (id, type) => {
   const url = `https://api.themoviedb.org/3/person/${id}${type}?api_key=${process.env.API_KEY}`;
 
   try {
-    const response = await fetch(url, { cache: "no-store" });
+    const response = await fetch(url);
     if (!response.ok) {
       throw new Error("Failed to fetch celeb data");
     }

@@ -5,22 +5,24 @@ import SearchInput from "./SearchInput";
 export const SearchInputButton = () => {
   // console.log({ userData });
   const [isVisible, setIsVisible] = useState(false);
-  const searchFormRef = useRef(null);
-  const searchInputRef = useRef(null);
+  const searchFormRef = useRef<HTMLDivElement>(null);
+  const searchInputRef = useRef<HTMLInputElement>(null);
 
   const toggleSearchForm = () => {
     setIsVisible(!isVisible);
     if (!isVisible) {
       setTimeout(() => {
-        searchInputRef.current.focus();
+        if (searchInputRef.current) {
+          searchInputRef.current.focus();
+        }
       }, 100);
     }
   };
 
-  const handleClickOutside = (event) => {
+  const handleClickOutside = (event: MouseEvent) => {
     if (
       searchFormRef.current &&
-      !searchFormRef.current.contains(event.target)
+      !searchFormRef.current.contains(event.target as Node)
     ) {
       setIsVisible(false);
     }
