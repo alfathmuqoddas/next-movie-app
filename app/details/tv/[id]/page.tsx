@@ -12,7 +12,7 @@ import { getComments } from "@/lib/firebaseQuery";
 import YoutubeIcons from "@/components/YoutubeIcons";
 import RadialRating from "@/components/RadialRating";
 import Hero from "@/components/Hero";
-import Comments from "@/components/Comments";
+import Comments from "@/components/comment/Comments";
 import AddToFavorites from "@/components/AddToFavorites";
 import ScrollRestore from "@/components/ScrollRestore";
 import Link from "next/link";

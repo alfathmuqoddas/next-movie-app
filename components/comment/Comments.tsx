@@ -2,9 +2,9 @@
 
 import { useState, useEffect, useCallback } from "react";
 import CommentForm from "./CommentForm";
-import useAuthStore from "../store/useAuthStore";
-import { deleteComment } from "../lib/firebaseQuery";
-import { getComments } from "../lib/firebaseQuery";
+import useAuthStore from "../../store/useAuthStore";
+import { deleteComment } from "../../lib/firebaseQuery";
+import { getComments } from "../../lib/firebaseQuery";
 
 const Comments = ({ movieId }) => {
   const [isDeleting, setisDeleting] = useState(false);
