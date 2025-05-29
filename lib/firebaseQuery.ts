@@ -134,7 +134,7 @@ export const getFavorites = async (
   mediaType,
   page = 1,
   pageSize = 10,
-  previousLastCreatedAt // Optional: To optimize pagination
+  previousLastCreatedAt? // Optional: To optimize pagination
 ) => {
   try {
     if (!userId || !mediaType) {
