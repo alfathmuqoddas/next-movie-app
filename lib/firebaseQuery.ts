@@ -14,7 +14,7 @@ import {
 } from "firebase/firestore";
 import { db } from "./firebase";
 
-export const getComments = async (movieId) => {
+export const getComments = async (movieId: string) => {
   try {
     if (!movieId) {
       console.warn("movieId is required to fetch comments.");
@@ -130,11 +130,11 @@ export const checkIsFavorite = async (payload, type, userId) => {
 };
 
 export const getFavorites = async (
-  userId,
-  mediaType,
-  page = 1,
-  pageSize = 10,
-  previousLastCreatedAt? // Optional: To optimize pagination
+  userId: string,
+  mediaType: string,
+  page: number = 1,
+  pageSize: number = 10,
+  previousLastCreatedAt?: string // Optional: To optimize pagination
 ) => {
   try {
     if (!userId || !mediaType) {
@@ -252,7 +252,7 @@ export const deleteFavorite = async (type, uid, mediaId) => {
   }
 };
 
-export const deleteComment = async (movieId, commentId) => {
+export const deleteComment = async (movieId: string, commentId: string) => {
   try {
     if (!movieId || !commentId) {
       console.warn("Invalid parameters: movieId and commentId are required.");
@@ -270,7 +270,7 @@ export const deleteComment = async (movieId, commentId) => {
   }
 };
 
-export const addComment = async (movieId, payload) => {
+export const addComment = async (movieId: string, payload: any) => {
   try {
     if (!movieId) {
       console.warn("movieId is required to add a comment.");

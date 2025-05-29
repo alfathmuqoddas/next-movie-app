@@ -2,16 +2,14 @@
 
 import { useState, useEffect } from "react";
 import useAuthStore from "../store/useAuthStore";
-import { useRouter } from "next/navigation";
 import { addComment } from "../lib/firebaseQuery";
 
-const CommentForm = ({ id }) => {
+const CommentForm = ({ id, onCommentAdded }) => {
   const [commentText, setCommentText] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
   const { userData } = useAuthStore();
-  const router = useRouter();
 
   useEffect(() => {
     if (errorMessage) {
@@ -56,7 +54,7 @@ const CommentForm = ({ id }) => {
     if (result?.success) {
       setCommentText("");
       setSuccessMessage("Comment added successfully!");
-      router.refresh();
+      onCommentAdded();
     } else {
       setErrorMessage(result?.error || "Error adding comment");
     }
