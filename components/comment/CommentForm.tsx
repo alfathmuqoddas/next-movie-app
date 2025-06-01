@@ -73,7 +73,7 @@ const CommentForm = ({ id, onCommentAdded }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="mb-8">
+    <form onSubmit={handleSubmit} className="mb-4">
       <div className="relative w-full lg:w-1/2">
         <textarea
           id="comment-form"

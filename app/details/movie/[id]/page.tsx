@@ -8,8 +8,6 @@ import {
   getVideosData,
   getSimilarData,
 } from "../../../../lib/getData";
-import { getComments } from "../../../../lib/firebaseQuery";
-import YoutubeIcons from "../../../../components/YoutubeIcons";
 import RadialRating from "../../../../components/RadialRating";
 import Hero from "../../../../components/Hero";
 import Comments from "../../../../components/comment/Comments";
@@ -32,48 +30,13 @@ async function getMovieDetails(id: string) {
   const { results: similarData } = similarDataRes;
   const { cast: casts, crew: crews } = credits;
 
-  const props = {
-    mediaDetails: {
-      original_title: mediaDetails.original_title,
-      backdrop_path: mediaDetails.backdrop_path,
-      poster_path: mediaDetails.poster_path,
-      release_date: mediaDetails.release_date,
-      title: mediaDetails.title,
-      tagline: mediaDetails.tagline,
-      genres: mediaDetails.genres,
-      vote_average: mediaDetails.vote_average,
-      overview: mediaDetails.overview,
-      runtime: mediaDetails.runtime,
-      budget: mediaDetails.budget,
-      revenue: mediaDetails.revenue,
-      id: mediaDetails.id,
-    },
-    casts: casts.map((c: any) => ({
-      profile_path: c.profile_path,
-      name: c.name,
-      character: c.character,
-      id: c.id,
-    })),
-    crews: crews.filter((el) => el.job === "Director"),
-    picSelected: picSelected
-      .slice(0, 50)
-      .map((pic: any) => ({ file_path: pic.file_path })),
-    videoSelected: videoSelected.map((video: any) => ({
-      key: video.key,
-      name: video.name,
-    })),
-    similarData: similarData.map((similar: any) => ({
-      id: similar.id,
-      poster_path: similar.poster_path,
-      title: similar.title,
-    })),
-  };
-
-  const dataSize = JSON.stringify(props).length;
-  console.log(`Data size: ${dataSize / 1024} KB`);
-
   return {
-    props,
+    mediaDetails,
+    picSelected,
+    videoSelected,
+    similarData,
+    casts,
+    crews,
   };
 }
 
@@ -83,11 +46,10 @@ export async function generateMetadata({
   params: Promise<{ id: string }>;
 }): Promise<any> {
   const { id: movieId } = await params;
-  const { props } = await getMovieDetails(movieId);
-  const { mediaDetails } = props;
+  const { mediaDetails } = await getMovieDetails(movieId);
 
   return {
-    title: mediaDetails.title,
+    title: mediaDetails.title + " | ALEFAST",
     description: mediaDetails.overview,
     openGraph: {
       title: mediaDetails.title,
@@ -123,7 +85,6 @@ export default async function Page({
   params: Promise<{ id: string }>;
 }) {
   const { id: movieId } = await params;
-  const { props } = await getMovieDetails(movieId);
   const {
     mediaDetails,
     casts,
@@ -131,12 +92,9 @@ export default async function Page({
     picSelected,
     videoSelected,
     similarData,
-  } = props;
+  } = await getMovieDetails(movieId);
 
-  const directorName = crews.length > 0 ? crews[0].name : "data not available";
-  const titleName = `${
-    mediaDetails.original_title
-  } (${mediaDetails.release_date.substring(0, 4)}) | ALEFAST`;
+  const directorName = crews?.filter((el) => el.job === "Director")[0]?.name;
 
   const {
     backdrop_path,
@@ -165,8 +123,8 @@ export default async function Page({
         tagline={tagline}
       />
 
-      <div className="max-w-5xl px-4 mx-auto flex flex-col gap-12 my-12">
-        <div className="flex flex-col gap-8">
+      <section className="md:max-w-5xl md:px-4 md:mx-auto flex flex-col gap-12">
+        <div className="px-4 md:px-0">
           <div className="flex gap-y-2 flex-wrap">
             {genres.map((genre) => (
               <Link
@@ -181,23 +139,22 @@ export default async function Page({
           </div>
           <RadialRating rating={vote_average} size="4rem" />
           <AddToFavorites payload={payload} />
-          <div>
-            <article className="overview">
-              <h3 className="text-2xl font-bold">Overview</h3>
-              <p>{overview}</p>
-            </article>
-            <article className="mt-4">
-              <div className="crew">Director: {directorName}</div>
-              <div>Runtime: {runtime} minutes</div>
-              <div>Budget: ${formatNumber(budget)}</div>
-              <div>Box Office: ${formatNumber(revenue)}</div>
-              <div>Vote Average: {Math.round(vote_average * 10)}</div>
-            </article>
-          </div>
         </div>
-      </div>
 
-      <section className="md:max-w-5xl md:px-4 md:mx-auto flex flex-col gap-12">
+        <div className="px-4 md:px-0">
+          <article className="overview">
+            <h3 className="text-2xl font-bold">Overview</h3>
+            <p>{overview}</p>
+          </article>
+          <article className="mt-4">
+            <div className="crew">Director: {directorName}</div>
+            <div>Runtime: {runtime} minutes</div>
+            <div>Budget: ${formatNumber(budget)}</div>
+            <div>Box Office: ${formatNumber(revenue)}</div>
+            <div>Vote Average: {Math.round(vote_average * 10)}</div>
+          </article>
+        </div>
+
         <TemplateFront templateName={"Cast"}>
           {casts.length > 0 ? (
             casts.map((cast: any) => {
@@ -279,9 +236,8 @@ export default async function Page({
             <>Data Unavailable</>
           )}
         </TemplateFront>
+        <Comments movieId={movieId} />
       </section>
-
-      <Comments movieId={movieId} />
     </>
   );
 }

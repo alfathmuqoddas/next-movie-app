@@ -1,5 +1,10 @@
 import CardWrap, { CardHorizontal } from "@/components/Card";
-import { CastCard, GalleryCard, VideoCard } from "@/components/card/index";
+import {
+  CastCard,
+  GalleryCard,
+  VideoCard,
+  SeasonsCard,
+} from "@/components/card/index";
 import TemplateFront from "@/components/TemplateFront";
 import {
   getMediaDetails,
@@ -31,50 +36,13 @@ async function getTvDetailsData(id: string) {
   const { results: similarData } = similarDataRes;
   const { cast: casts, crew: crews } = credits;
 
-  const props = {
-    mediaDetails: {
-      name: mediaDetails.name,
-      first_air_date: mediaDetails.first_air_date,
-      last_air_date: mediaDetails.last_air_date,
-      backdrop_path: mediaDetails.backdrop_path,
-      poster_path: mediaDetails.poster_path,
-      tagline: mediaDetails.tagline,
-      genres: mediaDetails.genres,
-      overview: mediaDetails.overview,
-      vote_average: mediaDetails.vote_average,
-      episode_run_time: mediaDetails.episode_run_time,
-      number_of_episodes: mediaDetails.number_of_episodes,
-      number_of_seasons: mediaDetails.number_of_seasons,
-      networks: mediaDetails.networks,
-      seasons: mediaDetails.seasons,
-      id: mediaDetails.id,
-    },
-    casts: casts.map((c) => ({
-      profile_path: c.profile_path,
-      name: c.name,
-      character: c.character,
-      id: c.id,
-    })),
-    crews: crews.filter((el) => el.job === "Director"),
-    picSelected: picSelected.slice(0, 50).map((pic) => ({
-      file_path: pic.file_path,
-    })),
-    videoSelected: videoSelected.map((video) => ({
-      key: video.key,
-      name: video.name,
-    })),
-    similarData: similarData.map((similar) => ({
-      id: similar.id,
-      poster_path: similar.poster_path,
-      name: similar.name,
-    })),
-  };
-
-  const dataSize = JSON.stringify(props).length;
-  console.log(`Data size: ${dataSize / 1024} KB`);
-
   return {
-    props,
+    mediaDetails,
+    picSelected,
+    videoSelected,
+    similarData,
+    casts,
+    crews,
   };
 }
 
@@ -84,11 +52,10 @@ export const generateMetadata = async ({
   params: Promise<{ id: string }>;
 }): Promise<any> => {
   const { id: tvId } = await params;
-  const { props } = await getTvDetailsData(tvId);
-  const { mediaDetails } = props;
+  const { mediaDetails } = await getTvDetailsData(tvId);
 
   return {
-    title: mediaDetails.name,
+    title: mediaDetails.name + " | ALEFAST",
     description: mediaDetails.overview,
     openGraph: {
       title: mediaDetails.name,
@@ -124,15 +91,14 @@ export default async function Page({
   params: Promise<{ id: string }>;
 }) {
   const { id: tvId } = await params;
-  const { props } = await getTvDetailsData(tvId);
   const {
     mediaDetails,
     casts,
-    crews,
     picSelected,
     videoSelected,
     similarData,
-  } = props;
+    crews,
+  } = await getTvDetailsData(tvId);
 
   const {
     name,
@@ -154,11 +120,7 @@ export default async function Page({
 
   const payload = { id, title: name, poster_path };
 
-  const directorName = crews.length > 0 ? crews[0].name : "data not available";
-  const titleName = `${mediaDetails.name} (${first_air_date.substring(
-    0,
-    4
-  )}) | ALEFAST`;
+  const directorName = crews?.filter((el) => el.job === "Director")[0]?.name;
 
   return (
     <>
@@ -172,8 +134,9 @@ export default async function Page({
         title={name}
         tagline={tagline}
       />
-      <div className="max-w-5xl px-4 mx-auto flex flex-col gap-12 my-12">
-        <div className="flex flex-col gap-8">
+
+      <section className="md:max-w-5xl md:px-4 md:mx-auto flex flex-col gap-12">
+        <div className="px-4 md:px-0">
           <div className="flex gap-y-2 flex-wrap">
             {genres.map((genre) => (
               <Link
@@ -188,69 +151,25 @@ export default async function Page({
           </div>
           <RadialRating rating={vote_average} size="4rem" />
           <AddToFavorites payload={payload} type="tv" />
-          <div>
-            <div className="overview">
-              <h3 className="text-2xl font-bold">Overview</h3>
-              <p>{overview}</p>
-            </div>
-            <div className="mt-4">
-              <div className="crew">Director: {directorName}</div>
-              <div>Runtime: {episode_run_time[0]} minutes</div>
-              <div>Number of Episodes: {number_of_episodes}</div>
-              <div>Number of Seasons: {number_of_seasons}</div>
-              <div>Networks: {networks[0].name}</div>
-              <div>Vote Average: {Math.round(vote_average * 10)}</div>
-            </div>
+        </div>
+
+        <div className="px-4 md:px-0">
+          <div className="overview">
+            <h3 className="text-2xl font-bold">Overview</h3>
+            <p>{overview}</p>
+          </div>
+          <div className="mt-4">
+            <div>Director: {directorName}</div>
+            <div>Runtime: {episode_run_time[0]} minutes</div>
+            <div>Number of Episodes: {number_of_episodes}</div>
+            <div>Number of Seasons: {number_of_seasons}</div>
+            <div>Networks: {networks[0].name}</div>
+            <div>Vote Average: {Math.round(vote_average * 10)}</div>
           </div>
         </div>
 
-        <div className="px-4 border rounded-[20px] border-neutral-500">
-          <h3 className="text-2xl font-bold py-4">Seasons</h3>
-          <div className="max-h-[360px] overflow-auto flex flex-col gap-4 pb-4">
-            {seasons.map((season) => {
-              const {
-                air_date,
-                episode_count,
-                id,
-                name,
-                overview,
-                poster_path,
-                //season_number,
-                vote_average,
-              } = season;
-              return (
-                <div key={id}>
-                  <CardHorizontal
-                    title={name}
-                    subtitle={
-                      overview
-                        ? overview.length > 240
-                          ? overview.substring(0, 240) + "..."
-                          : overview
-                        : "Description data not exist"
-                    }
-                    img={
-                      poster_path
-                        ? `https://image.tmdb.org/t/p/w342${poster_path}`
-                        : "https://placehold.co/185x278?text=Data+Unavailable"
-                    }
-                    imgWidth="342"
-                    imgHeight="513"
-                    subtitle2={`${
-                      air_date ? air_date.substring(0, 4) : "Data Unavailable"
-                    }, ${episode_count} Episode(s)`}
-                    subtitle3={
-                      <RadialRating rating={vote_average} size="2rem" />
-                    }
-                  />
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      </div>
+        <SeasonsCard seasons={seasons} />
 
-      <div className="md:max-w-5xl md:px-4 md:mx-auto flex flex-col gap-12">
         <TemplateFront templateName={"Cast"}>
           {casts.length > 0 ? (
             casts.map((cast, index) => {
@@ -332,9 +251,8 @@ export default async function Page({
             <>Data Unavailable</>
           )}
         </TemplateFront>
-      </div>
-
-      <Comments movieId={tvId} />
+        <Comments movieId={tvId} />
+      </section>
     </>
   );
 }

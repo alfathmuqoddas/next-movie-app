@@ -57,15 +57,11 @@ const Comments = ({ movieId }) => {
   };
 
   if (isLoading) {
-    return (
-      <section className="max-w-5xl px-4 mx-auto mt-12">
-        <div>Loading...</div>
-      </section>
-    );
+    return <div>Loading...</div>;
   }
 
   return (
-    <section className="max-w-5xl px-4 mx-auto mt-12">
+    <section className="px-4 md:px-0" aria-label="comments">
       <h2 className="text-2xl font-bold mb-4">Comments</h2>
 
       {userData ? (
