@@ -191,7 +191,7 @@ export const getDiscover = async (year, genreId, page, mediaType) => {
   }
 };
 
-export const getGenres = async (mediaType) => {
+export const getGenres = async (mediaType: "tv" | "movie") => {
   try {
     const genres = await (
       await fetch(
