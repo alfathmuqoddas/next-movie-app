@@ -5,12 +5,10 @@ import useAuthStore from "../../store/useAuthStore";
 import { useState, useEffect, useCallback } from "react";
 import { CardGrid } from "../../components/Card";
 import Pagination from "../../components/Pagination";
-import { useRouter } from "next/navigation";
 import { Trash } from "lucide-react";
 
 const Favorites = () => {
   const { userData } = useAuthStore();
-  const router = useRouter();
   const [favorites, setFavorites] = useState<{
     data: any;
     currentPage: number;
@@ -68,7 +66,9 @@ const Favorites = () => {
       const result = await deleteFavorite(type, userData.uid.toString(), id);
       if (result.success) {
         console.log("Favorite deleted successfully!");
-        router.refresh();
+        // router.refresh();
+        fetchFavoritesTv();
+        fetchFavorites();
       } else {
         console.error("Error deleting favorite: ", result.error);
         alert(`Error deleting favorite: ${result.error}`);

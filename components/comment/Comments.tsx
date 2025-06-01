@@ -32,7 +32,7 @@ const Comments = ({ movieId }) => {
     fetchComments();
   }, [fetchComments]);
 
-  console.log({ comments });
+  // console.log({ comments });
 
   //this will be called by add comment form
   const handleCommentAdded = () => {
