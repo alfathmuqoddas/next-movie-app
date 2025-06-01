@@ -29,27 +29,20 @@ const Favorites = () => {
   });
   const [favsPage, setFavsPage] = useState(1);
   const [favsTvPage, setFavsTvPage] = useState(1);
-  const [favsCount, setFavsCount] = useState(10);
-  const [favsTvCount, setFavsTvCount] = useState(10);
 
   // Fetch Movies
   const fetchFavorites = useCallback(async () => {
     if (!userData?.uid) return;
-    const favs = await getFavorites(userData.uid, "movie", favsPage, favsCount);
+    const favs = await getFavorites(userData.uid, "movie", favsPage, 10);
     setFavorites(favs);
-  }, [userData?.uid, favsPage, favsCount]);
+  }, [userData?.uid, favsPage]);
 
   // Fetch TV Shows
   const fetchFavoritesTv = useCallback(async () => {
     if (!userData?.uid) return;
-    const favsTv = await getFavorites(
-      userData.uid,
-      "tv",
-      favsTvPage,
-      favsTvCount
-    );
+    const favsTv = await getFavorites(userData.uid, "tv", favsTvPage, 10);
     setFavoritesTv(favsTv);
-  }, [userData?.uid, favsTvPage, favsTvCount]);
+  }, [userData?.uid, favsTvPage]);
 
   // Fetch data on mount and when dependencies change
   useEffect(() => {
@@ -65,16 +58,17 @@ const Favorites = () => {
       if (!confirm("Are you sure you want to delete this favorite?")) return;
       const result = await deleteFavorite(type, userData.uid.toString(), id);
       if (result.success) {
-        console.log("Favorite deleted successfully!");
-        // router.refresh();
-        fetchFavoritesTv();
-        fetchFavorites();
+        alert("Favorite deleted successfully!");
+
+        if (type === "movie") {
+          fetchFavorites();
+        } else {
+          fetchFavoritesTv();
+        }
       } else {
-        console.error("Error deleting favorite: ", result.error);
         alert(`Error deleting favorite: ${result.error}`);
       }
     } catch (error) {
-      console.error("Error deleting favorite: ", error);
       alert(`Error deleting favorite: ${error}`);
     }
   };
@@ -82,16 +76,12 @@ const Favorites = () => {
   return (
     <>
       {!userData ? (
-        <div className="max-w-5xl px-4 mx-auto flex flex-col gap-12 my-12">
-          You have to login
-        </div>
+        <p>You have to login</p>
       ) : (
-        <div className="max-w-5xl px-4 mx-auto flex flex-col gap-12 my-12">
-          <div className="flex flex-col gap-8">
-            <h1 className="px-4 md:px-0 text-2xl font-bold mb-4">
-              Favorites Movies
-            </h1>
-            <article className="grid grid-cols-3 md:grid-cols-5 gap-4 lg:gap-8">
+        <>
+          <div className="flex flex-col gap-4">
+            <h1 className="text-2xl font-bold">Favorites Movies</h1>
+            <article className="grid grid-cols-3 md:grid-cols-6 gap-4">
               {favorites.data?.length > 0 ? (
                 favorites.data?.map((result) => (
                   <div key={result.id} className="relative">
@@ -125,11 +115,9 @@ const Favorites = () => {
               updatePage={setFavsPage}
             />
           </div>
-          <div className="flex flex-col gap-8">
-            <h1 className="px-4 md:px-0 text-2xl font-bold mb-4">
-              Favorites TV Shows
-            </h1>
-            <article className="grid grid-cols-3 md:grid-cols-5 gap-4">
+          <div className="flex flex-col gap-4">
+            <h1 className="text-2xl font-bold">Favorites TV Shows</h1>
+            <article className="grid grid-cols-3 md:grid-cols-6 gap-4">
               {favoritesTv.data?.length > 0 ? (
                 favoritesTv.data?.map((result) => (
                   <div key={result.id} className="relative">
@@ -154,18 +142,7 @@ const Favorites = () => {
                   </div>
                 ))
               ) : (
-                // <div className="relative">
-                //   <div className="absolute top-0 right-0">
-                //     <button className="btn btn-sm btn-ghost">delete</button>
-                //   </div>
-                //   <CardGrid
-                //     img={"https://placehold.co/185x278?text=Data+Unavailable"}
-                //     title="Test"
-                //     link="test"
-                //     subtitle=""
-                //   />
-                // </div>
-                <>No favorites yet</>
+                <p>No favorites yet</p>
               )}
             </article>
             <Pagination
@@ -174,7 +151,7 @@ const Favorites = () => {
               updatePage={setFavsTvPage}
             />
           </div>
-        </div>
+        </>
       )}
     </>
   );

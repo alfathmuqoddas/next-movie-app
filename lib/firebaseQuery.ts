@@ -214,8 +214,7 @@ export const getFavorites = async (
       poster_path: doc.data().poster_path,
       title: doc.data().title,
       contentId: doc.data().id,
-      createdAt: doc.data().createdAt, // Include createdAt if you plan to use it for next page
-      // Add other fields as needed
+      createdAt: doc.data().createdAt,
     }));
 
     return {
