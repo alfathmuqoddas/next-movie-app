@@ -1,6 +1,6 @@
-import { getDiscover, getGenres } from "@/lib/getData";
+import { getDiscover } from "@/lib/getData";
 import { CardGrid } from "@/components/Card";
-import DiscoverPagination from "@/components/DiscoverPagination";
+import DiscoverPagination from "@/components/discover/DiscoverPagination";
 import ScrollRestore from "@/components/ScrollRestore";
 
 export function generateMetadata() {
