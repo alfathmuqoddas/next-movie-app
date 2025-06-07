@@ -151,10 +151,7 @@ export default async function Page({
         <div className="px-4 md:px-0">
           <div className="flex gap-y-2 flex-wrap">
             {mediaDetails?.genres?.map((genre: any) => (
-              <Link
-                key={genre.id}
-                href={`/discover?media_type=${mediaType}&genreId=${genre.id}`}
-              >
+              <Link key={genre.id} href={`/discover/${mediaType}/${genre.id}`}>
                 <div className="btn btn-outline rounded-full mr-2">
                   {genre.name}
                 </div>

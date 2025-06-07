@@ -9,6 +9,13 @@ export const CardGrid = ({
   imgHeight = "278",
   title,
   subtitle,
+}: {
+  link: string;
+  img: string;
+  imgWidth?: string;
+  imgHeight?: string;
+  title: string;
+  subtitle?: string;
 }) => {
   return (
     <Link href={link} className="rounded-[16px] w-full" title={title}>

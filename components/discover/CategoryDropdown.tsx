@@ -7,28 +7,43 @@ export default function CategoryDropdown({ categoryData }) {
   const params = useParams<{ categoryId: string; mediaType: string }>();
 
   return (
-    <select
-      name="categoryId"
-      id="categoryId"
-      className="select select-sm"
-      onChange={(e) => {
-        const newCategoryId = e.target.value;
-        router.push(`/discover/${params?.mediaType}/${newCategoryId}/1`);
-      }}
-    >
-      <option value="" selected={categoryData.id === ""}>
-        All Categories
-      </option>
-      {categoryData.map((category) => (
-        <option
-          key={category.id}
-          value={category.id}
-          defaultValue={params?.categoryId}
-          selected={category.id === Number(params?.categoryId)}
-        >
-          {category.name}
+    <div className="flex gap-8">
+      <select
+        name="categoryId"
+        id="categoryId"
+        className="select select-sm"
+        onChange={(e) => {
+          const newCategoryId = e.target.value;
+          router.push(`/discover/${params?.mediaType}/${newCategoryId}/1`);
+        }}
+      >
+        {categoryData.map((category) => (
+          <option
+            key={category.id}
+            value={category.id}
+            defaultValue={params?.categoryId}
+            selected={category.id === Number(params?.categoryId)}
+          >
+            {category.name}
+          </option>
+        ))}
+      </select>
+      <select
+        name="media_type"
+        id="media_type"
+        className="select select-sm"
+        onChange={(e) => {
+          const newMediaType = e.target.value;
+          router.push(`/discover/${newMediaType}`);
+        }}
+      >
+        <option value="movie" selected={params?.mediaType === "movie"}>
+          Movies
         </option>
-      ))}
-    </select>
+        <option value="tv" selected={params?.mediaType === "tv"}>
+          TV Series
+        </option>
+      </select>
+    </div>
   );
 }
