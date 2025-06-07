@@ -131,6 +131,8 @@ export default async function Page({
     };
   }
 
+  //   console.log({ mediaDetails });
+
   return (
     <>
       <ScrollRestore />
@@ -138,14 +140,14 @@ export default async function Page({
         backdrop_path={mediaDetails.backdrop_path}
         release_date={
           mediaType === "tv"
-            ? `${mediaDetails.first_air_date.substring(
+            ? `${mediaDetails?.first_air_date?.substring(
                 0,
                 4
-              )} - ${mediaDetails.last_air_date.substring(0, 4)}`
-            : mediaDetails.release_date.substring(0, 4)
+              )} - ${mediaDetails?.last_air_date?.substring(0, 4)}`
+            : mediaDetails?.release_date?.substring(0, 4)
         }
-        title={mediaType === "tv" ? mediaDetails.name : mediaDetails.title}
-        tagline={mediaDetails.tagline}
+        title={mediaType === "tv" ? mediaDetails?.name : mediaDetails?.title}
+        tagline={mediaDetails?.tagline}
       />
       <section className="md:max-w-5xl md:px-4 md:mx-auto flex flex-col gap-12">
         <div className="px-4 md:px-0">
@@ -172,21 +174,25 @@ export default async function Page({
             <article className="mt-4">
               <div>Director: {directorName}</div>
               <div>Runtime: {mediaDetails?.episode_run_time[0]} minutes</div>
-              <div>Number of Episodes: {mediaDetails?.number_of_episodes}</div>
-              <div>Number of Seasons: {mediaDetails?.number_of_seasons}</div>
+              <div>
+                Number of Episodes: {mediaDetails?.number_of_episodes || 0}
+              </div>
+              <div>
+                Number of Seasons: {mediaDetails?.number_of_seasons || 0}
+              </div>
               <div>Networks: {mediaDetails?.networks[0].name}</div>
               <div>
-                Vote Average: {Math.round(mediaDetails?.vote_average * 10)}
+                Vote Average: {Math.round(mediaDetails?.vote_average * 10 || 0)}
               </div>
             </article>
           ) : (
             <article>
               <div className="crew">Director: {directorName}</div>
-              <div>Runtime: {mediaDetails?.runtime} minutes</div>
-              <div>Budget: ${formatNumber(mediaDetails?.budget)}</div>
-              <div>Box Office: ${formatNumber(mediaDetails?.revenue)}</div>
+              <div>Runtime: {mediaDetails?.runtime || 0} minutes</div>
+              <div>Budget: ${formatNumber(mediaDetails?.budget || 0)}</div>
+              <div>Box Office: ${formatNumber(mediaDetails?.revenue || 0)}</div>
               <div>
-                Vote Average: {Math.round(mediaDetails?.vote_average * 10)}
+                Vote Average: {Math.round(mediaDetails?.vote_average * 10 || 0)}
               </div>
             </article>
           )}

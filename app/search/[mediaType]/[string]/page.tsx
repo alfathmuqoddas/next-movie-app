@@ -38,8 +38,8 @@ async function getSearchResults(mediaType: "movie" | "tv", string: string) {
     mediaType, // Pass mediaType to props
   };
 
-  const dataSize = JSON.stringify(props).length;
-  console.log(`Data size for ${mediaType}: ${dataSize / 1024} KB`);
+  // const dataSize = JSON.stringify(props).length;
+  // console.log(`Data size for ${mediaType}: ${dataSize / 1024} KB`);
 
   return {
     props,

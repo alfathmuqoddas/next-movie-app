@@ -64,8 +64,8 @@ async function fetchingFunction() {
     })),
   };
 
-  const dataSize = JSON.stringify(props).length;
-  console.log(`Index page data size: ${dataSize / 1024} KB`);
+  // const dataSize = JSON.stringify(props).length;
+  // console.log(`Index page data size: ${dataSize / 1024} KB`);
 
   return {
     props,
