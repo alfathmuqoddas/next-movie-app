@@ -1,10 +1,10 @@
-import CardWrap, { CardHorizontal } from "@/components/Card";
 import {
   CastCard,
   GalleryCard,
   VideoCard,
   SeasonsCard,
 } from "@/components/card/index";
+import CardWrap from "@/components/Card";
 import TemplateFront from "@/components/TemplateFront";
 import {
   getMediaDetails,
@@ -13,22 +13,21 @@ import {
   getVideosData,
   getSimilarData,
 } from "@/lib/getData";
-import { getComments } from "@/lib/firebaseQuery";
-import YoutubeIcons from "@/components/YoutubeIcons";
 import RadialRating from "@/components/RadialRating";
 import Hero from "@/components/Hero";
 import Comments from "@/components/comment/Comments";
 import AddToFavorites from "@/components/AddToFavorites";
 import ScrollRestore from "@/components/ScrollRestore";
 import Link from "next/link";
+import { formatNumber } from "@/lib/helper";
 
-async function getTvDetailsData(id: string) {
+async function getDetailsData(id: string, mediaType: "tv" | "movie") {
   const [mediaDetails, credits, pic, vid, similarDataRes] = await Promise.all([
-    getMediaDetails("tv", id),
-    getCreditData("tv", id),
-    getPicsData("tv", id),
-    getVideosData("tv", id),
-    getSimilarData("tv", id),
+    getMediaDetails(mediaType, id),
+    getCreditData(mediaType, id),
+    getPicsData(mediaType, id),
+    getVideosData(mediaType, id),
+    getSimilarData(mediaType, id),
   ]);
 
   const { posters: picSelected } = pic;
@@ -46,51 +45,58 @@ async function getTvDetailsData(id: string) {
   };
 }
 
-export const generateMetadata = async ({
+async function generateMetadata({
   params,
 }: {
-  params: Promise<{ id: string }>;
-}): Promise<any> => {
-  const { id: tvId } = await params;
-  const { mediaDetails } = await getTvDetailsData(tvId);
+  params: Promise<{ id: string; mediaType: "tv" | "movie" }>;
+}) {
+  const { id: mediaId, mediaType } = await params;
+  const { mediaDetails } = await getDetailsData(mediaId, mediaType);
+
+  let mediaTitle: string;
+  if (mediaType === "tv") {
+    mediaTitle = mediaDetails.name;
+  } else {
+    mediaTitle = mediaDetails.title;
+  }
 
   return {
-    title: mediaDetails.name + " | ALEFAST",
+    title: mediaTitle + " | ALEFAST",
     description: mediaDetails.overview,
     openGraph: {
-      title: mediaDetails.name,
+      title: mediaTitle,
       description: mediaDetails.overview,
       images: [
         {
           url: `https://image.tmdb.org/t/p/w342${mediaDetails.poster_path}`,
           width: 342,
           height: 513,
-          alt: mediaDetails.name,
+          alt: "Poster For " + mediaTitle,
         },
       ],
     },
     twitter: {
       card: "summary_large_image",
-      title: mediaDetails.name,
+      title: mediaTitle,
       description: mediaDetails.overview,
       images: [
         {
           url: `https://image.tmdb.org/t/p/w342${mediaDetails.poster_path}`,
           width: 342,
           height: 513,
-          alt: mediaDetails.name,
+          alt: "Poster For " + mediaTitle,
         },
       ],
     },
   };
-};
+}
 
 export default async function Page({
   params,
 }: {
-  params: Promise<{ id: string }>;
+  params: Promise<{ id: string; mediaType: "tv" | "movie" }>;
 }) {
-  const { id: tvId } = await params;
+  const { id: mediaId, mediaType } = await params;
   const {
     mediaDetails,
     casts,
@@ -98,50 +104,55 @@ export default async function Page({
     videoSelected,
     similarData,
     crews,
-  } = await getTvDetailsData(tvId);
+  } = await getDetailsData(mediaId, mediaType);
 
-  const {
-    name,
-    first_air_date,
-    last_air_date,
-    backdrop_path,
-    poster_path,
-    tagline,
-    genres,
-    overview,
-    vote_average,
-    episode_run_time,
-    number_of_episodes,
-    number_of_seasons,
-    networks,
-    seasons,
-    id,
-  } = mediaDetails;
+  const directorName = crews?.filter((el: any) => el.job === "Director")[0]
+    ?.name;
 
-  const payload = { id, title: name, poster_path };
+  let favoritePayload: {
+    id: string;
+    title?: string;
+    name?: string;
+    poster_path: string;
+  };
 
-  const directorName = crews?.filter((el) => el.job === "Director")[0]?.name;
+  if (mediaType === "tv") {
+    favoritePayload = {
+      id: mediaDetails.id,
+      title: mediaDetails.name,
+      poster_path: mediaDetails.poster_path,
+    };
+  } else {
+    favoritePayload = {
+      id: mediaDetails.id,
+      title: mediaDetails.title,
+      poster_path: mediaDetails.poster_path,
+    };
+  }
 
   return (
     <>
       <ScrollRestore />
       <Hero
-        backdrop_path={backdrop_path}
-        release_date={`${first_air_date.substring(
-          0,
-          4
-        )} - ${last_air_date.substring(0, 4)}`}
-        title={name}
-        tagline={tagline}
+        backdrop_path={mediaDetails.backdrop_path}
+        release_date={
+          mediaType === "tv"
+            ? `${mediaDetails.first_air_date.substring(
+                0,
+                4
+              )} - ${mediaDetails.last_air_date.substring(0, 4)}`
+            : mediaDetails.release_date
+        }
+        title={mediaType === "tv" ? mediaDetails.name : mediaDetails.title}
+        tagline={mediaDetails.tagline}
       />
-
       <section className="md:max-w-5xl md:px-4 md:mx-auto flex flex-col gap-12">
         <div className="px-4 md:px-0">
           <div className="flex gap-y-2 flex-wrap">
-            {genres.map((genre) => (
+            {mediaDetails?.genres?.map((genre: any) => (
               <Link
                 key={genre.id}
-                href={`/discover?media_type=tv&genreId=${genre.id}`}
+                href={`/discover?media_type=${mediaType}&genreId=${genre.id}`}
               >
                 <div className="btn btn-outline rounded-full mr-2">
                   {genre.name}
@@ -149,34 +160,51 @@ export default async function Page({
               </Link>
             ))}
           </div>
-          <RadialRating rating={vote_average} size="4rem" />
-          <AddToFavorites payload={payload} type="tv" />
+          <RadialRating rating={mediaDetails.vote_average} size="4rem" />
+          <AddToFavorites payload={favoritePayload} />
         </div>
 
         <div className="px-4 md:px-0">
-          <div className="overview">
+          <article className="overview">
             <h3 className="text-2xl font-bold">Overview</h3>
-            <p>{overview}</p>
-          </div>
-          <div className="mt-4">
-            <div>Director: {directorName}</div>
-            <div>Runtime: {episode_run_time[0]} minutes</div>
-            <div>Number of Episodes: {number_of_episodes}</div>
-            <div>Number of Seasons: {number_of_seasons}</div>
-            <div>Networks: {networks[0].name}</div>
-            <div>Vote Average: {Math.round(vote_average * 10)}</div>
-          </div>
+            <p>{mediaDetails.overview}</p>
+          </article>
+
+          {mediaType === "tv" ? (
+            <article className="mt-4">
+              <div>Director: {directorName}</div>
+              <div>Runtime: {mediaDetails?.episode_run_time[0]} minutes</div>
+              <div>Number of Episodes: {mediaDetails?.number_of_episodes}</div>
+              <div>Number of Seasons: {mediaDetails?.number_of_seasons}</div>
+              <div>Networks: {mediaDetails?.networks[0].name}</div>
+              <div>
+                Vote Average: {Math.round(mediaDetails?.vote_average * 10)}
+              </div>
+            </article>
+          ) : (
+            <article>
+              <div className="crew">Director: {directorName}</div>
+              <div>Runtime: {mediaDetails?.runtime} minutes</div>
+              <div>Budget: ${formatNumber(mediaDetails?.budget)}</div>
+              <div>Box Office: ${formatNumber(mediaDetails?.revenue)}</div>
+              <div>
+                Vote Average: {Math.round(mediaDetails?.vote_average * 10)}
+              </div>
+            </article>
+          )}
         </div>
 
-        <SeasonsCard seasons={seasons} />
+        {mediaDetails === "tv" && (
+          <SeasonsCard seasons={mediaDetails.seasons} />
+        )}
 
         <TemplateFront templateName={"Cast"}>
           {casts.length > 0 ? (
-            casts.map((cast, index) => {
+            casts.map((cast: any) => {
               const { profile_path, name, character, id } = cast;
               return (
                 <CastCard
-                  key={index}
+                  key={id}
                   img={
                     profile_path
                       ? `https://image.tmdb.org/t/p/w185${profile_path}`
@@ -195,11 +223,11 @@ export default async function Page({
 
         <TemplateFront templateName={"Pictures"}>
           {picSelected.length > 0 ? (
-            picSelected.map((picSelect, index) => {
+            picSelected.map((picSelect) => {
               const { file_path } = picSelect;
               return (
                 <GalleryCard
-                  key={index}
+                  key={file_path}
                   img={
                     file_path
                       ? `https://image.tmdb.org/t/p/w185/${file_path}`
@@ -236,14 +264,30 @@ export default async function Page({
 
         <TemplateFront templateName={"Recommendations"}>
           {similarData.length > 0 ? (
-            similarData.map((similarDat, index) => {
-              const { id, poster_path, name } = similarDat;
+            similarData.map((similarDat: any) => {
+              let id: string;
+              let poster_path: string;
+              let title: string;
+              let media_type: string;
+
+              if (mediaType === "tv") {
+                id = similarDat.id;
+                poster_path = similarDat.poster_path;
+                title = similarDat.name;
+                media_type = similarDat.media_type;
+              } else {
+                id = similarDat.id;
+                poster_path = similarDat.poster_path;
+                title = similarDat.title;
+                media_type = similarDat.media_type;
+              }
+
               return (
                 <CardWrap
-                  key={index}
-                  link="/tv"
-                  content={{ id, poster_path, name }}
+                  key={id}
+                  content={{ id, poster_path, title, media_type }}
                   size="w-24 lg:w-36"
+                  link={`/${mediaType}`}
                 />
               );
             })
@@ -251,7 +295,8 @@ export default async function Page({
             <>Data Unavailable</>
           )}
         </TemplateFront>
-        <Comments movieId={tvId} />
+
+        <Comments movieId={mediaId} />
       </section>
     </>
   );
