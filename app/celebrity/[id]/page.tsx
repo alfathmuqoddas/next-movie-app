@@ -12,43 +12,10 @@ async function getCelebDetails(id: string) {
       getCelebData(id, "/tv_credits"),
     ]);
 
-  const props = {
-    personDetails: {
-      name: personDetails.name,
-      biography: personDetails.biography,
-      birthday: personDetails.birthday,
-      place_of_birth: personDetails.place_of_birth,
-      known_for_department: personDetails.known_for_department,
-      deathday: personDetails.deathday,
-      profile_path: personDetails.profile_path,
-    },
-    personMovieCredits: {
-      cast: personMovieCredits.cast?.map((cast) => ({
-        poster_path: cast.poster_path,
-        title: cast.title,
-        vote_average: cast.vote_average,
-        id: cast.id,
-        release_date: cast.release_date,
-        character: cast.character,
-      })),
-    },
-    personTVCredits: {
-      cast: personTVCredits.cast?.map((cast) => ({
-        poster_path: cast.poster_path,
-        name: cast.name,
-        vote_average: cast.vote_average,
-        id: cast.id,
-        first_air_date: cast.first_air_date,
-        character: cast.character,
-      })),
-    },
-  };
-
-  const dataSize = JSON.stringify(props).length;
-  console.log(`Data size: ${dataSize / 1024} KB`);
-
   return {
-    props,
+    personDetails,
+    personMovieCredits,
+    personTVCredits,
   };
 }
 
@@ -58,18 +25,17 @@ export const generateMetadata = async ({
   params: Promise<{ id: string }>;
 }): Promise<any> => {
   const { id: celebId } = await params;
-  const { props } = await getCelebDetails(celebId);
-  const { personDetails } = props;
+  const { personDetails } = await getCelebDetails(celebId);
 
   return {
-    title: personDetails.name,
+    title: personDetails.name + " | ALEFAST",
     description: personDetails.biography,
     openGraph: {
-      title: personDetails.name,
+      title: personDetails.name + " | ALEFAST",
       description: personDetails.biography,
       images: [
         {
-          url: `https://image.tmdb.org/t/p/w342${personDetails.profile_path}`,
+          url: `https://image.tmdb.org/t/p/w342${personDetails.profile_path} || https://placehold.co/342x513?text=Data+Unavailable`,
           width: 342,
           height: 513,
           alt: personDetails.name,
@@ -78,11 +44,11 @@ export const generateMetadata = async ({
     },
     twitter: {
       card: "summary_large_image",
-      title: personDetails.name,
+      title: personDetails.name + " | ALEFAST",
       description: personDetails.biography,
       images: [
         {
-          url: `https://image.tmdb.org/t/p/w342${personDetails.profile_path}`,
+          url: `https://image.tmdb.org/t/p/w342${personDetails.profile_path} || https://placehold.co/342x513?text=Data+Unavailable`,
           width: 342,
           height: 513,
           alt: personDetails.name,
@@ -98,8 +64,8 @@ export default async function Page({
   params: Promise<{ id: string }>;
 }) {
   const { id: celebId } = await params;
-  const { props } = await getCelebDetails(celebId);
-  const { personDetails, personMovieCredits, personTVCredits } = props;
+  const { personDetails, personMovieCredits, personTVCredits } =
+    await getCelebDetails(celebId);
   const {
     name,
     biography,
@@ -111,8 +77,6 @@ export default async function Page({
   } = personDetails;
   const { cast } = personMovieCredits;
   const { cast: tvCast } = personTVCredits;
-
-  // console.log({ personDetails, personMovieCredits, personTVCredits });
 
   return (
     <>

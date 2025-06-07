@@ -45,7 +45,7 @@ async function getDetailsData(id: string, mediaType: "tv" | "movie") {
   };
 }
 
-async function generateMetadata({
+export async function generateMetadata({
   params,
 }: {
   params: Promise<{ id: string; mediaType: "tv" | "movie" }>;
@@ -54,6 +54,7 @@ async function generateMetadata({
   const { mediaDetails } = await getDetailsData(mediaId, mediaType);
 
   let mediaTitle: string;
+
   if (mediaType === "tv") {
     mediaTitle = mediaDetails.name;
   } else {
@@ -64,11 +65,11 @@ async function generateMetadata({
     title: mediaTitle + " | ALEFAST",
     description: mediaDetails.overview,
     openGraph: {
-      title: mediaTitle,
+      title: mediaTitle + " | ALEFAST",
       description: mediaDetails.overview,
       images: [
         {
-          url: `https://image.tmdb.org/t/p/w342${mediaDetails.poster_path}`,
+          url: `https://image.tmdb.org/t/p/w342${mediaDetails?.poster_path} || https://placehold.co/342x513?text=Data+Unavailable`,
           width: 342,
           height: 513,
           alt: "Poster For " + mediaTitle,
@@ -77,11 +78,11 @@ async function generateMetadata({
     },
     twitter: {
       card: "summary_large_image",
-      title: mediaTitle,
+      title: mediaTitle + " | ALEFAST",
       description: mediaDetails.overview,
       images: [
         {
-          url: `https://image.tmdb.org/t/p/w342${mediaDetails.poster_path}`,
+          url: `https://image.tmdb.org/t/p/w342${mediaDetails?.poster_path} || https://placehold.co/342x513?text=Data+Unavailable`,
           width: 342,
           height: 513,
           alt: "Poster For " + mediaTitle,
@@ -141,7 +142,7 @@ export default async function Page({
                 0,
                 4
               )} - ${mediaDetails.last_air_date.substring(0, 4)}`
-            : mediaDetails.release_date
+            : mediaDetails.release_date.substring(0, 4)
         }
         title={mediaType === "tv" ? mediaDetails.name : mediaDetails.title}
         tagline={mediaDetails.tagline}
