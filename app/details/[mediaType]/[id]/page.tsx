@@ -150,7 +150,7 @@ export default async function Page({
         tagline={mediaDetails?.tagline}
       />
       <section className="md:max-w-5xl md:px-4 md:mx-auto flex flex-col gap-12">
-        <div className="px-4 md:px-0">
+        <div className="px-4 md:px-0 flex flex-col gap-8">
           <div className="flex gap-y-2 flex-wrap">
             {mediaDetails?.genres?.map((genre: any) => (
               <Link key={genre.id} href={`/discover/${mediaType}/${genre.id}`}>

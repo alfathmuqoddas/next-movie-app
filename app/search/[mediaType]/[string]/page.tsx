@@ -1,10 +1,11 @@
 // app/search/[mediaType]/[string]/page.tsx (or a similar path)
 import Link from "next/link";
-import { CardHorizontal } from "../../../../components/Card";
+import { SearchCard } from "@/components/card/index";
 import RadialRating from "../../../../components/RadialRating";
 import { queryData } from "../../../../lib/getData";
 import ButtonSearchToggle from "../../../../components/ButtonSearchToggle";
 import ScrollRestore from "@/components/ScrollRestore";
+// import Toggle from "./Toggle";
 
 // Define a type for the search result item for better type safety
 type SearchResultItem = {
@@ -22,28 +23,7 @@ async function getSearchResults(mediaType: "movie" | "tv", string: string) {
   const searchData = await queryData(mediaType, string);
   const { results } = searchData;
 
-  const props = {
-    searchDatas: results.map((s: any) => ({
-      id: s.id,
-      poster_path: s.poster_path,
-      // Conditionally map title/name and release_date/first_air_date
-      title: mediaType === "movie" ? s.title : undefined,
-      name: mediaType === "tv" ? s.name : undefined,
-      release_date: mediaType === "movie" ? s.release_date : undefined,
-      first_air_date: mediaType === "tv" ? s.first_air_date : undefined,
-      vote_average: s.vote_average,
-      overview: s.overview,
-    })),
-    string,
-    mediaType, // Pass mediaType to props
-  };
-
-  // const dataSize = JSON.stringify(props).length;
-  // console.log(`Data size for ${mediaType}: ${dataSize / 1024} KB`);
-
-  return {
-    props,
-  };
+  return { results };
 }
 
 export const generateMetadata = async ({ params }) => {
@@ -86,8 +66,7 @@ export default async function SearchPage({
   params: Promise<{ string: string; mediaType: "movie" | "tv" }>; // Add mediaType to params
 }) {
   const { string, mediaType } = await params; // Destructure mediaType
-  const { props } = await getSearchResults(mediaType, string);
-  const { searchDatas } = props;
+  const { results: searchDatas } = await getSearchResults(mediaType, string);
 
   const pageTitle = mediaType === "movie" ? "Movies" : "TV Series";
   const toggleMediaType = mediaType === "movie" ? "tv" : "movie";
@@ -103,7 +82,10 @@ export default async function SearchPage({
         string={string}
         label={toggleLabel}
       />
-      <div className="flex flex-col gap-4">
+      {/* <div className="flex justify-center items-center">
+        <Toggle mediaType={toggleMediaType} currentSearch={string} />
+      </div> */}
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-x-8 md:gap-x-0 gap-y-8">
         {searchDatas.length > 0 ? (
           searchDatas.map((searchItem: SearchResultItem) => {
             const {
@@ -128,19 +110,19 @@ export default async function SearchPage({
                 href={`/details/${mediaType}/${id}`} // Use mediaType in href
                 title={overview ?? ""}
               >
-                <CardHorizontal
+                <SearchCard
                   img={
                     poster_path
-                      ? `https://image.tmdb.org/t/p/w342/${poster_path}`
+                      ? `https://image.tmdb.org/t/p/w185/${poster_path}`
                       : "https://placehold.co/185x278?text=Data+Unavailable"
                   }
-                  imgWidth="342"
-                  imgHeight="513"
-                  title={`${displayTitle} (${
-                    displayDate ? displayDate.substring(0, 4) : "TBA"
-                  })`}
-                  subtitle={overview ?? "Data Unavailable"}
-                  subtitle2={<RadialRating rating={vote_average} size="2rem" />}
+                  title={`${displayTitle?.toString()} (${displayDate?.substring(
+                    0,
+                    4
+                  )})`}
+                  subtitle={
+                    <RadialRating rating={vote_average} size="1.5rem" />
+                  }
                 />
               </Link>
             );

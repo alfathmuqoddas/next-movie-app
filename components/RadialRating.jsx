@@ -10,7 +10,7 @@ const RadialRating = ({ rating, size }) => {
 
   return (
     <div
-      className={`my-8 radial-progress bg-primary border-4 border-primary ${textColorClass}`}
+      className={`radial-progress bg-primary border-4 border-primary ${textColorClass}`}
       style={{
         "--value": rating * 10,
         "--size": size,
