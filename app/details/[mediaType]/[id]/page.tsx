@@ -273,23 +273,26 @@ export default async function Page({
               let poster_path: string;
               let title: string;
               let media_type: string;
+              let vote_average: number;
 
               if (mediaType === "tv") {
                 id = similarDat.id;
                 poster_path = similarDat.poster_path;
                 title = similarDat.name;
                 media_type = similarDat.media_type;
+                vote_average = similarDat.vote_average;
               } else {
                 id = similarDat.id;
                 poster_path = similarDat.poster_path;
                 title = similarDat.title;
                 media_type = similarDat.media_type;
+                vote_average = similarDat.vote_average;
               }
 
               return (
                 <CardWrap
                   key={id}
-                  content={{ id, poster_path, title, media_type }}
+                  content={{ id, poster_path, title, media_type, vote_average }}
                   size="w-24 lg:w-36"
                   link={`/${mediaType}`}
                 />

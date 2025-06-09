@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ReactNode } from "react";
+import RadialRating from "./RadialRating";
 // import Image from "next/image";
 
 export const CardGrid = ({
@@ -99,7 +100,7 @@ export const CardWrap = ({
   size: string;
   link?: string;
 }) => {
-  const { id, poster_path, title, name, media_type } = content;
+  const { id, poster_path, title, name, media_type, vote_average } = content;
   return (
     <Link
       className="no-underline focus:bg-neutral-900 rounded-[16px]"
@@ -112,11 +113,14 @@ export const CardWrap = ({
       }
     >
       <article className={`p-0 ${size} m-2 mb-0 text-sm lg:text-base`}>
-        <figure>
+        <figure className="relative hover:scale-105 transition-transform duration-300">
+          <div className="absolute top-1 right-1">
+            <RadialRating rating={vote_average} size="2rem" />
+          </div>
           <img
             src={`https://image.tmdb.org/t/p/w342/${poster_path}`}
             alt="card-thumbnail"
-            className="rounded-[16px] w-full hover:scale-105 transition-transform duration-300"
+            className="rounded-[16px] w-full "
             width="342"
             height="513"
             loading="lazy"

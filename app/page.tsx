@@ -28,17 +28,20 @@ async function fetchingFunction() {
       id: p.id,
       poster_path: p.poster_path,
       title: p.title,
+      vote_average: p.vote_average,
     })),
     popularTvDatas: popularTvDatas.map((p) => ({
       id: p.id,
       poster_path: p.poster_path,
       name: p.name,
       first_air_date: p.first_air_date,
+      vote_average: p.vote_average,
     })),
     nowPlayingDatas: nowPlayingDatas.map((p) => ({
       id: p.id,
       poster_path: p.poster_path,
       title: p.title,
+      vote_average: p.vote_average,
     })),
     trendingDatasDay: trendingDatasDay.map((tDay) => ({
       id: tDay.id,
@@ -50,6 +53,7 @@ async function fetchingFunction() {
       first_air_date: tDay.first_air_date || `Data Unavailable`,
       name: tDay.name || tDay.title,
       media_type: tDay.media_type || `Data Unavailable`,
+      vote_average: tDay.vote_average,
     })),
     trendingDatasWeek: trendingDatasWeek.map((tWeek) => ({
       id: tWeek.id,
@@ -61,6 +65,7 @@ async function fetchingFunction() {
       first_air_date: tWeek.first_air_date || `Data Unavailable`,
       name: tWeek.name || `Data Unavailable`,
       media_type: tWeek.media_type || `Data Unavailable`,
+      vote_average: tWeek.vote_average,
     })),
   };
 
