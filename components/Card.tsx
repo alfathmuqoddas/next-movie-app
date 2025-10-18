@@ -20,7 +20,7 @@ export const CardGrid = ({
 }) => {
   return (
     <Link href={link} className="rounded-2xl w-full" title={title}>
-      <article className="max-w-full mx-2 mt-2 mb-0 text-sm lg:text-base">
+      <article className="max-w-full m-1 text-sm lg:text-base">
         <figure>
           <img
             src={img}
@@ -116,7 +116,7 @@ export const CardWrap = ({
     >
       <article
         className={`p-0 ${size} ${
-          type === "front" ? "m-2" : "m-1"
+          type === "front" ? "m-2" : "m-1 md:m-2"
         } mb-0 text-sm lg:text-base`}
       >
         <figure className="relative hover:scale-105 transition-transform duration-300">

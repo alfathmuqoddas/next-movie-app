@@ -170,32 +170,38 @@ export default async function Page({
             <p>{mediaDetails.overview}</p>
           </article>
 
-          {mediaType === "tv" ? (
-            <article className="mt-4">
-              <div>Director: {directorName}</div>
-              <div>Runtime: {mediaDetails?.episode_run_time[0]} minutes</div>
-              <div>
-                Number of Episodes: {mediaDetails?.number_of_episodes || 0}
-              </div>
-              <div>
-                Number of Seasons: {mediaDetails?.number_of_seasons || 0}
-              </div>
-              <div>Networks: {mediaDetails?.networks[0].name}</div>
-              <div>
-                Vote Average: {Math.round(mediaDetails?.vote_average * 10 || 0)}
-              </div>
-            </article>
-          ) : (
-            <article>
-              <div className="crew">Director: {directorName}</div>
-              <div>Runtime: {mediaDetails?.runtime || 0} minutes</div>
-              <div>Budget: ${formatNumber(mediaDetails?.budget || 0)}</div>
-              <div>Box Office: ${formatNumber(mediaDetails?.revenue || 0)}</div>
-              <div>
-                Vote Average: {Math.round(mediaDetails?.vote_average * 10 || 0)}
-              </div>
-            </article>
-          )}
+          <article className="mt-4">
+            {mediaType === "tv" ? (
+              <>
+                <div>Director: {directorName}</div>
+                <div>Runtime: {mediaDetails?.episode_run_time[0]} minutes</div>
+                <div>
+                  Number of Episodes: {mediaDetails?.number_of_episodes || 0}
+                </div>
+                <div>
+                  Number of Seasons: {mediaDetails?.number_of_seasons || 0}
+                </div>
+                <div>Networks: {mediaDetails?.networks[0].name}</div>
+                <div>
+                  Vote Average:{" "}
+                  {Math.round(mediaDetails?.vote_average * 10 || 0)}
+                </div>
+              </>
+            ) : (
+              <>
+                <div className="crew">Director: {directorName}</div>
+                <div>Runtime: {mediaDetails?.runtime || 0} minutes</div>
+                <div>Budget: ${formatNumber(mediaDetails?.budget || 0)}</div>
+                <div>
+                  Box Office: ${formatNumber(mediaDetails?.revenue || 0)}
+                </div>
+                <div>
+                  Vote Average:{" "}
+                  {Math.round(mediaDetails?.vote_average * 10 || 0)}
+                </div>
+              </>
+            )}
+          </article>
         </div>
 
         {mediaType === "tv" && <SeasonsCard seasons={mediaDetails.seasons} />}

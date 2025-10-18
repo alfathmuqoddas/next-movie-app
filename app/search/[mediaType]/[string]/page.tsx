@@ -1,7 +1,5 @@
 // app/search/[mediaType]/[string]/page.tsx (or a similar path)
-import Link from "next/link";
-import { SearchCard } from "@/components/card/index";
-import RadialRating from "../../../../components/RadialRating";
+import { CardGrid } from "@/components/Card";
 import { queryData } from "../../../../lib/getData";
 import ButtonSearchToggle from "../../../../components/ButtonSearchToggle";
 import ScrollRestore from "@/components/ScrollRestore";
@@ -85,19 +83,16 @@ export default async function SearchPage({
       {/* <div className="flex justify-center items-center">
         <Toggle mediaType={toggleMediaType} currentSearch={string} />
       </div> */}
-      <div className="grid grid-cols-3 md:grid-cols-4 xl:grid-cols-4 gap-x-2 md:gap-x-4 gap-y-8">
+      <div className="grid grid-cols-3 md:grid-cols-5 gap-1 md:gap-4">
         {searchDatas.length > 0 ? (
           searchDatas.map((searchItem: SearchResultItem) => {
             const {
               id,
               poster_path,
-              // Use optional chaining or checks for title/name and dates
               title,
               name,
               release_date,
               first_air_date,
-              vote_average,
-              overview,
             } = searchItem;
 
             const displayTitle = mediaType === "movie" ? title : name;
@@ -105,24 +100,19 @@ export default async function SearchPage({
               mediaType === "movie" ? release_date : first_air_date;
 
             return (
-              <Link
+              <CardGrid
                 key={id}
-                href={`/details/${mediaType}/${id}`} // Use mediaType in href
-                title={displayTitle ?? ""}
-              >
-                <SearchCard
-                  img={
-                    poster_path
-                      ? `https://image.tmdb.org/t/p/w185/${poster_path}`
-                      : "https://placehold.co/185x278?text=Data+Unavailable"
-                  }
-                  title={`${displayTitle?.toString()} (${displayDate?.substring(
-                    0,
-                    4
-                  )})`}
-                  subtitle={<RadialRating rating={vote_average} size="2rem" />}
-                />
-              </Link>
+                img={
+                  poster_path
+                    ? `https://image.tmdb.org/t/p/w185/${poster_path}}`
+                    : "https://placehold.co/185x278?text=Data+Unavailable"
+                }
+                title={`${displayTitle?.toString()} (${displayDate?.substring(
+                  0,
+                  4
+                )})`}
+                link={`/details/${mediaType}/${id}`}
+              />
             );
           })
         ) : (
