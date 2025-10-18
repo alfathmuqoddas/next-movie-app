@@ -10,15 +10,13 @@ export default function SearchCard({
   subtitle: ReactNode;
 }) {
   return (
-    <article
-      className={`flex flex-row md:flex-col active:bg-neutral-900 rounded-[16px] max-w-screen items-center`}
-    >
-      <figure className={`relative flex-none w-20 lg:w-32`}>
-        <div className="absolute top-1 right-1 text-xs">{subtitle}</div>
+    <article className={`flex flex-col rounded-2xl items-center`}>
+      <figure className={`relative flex-none w-full`}>
+        <div className="absolute top-1 right-1 text-sm">{subtitle}</div>
         <img
           src={img}
           alt="cardSmall-thumbnail"
-          className="rounded-[16px]"
+          className="rounded-2xl"
           width="185"
           height="273"
           loading="lazy"

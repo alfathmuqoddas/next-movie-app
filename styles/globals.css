@@ -44,7 +44,3 @@
 .backdrop-title {
   font-size: 5rem;
 }
-
-p {
-  @apply text-sm;
-}

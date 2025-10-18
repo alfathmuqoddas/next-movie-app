@@ -14,7 +14,7 @@ export default function VideoCard({ link, img, subtitle }: IVideoCard) {
       className="focus:bg-neutral-900 rounded-[16px]"
       title={subtitle}
     >
-      <article className="w-32 lg:w-64 mx-2 mt-2 mb-0 text-sm lg:text-base">
+      <article className="w-32 lg:w-64 mx-1 md:mx-2 mt-2 mb-0 text-sm lg:text-base">
         <figure>
           <img
             src={img}

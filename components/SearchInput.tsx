@@ -11,6 +11,7 @@ const SearchInput = forwardRef<HTMLInputElement, any>((_props, ref) => {
   const searchMovies = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     router.push(`/search/movie/${search}`);
+    setSearch("");
   };
 
   return (

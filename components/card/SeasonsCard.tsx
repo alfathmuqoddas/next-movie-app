@@ -36,6 +36,7 @@ export default function SeasonsCard({ seasons }) {
               subtitle2={`${
                 air_date ? air_date.substring(0, 4) : "Data Unavailable"
               }, ${episode_count} Episode(s)`}
+              subtitle3={<RadialRating rating={vote_average} size="1.5rem" />}
             />
           );
         })}

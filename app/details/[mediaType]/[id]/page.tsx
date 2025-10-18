@@ -198,9 +198,7 @@ export default async function Page({
           )}
         </div>
 
-        {mediaDetails === "tv" && (
-          <SeasonsCard seasons={mediaDetails.seasons} />
-        )}
+        {mediaType === "tv" && <SeasonsCard seasons={mediaDetails.seasons} />}
 
         <TemplateFront templateName={"Cast"}>
           {casts.length > 0 ? (
@@ -294,6 +292,7 @@ export default async function Page({
                   key={id}
                   content={{ id, poster_path, title, media_type, vote_average }}
                   size="w-24 lg:w-36"
+                  type="details"
                   link={`/${mediaType}`}
                 />
               );

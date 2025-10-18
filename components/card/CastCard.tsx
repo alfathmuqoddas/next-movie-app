@@ -14,7 +14,7 @@ export default function CastCard({ link, img, title, subtitle }: ICastCard) {
       className="focus:bg-neutral-900 rounded-[16px]"
       title={title}
     >
-      <article className="w-24 lg:w-36 mx-2 mt-2 mb-0 text-sm lg:text-base">
+      <article className="w-24 lg:w-36 mx-1 md:mx-2 mt-2 mb-0 text-sm lg:text-base">
         <figure>
           <img
             src={img}

@@ -85,7 +85,7 @@ export default async function SearchPage({
       {/* <div className="flex justify-center items-center">
         <Toggle mediaType={toggleMediaType} currentSearch={string} />
       </div> */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-x-8 md:gap-x-0 gap-y-8">
+      <div className="grid grid-cols-3 md:grid-cols-4 xl:grid-cols-4 gap-x-2 md:gap-x-4 gap-y-8">
         {searchDatas.length > 0 ? (
           searchDatas.map((searchItem: SearchResultItem) => {
             const {
@@ -108,7 +108,7 @@ export default async function SearchPage({
               <Link
                 key={id}
                 href={`/details/${mediaType}/${id}`} // Use mediaType in href
-                title={overview ?? ""}
+                title={displayTitle ?? ""}
               >
                 <SearchCard
                   img={
@@ -120,9 +120,7 @@ export default async function SearchPage({
                     0,
                     4
                   )})`}
-                  subtitle={
-                    <RadialRating rating={vote_average} size="1.5rem" />
-                  }
+                  subtitle={<RadialRating rating={vote_average} size="2rem" />}
                 />
               </Link>
             );

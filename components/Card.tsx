@@ -19,13 +19,13 @@ export const CardGrid = ({
   subtitle?: string;
 }) => {
   return (
-    <Link href={link} className="rounded-[16px] w-full" title={title}>
+    <Link href={link} className="rounded-2xl w-full" title={title}>
       <article className="max-w-full mx-2 mt-2 mb-0 text-sm lg:text-base">
         <figure>
           <img
             src={img}
             alt="cardSmall-thumbnail"
-            className={`rounded-[16px] hover:scale-105 transition-transform duration-300`}
+            className={`rounded-2xl hover:scale-105 transition-transform duration-300`}
             loading="lazy"
             width={imgWidth}
             height={imgHeight}
@@ -95,15 +95,17 @@ export const CardWrap = ({
   content,
   size,
   link,
+  type = "front",
 }: {
   content: any;
   size: string;
   link?: string;
+  type?: string;
 }) => {
   const { id, poster_path, title, name, media_type, vote_average } = content;
   return (
     <Link
-      className="no-underline focus:bg-neutral-900 rounded-[16px]"
+      className="no-underline focus:bg-neutral-900 rounded-2xl"
       href={
         media_type == "movie"
           ? `/details/movie/${id}`
@@ -112,7 +114,11 @@ export const CardWrap = ({
           : `/details${link}/${id}`
       }
     >
-      <article className={`p-0 ${size} m-2 mb-0 text-sm lg:text-base`}>
+      <article
+        className={`p-0 ${size} ${
+          type === "front" ? "m-2" : "m-1"
+        } mb-0 text-sm lg:text-base`}
+      >
         <figure className="relative hover:scale-105 transition-transform duration-300">
           <div className="absolute top-1 right-1">
             <RadialRating rating={vote_average} size="2rem" />
@@ -120,7 +126,7 @@ export const CardWrap = ({
           <img
             src={`https://image.tmdb.org/t/p/w342/${poster_path}`}
             alt="card-thumbnail"
-            className="rounded-[16px] w-full "
+            className="rounded-2xl w-full "
             width="342"
             height="513"
             loading="lazy"
