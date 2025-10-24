@@ -11,36 +11,63 @@ import {
   limit,
   startAfter,
   where,
+  type DocumentSnapshot,
+  type Query,
+  type Timestamp,
 } from "firebase/firestore";
 import { db } from "./firebase";
+import type { TPaginatedCommentsResult } from "./firebaseQuery.type";
+import { timeAgo } from "./helper";
 
-export const getComments = async (movieId: string) => {
+const PAGE_SIZE = 5;
+
+export const getComments = async (
+  movieId: string,
+  startAfterDoc: DocumentSnapshot | null = null
+): Promise<TPaginatedCommentsResult> => {
   try {
     if (!movieId) {
       console.warn("movieId is required to fetch comments.");
-      return;
+      return { comments: [], lastVisible: null, hasMore: false };
     }
 
-    const commentsCollection = query(
+    let commentsQuery = query(
       collection(db, "commentsByMovieId", movieId.toString(), "comments"),
-      orderBy("createdAt", "desc")
-    );
-    const commentSnapshot = await getDocs(commentsCollection);
+      orderBy("createdAt", "desc"),
+      limit(PAGE_SIZE)
+    ) as Query;
+
+    if (startAfterDoc) {
+      commentsQuery = query(commentsQuery, startAfter(startAfterDoc));
+    }
+
+    const commentSnapshot = await getDocs(commentsQuery);
+
+    const hasMore = commentSnapshot.docs.length === PAGE_SIZE;
+
+    const lastVisible =
+      commentSnapshot.docs.length > 0
+        ? commentSnapshot.docs[commentSnapshot.docs.length - 1]
+        : null;
+
     const commentsList = commentSnapshot.docs.map((doc) => {
       const data = doc.data();
+
+      const formattedCreatedAt = timeAgo(data.createdAt as Timestamp);
+
       return {
         id: doc.id,
         userId: data.userId,
         userName: data.userName,
         content: data.content,
         userDisplayPicture: data.userDisplayPicture,
-        createdAt: new Date(data.createdAt.toMillis()).toLocaleString("id"),
+        createdAt: formattedCreatedAt,
       };
     });
-    return commentsList;
+    return { comments: commentsList, lastVisible, hasMore };
   } catch (error) {
     console.error("Error fetching comments: ", error);
-    return { error: "Failed to fetch comments." };
+    return { comments: [], lastVisible: null, hasMore: false };
   }
 };
 
