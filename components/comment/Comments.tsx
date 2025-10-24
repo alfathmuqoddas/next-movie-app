@@ -12,6 +12,7 @@ const Comments = ({ movieId }) => {
   const [isDeleting, setisDeleting] = useState(false);
   const [comments, setComments] = useState<any>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [isLoadingMoreComments, setIsLoadingMoreComments] = useState(false);
   const [lastVisible, setLastVisible] = useState<DocumentSnapshot | null>(null);
   const [hasMore, setHasMore] = useState(true);
   const { userData } = useAuthStore();
@@ -39,7 +40,7 @@ const Comments = ({ movieId }) => {
     if (!hasMore || isLoading) return;
 
     try {
-      setIsLoading(true);
+      setIsLoadingMoreComments(true);
       const {
         comments: newComments,
         lastVisible: newLastVisible,
@@ -54,7 +55,7 @@ const Comments = ({ movieId }) => {
     } catch (error) {
       console.error("Error fetching comments: ", error);
     } finally {
-      setIsLoading(false);
+      setIsLoadingMoreComments(false);
     }
   };
 
@@ -144,10 +145,10 @@ const Comments = ({ movieId }) => {
             <div className="flex justify-left mt-4">
               <button
                 onClick={fetchMoreComments}
-                disabled={isLoading || !hasMore}
+                disabled={isLoadingMoreComments || !hasMore}
                 className="btn btn-outline btn-sm rounded-full mr-2"
               >
-                {isLoading ? "Loading..." : "Load More Comments"}
+                {isLoadingMoreComments ? "Loading..." : "Load More Comments"}
               </button>
             </div>
           )}
