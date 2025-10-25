@@ -3,9 +3,8 @@
 import { getFavorites, deleteFavorite } from "../../lib/firebaseQuery";
 import useAuthStore from "../../store/useAuthStore";
 import { useState, useEffect, useCallback } from "react";
-import { CardGrid } from "../../components/Card";
-import Pagination from "../../components/Pagination";
-import { Trash } from "lucide-react";
+import FavoritePagination from "./components/FavoritePagination";
+import FavoriteCard from "./components/FavoriteCard";
 
 const Favorites = () => {
   const { userData } = useAuthStore();
@@ -33,14 +32,14 @@ const Favorites = () => {
   // Fetch Movies
   const fetchFavorites = useCallback(async () => {
     if (!userData?.uid) return;
-    const favs = await getFavorites(userData.uid, "movie", favsPage, 10);
+    const favs = await getFavorites(userData.uid, "movie", favsPage, 12);
     setFavorites(favs);
   }, [userData?.uid, favsPage]);
 
   // Fetch TV Shows
   const fetchFavoritesTv = useCallback(async () => {
     if (!userData?.uid) return;
-    const favsTv = await getFavorites(userData.uid, "tv", favsTvPage, 10);
+    const favsTv = await getFavorites(userData.uid, "tv", favsTvPage, 12);
     setFavoritesTv(favsTv);
   }, [userData?.uid, favsTvPage]);
 
@@ -80,72 +79,48 @@ const Favorites = () => {
       ) : (
         <>
           <div className="flex flex-col gap-4">
-            <h1 className="text-2xl font-bold">Favorites Movies</h1>
+            <h1 className="text-2xl font-bold">Favorite Movies</h1>
             <article className="grid grid-cols-3 md:grid-cols-6 gap-4">
               {favorites.data?.length > 0 ? (
                 favorites.data?.map((result) => (
-                  <div key={result.id} className="relative">
-                    <div className="absolute top-2 right-1 flex gap-2">
-                      <button
-                        className="btn btn-sm btn-ghost"
-                        onClick={() => handleDeleteFavorite("movie", result.id)}
-                      >
-                        <Trash size={20} className="text-red-500" />
-                      </button>
-                    </div>
-                    <CardGrid
-                      img={
-                        result.poster_path
-                          ? `https://image.tmdb.org/t/p/w342/${result.poster_path}`
-                          : "https://placehold.co/185x278?text=Data+Unavailable"
-                      }
-                      title={result.title}
-                      link={`/details/movie/${result.contentId}`}
-                      subtitle=""
-                    />
-                  </div>
+                  <FavoriteCard
+                    key={result.id}
+                    link={`/details/movie/${result.contentId}`}
+                    title={result.title}
+                    poster_path={result.poster_path}
+                    handleClick={() => handleDeleteFavorite("movie", result.id)}
+                    subtitle=""
+                  />
                 ))
               ) : (
                 <p>No favorites yet</p>
               )}
             </article>
-            <Pagination
+            <FavoritePagination
               totalPages={favorites?.totalPages}
               currentPage={favsPage}
               updatePage={setFavsPage}
             />
           </div>
           <div className="flex flex-col gap-4">
-            <h1 className="text-2xl font-bold">Favorites TV Shows</h1>
+            <h1 className="text-2xl font-bold">Favorite TV Shows</h1>
             <article className="grid grid-cols-3 md:grid-cols-6 gap-4">
               {favoritesTv.data?.length > 0 ? (
                 favoritesTv.data?.map((result) => (
-                  <div key={result.id} className="relative">
-                    <div className="absolute top-2 right-1">
-                      <button
-                        className="btn btn-sm btn-ghost"
-                        onClick={() => handleDeleteFavorite("tv", result.id)}
-                      >
-                        <Trash size={20} className="text-red-500" />
-                      </button>
-                    </div>
-                    <CardGrid
-                      img={
-                        result.poster_path
-                          ? `https://image.tmdb.org/t/p/w342/${result.poster_path}`
-                          : "https://placehold.co/185x278?text=Data+Unavailable"
-                      }
-                      title={result.title}
-                      link={`/details/tv/${result.contentId}`}
-                      subtitle=""
-                    />
-                  </div>
+                  <FavoriteCard
+                    key={result.id}
+                    link={`/details/tv/${result.contentId}`}
+                    title={result.name}
+                    poster_path={result.poster_path}
+                    handleClick={() => handleDeleteFavorite("tv", result.id)}
+                    subtitle=""
+                  />
                 ))
               ) : (
                 <p>No favorites yet</p>
               )}
             </article>
-            <Pagination
+            <FavoritePagination
               totalPages={favoritesTv?.totalPages}
               currentPage={favsTvPage}
               updatePage={setFavsTvPage}

@@ -1,4 +1,4 @@
-const Pagination = ({ totalPages = 1, updatePage, currentPage }) => {
+const FavoritePagination = ({ totalPages = 1, updatePage, currentPage }) => {
   return (
     <div className="flex gap-2 justify-center items-center">
       <button
@@ -22,4 +22,4 @@ const Pagination = ({ totalPages = 1, updatePage, currentPage }) => {
   );
 };
 
-export default Pagination;
+export default FavoritePagination;
