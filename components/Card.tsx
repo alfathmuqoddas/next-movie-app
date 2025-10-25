@@ -68,13 +68,13 @@ export const CardHorizontal = ({
 }) => {
   return (
     <article
-      className={`flex active:bg-neutral-900 rounded-[16px] max-w-screen ${flexType}`}
+      className={`flex active:bg-neutral-900 rounded-2xl max-w-screen ${flexType}`}
     >
       <figure className={`flex-none w-20 lg:w-36`}>
         <img
           src={img}
           alt="cardSmall-thumbnail"
-          className="rounded-[16px]"
+          className="rounded-2xl"
           width={imgWidth}
           height={imgHeight}
           loading="lazy"
@@ -120,7 +120,7 @@ export const CardWrap = ({
         } mb-0 text-sm lg:text-base`}
       >
         <figure className="relative hover:scale-105 transition-transform duration-300">
-          <div className="absolute top-1 right-1">
+          <div className="absolute top-1 right-1 text-xs md:text-sm">
             <RadialRating rating={vote_average} size="2rem" />
           </div>
           <img

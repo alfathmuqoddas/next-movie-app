@@ -259,9 +259,7 @@ export default async function Page({
                   key={key}
                   link={`https://youtube.com/watch?v=${key}`}
                   img={`https://img.youtube.com/vi/${key}/0.jpg`}
-                  subtitle={
-                    name.length > 32 ? `${name.substring(0, 32)}...` : name
-                  }
+                  subtitle={name}
                 />
               );
             })
@@ -297,7 +295,7 @@ export default async function Page({
                 <CardWrap
                   key={id}
                   content={{ id, poster_path, title, media_type, vote_average }}
-                  size="w-24 lg:w-36"
+                  size="w-28 lg:w-36"
                   type="details"
                   link={`/${mediaType}`}
                 />

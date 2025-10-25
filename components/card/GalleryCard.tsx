@@ -8,7 +8,7 @@ export interface IGalleryCard {
 export default function GalleryCard({ img, link }: IGalleryCard) {
   return (
     <Link href={link} className="focus:bg-neutral-900 rounded-2xl" title={link}>
-      <article className="w-24 lg:w-36 mx-1 md:mx-2 mt-2 mb-2 text-sm lg:text-base">
+      <article className="w-28 lg:w-36 mx-1 md:mx-2 mt-2 mb-2 text-sm lg:text-base">
         <figure>
           <img
             src={img}

@@ -3,7 +3,7 @@ import { CardHorizontal } from "../Card";
 
 export default function SeasonsCard({ seasons }) {
   return (
-    <div className="mx-4 md:mx-0 px-4 border rounded-[20px] border-neutral-500">
+    <div className="mx-4 md:mx-0 px-4 border rounded-2xl border-neutral-500">
       <h3 className="text-2xl font-bold py-4">Seasons</h3>
       <div className="max-h-[360px] overflow-auto flex flex-col gap-4 pb-4">
         {seasons.map((season) => {
