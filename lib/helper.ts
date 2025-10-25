@@ -19,10 +19,14 @@ export const formatNumber = (num) => {
   return formattedNum;
 };
 
-export const sortByDate = (data: any, isMovie: boolean = true) => {
-  return data.sort((obj1: any, obj2: any) => {
+export const sortByDate = (data: any[], isMovie: boolean = true) => {
+  return [...data].sort((obj1, obj2) => {
     const date1 = new Date(isMovie ? obj1.release_date : obj1.first_air_date);
     const date2 = new Date(isMovie ? obj2.release_date : obj2.first_air_date);
+
+    if (isNaN(date1.getTime())) return 1;
+    if (isNaN(date2.getTime())) return -1;
+
     return date1.getTime() - date2.getTime();
   });
 };
@@ -51,4 +55,29 @@ export const timeAgo = (timestamp: Timestamp): string => {
   }
 
   return "just now";
+};
+
+export const convertBornDate = (date: string): string => {
+  // Validate input format (yyyy-mm-dd)
+  const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
+  if (!dateRegex.test(date)) {
+    throw new Error("Invalid date format. Expected yyyy-mm-dd");
+  }
+
+  const birthDate = new Date(date);
+
+  // Check if date is valid
+  if (isNaN(birthDate.getTime())) {
+    throw new Error("Invalid date");
+  }
+
+  // Format date to "Month Day, Year"
+  const options: Intl.DateTimeFormatOptions = {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  };
+  const formattedDate = birthDate.toLocaleDateString("en-US", options);
+
+  return `${formattedDate}`;
 };

@@ -21,13 +21,7 @@ export default function SeasonsCard({ seasons }) {
             <CardHorizontal
               key={id}
               title={name}
-              subtitle={
-                overview
-                  ? overview.length > 240
-                    ? overview.substring(0, 240) + "..."
-                    : overview
-                  : "Description data not exist"
-              }
+              subtitle={overview}
               img={
                 poster_path
                   ? `https://image.tmdb.org/t/p/w342${poster_path}`
@@ -36,7 +30,7 @@ export default function SeasonsCard({ seasons }) {
               subtitle2={`${
                 air_date ? air_date.substring(0, 4) : "Data Unavailable"
               }, ${episode_count} Episode(s)`}
-              subtitle3={<RadialRating rating={vote_average} size="1.5rem" />}
+              subtitle3={<RadialRating rating={vote_average} size="2rem" />}
             />
           );
         })}
