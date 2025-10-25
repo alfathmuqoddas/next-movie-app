@@ -34,9 +34,9 @@ export const generateMetadata = async ({
       description: personDetails.biography,
       images: [
         {
-          url: `https://image.tmdb.org/t/p/w342${personDetails.profile_path} || https://placehold.co/342x513?text=Data+Unavailable`,
-          width: 342,
-          height: 513,
+          url: `https://image.tmdb.org/t/p/w185${personDetails.profile_path} || https://placehold.co/342x513?text=Data+Unavailable`,
+          width: 185,
+          height: 278,
           alt: personDetails.name,
         },
       ],
@@ -47,9 +47,9 @@ export const generateMetadata = async ({
       description: personDetails.biography,
       images: [
         {
-          url: `https://image.tmdb.org/t/p/w342${personDetails.profile_path} || https://placehold.co/342x513?text=Data+Unavailable`,
-          width: 342,
-          height: 513,
+          url: `https://image.tmdb.org/t/p/w185${personDetails.profile_path} || https://placehold.co/342x513?text=Data+Unavailable`,
+          width: 185,
+          height: 278,
           alt: personDetails.name,
         },
       ],
@@ -88,7 +88,7 @@ export default async function Page({
               alt="cardSmall-thumbnail"
               className="rounded-2xl"
               width={185}
-              height={273}
+              height={278}
               loading="lazy"
             />
           </figure>

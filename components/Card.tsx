@@ -44,33 +44,21 @@ export const CardHorizontal = ({
   img,
   imgWidth,
   imgHeight,
-  title,
-  subtitle,
-  subtitle2,
-  subtitle3,
-  subtitle4,
-  flexType = "items-center",
-  cardBodyPadding = "ps-4",
+  children,
+  vote_average,
 }: {
   img: string;
   imgWidth?: string;
   imgHeight?: string;
   title?: string | ReactNode;
-  subtitle?: string;
-  video?: boolean;
-  cast?: boolean;
-  link?: string;
-  subtitle2?: string | ReactNode;
-  subtitle3?: ReactNode;
-  subtitle4?: string;
-  flexType?: string;
-  cardBodyPadding?: string;
+  vote_average?: number;
+  children: ReactNode;
 }) => {
   return (
     <article
-      className={`flex active:bg-neutral-900 rounded-2xl max-w-screen ${flexType}`}
+      className={`flex active:bg-neutral-900 rounded-2xl w-full items-center`}
     >
-      <figure className={`flex-none w-20 lg:w-28`}>
+      <figure className={`relative flex-none w-24 lg:w-32`}>
         <img
           src={img}
           alt="cardSmall-thumbnail"
@@ -79,16 +67,11 @@ export const CardHorizontal = ({
           height={imgHeight}
           loading="lazy"
         />
-      </figure>
-      <div className={`${cardBodyPadding} flex flex-col gap-2`}>
-        <h5 className="font-semibold">{title}</h5>
-        <div className="hidden lg:block">
-          <p className="text-sm line-clamp-3">{subtitle}</p>
+        <div className="absolute top-1 right-1 text-xs">
+          <RadialRating rating={vote_average} size="2rem" />
         </div>
-        <div className="text-sm">{subtitle2}</div>
-        <div className="text-sm">{subtitle3}</div>
-        <div className="text-sm">{subtitle4}</div>
-      </div>
+      </figure>
+      {children}
     </article>
   );
 };
@@ -126,11 +109,11 @@ export const CardWrap = ({
             <RadialRating rating={vote_average} size="2rem" />
           </div>
           <img
-            src={`https://image.tmdb.org/t/p/w342/${poster_path}`}
+            src={`https://image.tmdb.org/t/p/w185/${poster_path}`}
             alt="card-thumbnail"
             className="rounded-2xl w-full "
-            width="342"
-            height="513"
+            width="185"
+            height="278"
             loading="lazy"
           />
         </figure>

@@ -14,24 +14,28 @@ export default function SeasonsCard({ seasons }) {
             name,
             overview,
             poster_path,
-            //season_number,
             vote_average,
           } = season;
           return (
             <CardHorizontal
               key={id}
-              title={name}
-              subtitle={overview}
               img={
                 poster_path
-                  ? `https://image.tmdb.org/t/p/w342${poster_path}`
+                  ? `https://image.tmdb.org/t/p/w185${poster_path}`
                   : "https://placehold.co/185x278?text=Data+Unavailable"
               }
-              subtitle2={`${
-                air_date ? air_date.substring(0, 4) : "Data Unavailable"
-              }, ${episode_count} Episode(s)`}
-              subtitle3={<RadialRating rating={vote_average} size="2rem" />}
-            />
+              imgHeight="278"
+              imgWidth="185"
+              vote_average={vote_average}
+            >
+              <div className="flex flex-col gap-2 ps-4">
+                <h5 className="font-semibold">{name}</h5>
+                <p className="line-clamp-3">{overview}</p>
+                <p>{`${
+                  air_date ? air_date.substring(0, 4) : "Data Unavailable"
+                }, ${episode_count} Episode(s)`}</p>
+              </div>
+            </CardHorizontal>
           );
         })}
       </div>

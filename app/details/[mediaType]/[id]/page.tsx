@@ -69,9 +69,9 @@ export async function generateMetadata({
       description: mediaDetails.overview,
       images: [
         {
-          url: `https://image.tmdb.org/t/p/w342${mediaDetails?.poster_path} || https://placehold.co/342x513?text=Data+Unavailable`,
-          width: 342,
-          height: 513,
+          url: `https://image.tmdb.org/t/p/w185${mediaDetails?.poster_path} || https://placehold.co/342x513?text=Data+Unavailable`,
+          width: 185,
+          height: 278,
           alt: "Poster For " + mediaTitle,
         },
       ],
@@ -82,9 +82,9 @@ export async function generateMetadata({
       description: mediaDetails.overview,
       images: [
         {
-          url: `https://image.tmdb.org/t/p/w342${mediaDetails?.poster_path} || https://placehold.co/342x513?text=Data+Unavailable`,
-          width: 342,
-          height: 513,
+          url: `https://image.tmdb.org/t/p/w185${mediaDetails?.poster_path} || https://placehold.co/342x513?text=Data+Unavailable`,
+          width: 185,
+          height: 278,
           alt: "Poster For " + mediaTitle,
         },
       ],
