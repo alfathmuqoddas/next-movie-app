@@ -81,3 +81,23 @@ export const convertBornDate = (date: string): string => {
 
   return `${formattedDate}`;
 };
+
+export const createSlug = (str: string, id: string | number): string => {
+  const cleanedName = str
+    .toLowerCase()
+    .trim()
+    .replace(/[^\w\s-]/g, "")
+    .replace(/[\s_]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+
+  return `${cleanedName}-${id}`;
+};
+
+export const extractIdFromSlug = (slug: string): string => {
+  if (!slug || typeof slug !== "string") {
+    return "";
+  }
+  const segments = slug.split("-");
+  const lastIndex = segments.length - 1;
+  return segments[lastIndex];
+};

@@ -3,6 +3,7 @@ import { CardGrid } from "@/components/Card";
 import { queryData } from "../../../../lib/getData";
 import ButtonSearchToggle from "../../../../components/ButtonSearchToggle";
 import ScrollRestore from "@/components/ScrollRestore";
+import { createSlug } from "@/lib/helper";
 // import Toggle from "./Toggle";
 
 // Define a type for the search result item for better type safety
@@ -111,7 +112,10 @@ export default async function SearchPage({
                   0,
                   4
                 )})`}
-                link={`/details/${mediaType}/${id}`}
+                link={`/details/${mediaType}/${createSlug(
+                  displayTitle ?? "",
+                  id
+                )}`}
               />
             );
           })

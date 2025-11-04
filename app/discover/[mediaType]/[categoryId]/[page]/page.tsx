@@ -2,6 +2,7 @@ import { getDiscover } from "@/lib/getData";
 import { CardGrid } from "@/components/Card";
 import DiscoverPagination from "@/components/discover/DiscoverPagination";
 import ScrollRestore from "@/components/ScrollRestore";
+import { createSlug } from "@/lib/helper";
 
 export function generateMetadata() {
   return {
@@ -57,18 +58,21 @@ export default async function DiscoverCategoryPage({
       <ScrollRestore />
       {results.length > 0 ? (
         <article className="grid grid-cols-3 md:grid-cols-5 gap-1 md:gap-4 mt-8">
-          {results.map((result: any) => (
-            <CardGrid
-              key={result.id}
-              img={
-                result.poster_path
-                  ? `https://image.tmdb.org/t/p/w185/${result.poster_path}`
-                  : "https://placehold.co/185x278?text=Data+Unavailable"
-              }
-              title={mediaType === "movie" ? result.title : result.name}
-              link={`/details/${mediaType}/${result.id}`}
-            />
-          ))}
+          {results.map(({ title, name, poster_path, id }: any) => {
+            const displayTitle = mediaType === "movie" ? title : name;
+            return (
+              <CardGrid
+                key={id}
+                img={
+                  poster_path
+                    ? `https://image.tmdb.org/t/p/w185/${poster_path}`
+                    : "https://placehold.co/185x278?text=Data+Unavailable"
+                }
+                title={displayTitle}
+                link={`/details/${mediaType}/${createSlug(displayTitle, id)}`}
+              />
+            );
+          })}
         </article>
       ) : (
         <div className="flex justify-center items-center gap-4 mt-12">

@@ -20,6 +20,7 @@ import AddToFavorites from "@/components/AddToFavorites";
 import ScrollRestore from "@/components/ScrollRestore";
 import Link from "next/link";
 import { formatNumber } from "@/lib/helper";
+import { extractIdFromSlug } from "@/lib/helper";
 
 async function getDetailsData(id: string, mediaType: "tv" | "movie") {
   const [mediaDetails, credits, pic, vid, similarDataRes] = await Promise.all([
@@ -50,7 +51,8 @@ export async function generateMetadata({
 }: {
   params: Promise<{ id: string; mediaType: "tv" | "movie" }>;
 }) {
-  const { id: mediaId, mediaType } = await params;
+  const { id, mediaType } = await params;
+  const mediaId = extractIdFromSlug(id);
   const { mediaDetails } = await getDetailsData(mediaId, mediaType);
 
   let mediaTitle: string;
@@ -97,7 +99,10 @@ export default async function Page({
 }: {
   params: Promise<{ id: string; mediaType: "tv" | "movie" }>;
 }) {
-  const { id: mediaId, mediaType } = await params;
+  const { id, mediaType } = await params;
+
+  const mediaId = extractIdFromSlug(id);
+
   const {
     mediaDetails,
     casts,

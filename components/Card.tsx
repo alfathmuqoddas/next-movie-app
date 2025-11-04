@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ReactNode } from "react";
 import RadialRating from "./RadialRating";
+import { createSlug } from "../lib/helper";
 // import Image from "next/image";
 
 export const CardGrid = ({
@@ -93,10 +94,13 @@ export const CardWrap = ({
       className="no-underline focus:bg-neutral-900 rounded-2xl"
       href={
         media_type == "movie"
-          ? `/details/movie/${id}`
+          ? `/details/movie/${createSlug(title, id)}`
           : media_type == "tv"
-          ? `/details/tv/${id}`
-          : `/details${link}/${id}`
+          ? `/details/tv/${createSlug(name, id)}`
+          : `/details${link}/${createSlug(
+              link === "/movie" ? title : name,
+              id
+            )}`
       }
     >
       <article
