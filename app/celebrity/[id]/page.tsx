@@ -2,6 +2,7 @@ import { getCelebData } from "../../../lib/getData";
 import ScrollRestore from "@/components/ScrollRestore";
 import { convertBornDate, sortByDate } from "@/lib/helper";
 import DetailTabs from "./components/DetailTabs";
+import { extractIdFromSlug } from "@/lib/helper";
 
 async function getCelebDetails(id: string) {
   const [personDetails, personMovieCredits, personTVCredits] =
@@ -23,7 +24,8 @@ export const generateMetadata = async ({
 }: {
   params: Promise<{ id: string }>;
 }): Promise<any> => {
-  const { id: celebId } = await params;
+  const { id } = await params;
+  const celebId = extractIdFromSlug(id);
   const { personDetails } = await getCelebDetails(celebId);
 
   return {
@@ -62,7 +64,8 @@ export default async function Page({
 }: {
   params: Promise<{ id: string }>;
 }) {
-  const { id: celebId } = await params;
+  const { id } = await params;
+  const celebId = extractIdFromSlug(id);
   const { personDetails, personMovieCredits, personTVCredits } =
     await getCelebDetails(celebId);
   const { name, biography, birthday, place_of_birth, deathday, profile_path } =

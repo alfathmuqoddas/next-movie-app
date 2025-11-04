@@ -19,7 +19,7 @@ import Comments from "@/components/comment/Comments";
 import AddToFavorites from "@/components/AddToFavorites";
 import ScrollRestore from "@/components/ScrollRestore";
 import Link from "next/link";
-import { formatNumber } from "@/lib/helper";
+import { createSlug, formatNumber } from "@/lib/helper";
 import { extractIdFromSlug } from "@/lib/helper";
 
 async function getDetailsData(id: string, mediaType: "tv" | "movie") {
@@ -225,7 +225,7 @@ export default async function Page({
                   }
                   title={name}
                   subtitle={character}
-                  link={`/celebrity/${id}`}
+                  link={`/celebrity/${createSlug(name, id)}`}
                 />
               );
             })

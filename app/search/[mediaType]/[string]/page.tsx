@@ -84,9 +84,9 @@ export default async function SearchPage({
       {/* <div className="flex justify-center items-center">
         <Toggle mediaType={toggleMediaType} currentSearch={string} />
       </div> */}
-      <div className="grid grid-cols-3 md:grid-cols-5 gap-1 md:gap-4">
-        {searchDatas.length > 0 ? (
-          searchDatas.map((searchItem: SearchResultItem) => {
+      {searchDatas.length > 0 ? (
+        <div className="grid grid-cols-3 md:grid-cols-5 gap-1 md:gap-4">
+          {searchDatas.map((searchItem: SearchResultItem) => {
             const {
               id,
               poster_path,
@@ -118,13 +118,11 @@ export default async function SearchPage({
                 )}`}
               />
             );
-          })
-        ) : (
-          <div className="min-h-[250px]">
-            <p>{pageTitle} Not Exist</p> {/* Dynamic "Not Exist" message */}
-          </div>
-        )}
-      </div>
+          })}
+        </div>
+      ) : (
+        <div>{`${pageTitle} "${string}" doesn't exist`}</div>
+      )}
     </>
   );
 }
