@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { createSlug } from "@/lib/helper";
 
 const MovieCard = ({
   poster_path,
@@ -24,7 +25,7 @@ const MovieCard = ({
         loading="lazy"
       />
       <Link
-        href={`/details/${type}/${id}`}
+        href={`/details/${type}/${createSlug(title, id)}`}
         className="active:underline hover:underline text-blue-500"
       >
         {title}
