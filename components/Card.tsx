@@ -94,13 +94,10 @@ export const CardWrap = ({
       className="no-underline focus:bg-neutral-900 rounded-2xl"
       href={
         media_type == "movie"
-          ? `/details/movie/${createSlug(title, id)}`
+          ? `/details/movie/${createSlug(title || name, id)}`
           : media_type == "tv"
-          ? `/details/tv/${createSlug(name, id)}`
-          : `/details${link}/${createSlug(
-              link === "/movie" ? title : name,
-              id
-            )}`
+          ? `/details/tv/${createSlug(title || name, id)}`
+          : `/details${link}/${createSlug(title || name, id)}`
       }
     >
       <article
