@@ -5,6 +5,7 @@ import useAuthStore from "../../store/useAuthStore";
 import { useState, useEffect, useCallback } from "react";
 import FavoritePagination from "./components/FavoritePagination";
 import FavoriteCard from "./components/FavoriteCard";
+import { createSlug } from "@/lib/helper";
 
 const Favorites = () => {
   const { userData } = useAuthStore();
@@ -26,21 +27,43 @@ const Favorites = () => {
     currentPage: 0,
     totalPages: 0,
   });
+  const [loadingFavoriteMovies, setLoadingFavoriteMovies] = useState(true);
+  const [loadingFavoriteTv, setLoadingFavoriteTv] = useState(true);
   const [favsPage, setFavsPage] = useState(1);
   const [favsTvPage, setFavsTvPage] = useState(1);
 
   // Fetch Movies
   const fetchFavorites = useCallback(async () => {
-    if (!userData?.uid) return;
-    const favs = await getFavorites(userData.uid, "movie", favsPage, 12);
-    setFavorites(favs);
+    if (!userData?.uid) {
+      setLoadingFavoriteMovies(false);
+      return;
+    }
+    setLoadingFavoriteMovies(true);
+    try {
+      const favs = await getFavorites(userData.uid, "movie", favsPage, 12);
+      setFavorites(favs);
+    } catch (error) {
+      console.error("Error fetching favorites:", error);
+    } finally {
+      setLoadingFavoriteMovies(false);
+    }
   }, [userData?.uid, favsPage]);
 
   // Fetch TV Shows
   const fetchFavoritesTv = useCallback(async () => {
-    if (!userData?.uid) return;
-    const favsTv = await getFavorites(userData.uid, "tv", favsTvPage, 12);
-    setFavoritesTv(favsTv);
+    if (!userData?.uid) {
+      setLoadingFavoriteTv(false);
+      return;
+    }
+    setLoadingFavoriteTv(true);
+    try {
+      const favsTv = await getFavorites(userData.uid, "tv", favsTvPage, 12);
+      setFavoritesTv(favsTv);
+    } catch (error) {
+      console.error("Error fetching favorites:", error);
+    } finally {
+      setLoadingFavoriteTv(false);
+    }
   }, [userData?.uid, favsTvPage]);
 
   // Fetch data on mount and when dependencies change
@@ -81,11 +104,16 @@ const Favorites = () => {
           <div className="flex flex-col gap-4">
             <h1 className="text-2xl font-bold">Favorite Movies</h1>
             <article className="grid grid-cols-3 md:grid-cols-6 gap-4">
-              {favorites.data?.length > 0 ? (
+              {loadingFavoriteMovies ? (
+                <p>Loading...</p>
+              ) : favorites.data?.length > 0 ? (
                 favorites.data?.map((result) => (
                   <FavoriteCard
                     key={result.id}
-                    link={`/details/movie/${result.contentId}`}
+                    link={`/details/movie/${createSlug(
+                      result.title,
+                      result.contentId
+                    )}`}
                     title={result.title}
                     poster_path={result.poster_path}
                     handleClick={() => handleDeleteFavorite("movie", result.id)}
@@ -105,11 +133,16 @@ const Favorites = () => {
           <div className="flex flex-col gap-4">
             <h1 className="text-2xl font-bold">Favorite TV Shows</h1>
             <article className="grid grid-cols-3 md:grid-cols-6 gap-4">
-              {favoritesTv.data?.length > 0 ? (
+              {loadingFavoriteTv ? (
+                <p>Loading...</p>
+              ) : favoritesTv.data?.length > 0 ? (
                 favoritesTv.data?.map((result) => (
                   <FavoriteCard
                     key={result.id}
-                    link={`/details/tv/${result.contentId}`}
+                    link={`/details/tv/${createSlug(
+                      result.name,
+                      result.contentId
+                    )}`}
                     title={result.name}
                     poster_path={result.poster_path}
                     handleClick={() => handleDeleteFavorite("tv", result.id)}
